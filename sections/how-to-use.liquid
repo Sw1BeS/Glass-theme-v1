@@ -8,7 +8,7 @@
   assign step_count = steps.size
 %}
 
-<div class="how-to-use-section">
+<div class="how-to-use-section color-{{ section.settings.color_scheme }}" style="{% render 'spacing-style', settings: section.settings %}">
   <div class="how-to-use-container">
     <div class="how-to-use-header">
       {%- assign header_found = false -%}
@@ -576,7 +576,64 @@
   "name": "How to Use",
   "tag": "section",
   "class": "section",
-  "settings": [],
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        },
+      ],
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "options": [
+        {
+          "value": "full-width",
+          "label": "Full Width"
+        },
+        {
+          "value": "page-width",
+          "label": "Page Width"
+        }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0
+    }
+  ],
   "blocks": [
     {
       "type": "section_header",
@@ -715,7 +772,11 @@
             "duration": "5 minutes"
           }
         }
-      ]
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_width": "full-width"
+      }
     }
   ]
 }

@@ -3,7 +3,7 @@
   Features: Clean design, smooth animations, beauty industry styling
 {% endcomment %}
 
-<div class="faq-section" style="{% render 'spacing-style', settings: section.settings %}">
+<div class="faq-section color-{{ section.settings.color_scheme }} section-{{ section.settings.section_width }}" style="{% render 'spacing-style', settings: section.settings %}">
   <div class="faq-container">
     {%- assign header_found = false -%}
     {%- for block in section.blocks -%}
@@ -403,6 +403,46 @@
       "unit": "px",
       "label": "Padding Bottom",
       "default": 48
+    },
+    {
+      "type": "header",
+      "content": "Section Settings"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        },
+      ],
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "options": [
+        {
+          "value": "full-width",
+          "label": "Full Width"
+        },
+        {
+          "value": "page-width",
+          "label": "Page Width"
+        }
+      ],
+      "default": "page-width"
     }
   ],
   "blocks": [
