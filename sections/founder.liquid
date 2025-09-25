@@ -17,12 +17,10 @@
           {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
-
+      
       {%- unless header_found -%}
         <h2 class="story-title">{{ section.settings.section_heading | default: 'Meet the Founder' }}</h2>
-        <p class="story-subtitle">
-          {{ section.settings.section_subheading | default: 'The story behind IS Beauty Lux' }}
-        </p>
+        <p class="story-subtitle">{{ section.settings.section_subheading | default: 'The story behind IS Beauty Lux' }}</p>
       {%- endunless -%}
     </div>
 
@@ -1208,7 +1206,7 @@
     },
     {
       "type": "text",
-      "id": "section_subheading",
+      "id": "section_subheading", 
       "label": "Section Subheading",
       "default": "The story behind IS Beauty Lux"
     },
