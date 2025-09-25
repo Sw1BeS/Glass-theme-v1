@@ -86,10 +86,17 @@
   {% if section.settings.image_1 != blank or section.settings.image_1_mobile != blank %}
     <div class="hero-background">
       {% if section.settings.image_1 != blank %}
+<<<<<<< HEAD
     {{
       section.settings.image_1
           | image_url: width: 2400
       | image_tag:
+=======
+        {{
+          section.settings.image_1
+          | image_url: width: 2400
+          | image_tag:
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
             loading: 'eager',
             sizes: '(min-width: 768px) 100vw, 0px',
             widths: '768, 1024, 1366, 1600, 1920, 2400',
@@ -115,8 +122,13 @@
             sizes: '(max-width: 767px) 100vw, 0px',
             widths: '600, 800, 1200, 1600',
             class: 'hero-background-image hero-background-image--mobile'
+<<<<<<< HEAD
     }}
   {% endif %}
+=======
+        }}
+      {% endif %}
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
       <div class="hero-background-overlay"></div>
     </div>
   {% endif %}
@@ -127,12 +139,20 @@
         class="hero-text glass{% if glass_enabled %} glass-surface{% endif %} hero-text--tone-{{ panel_content_tone }}"
         {% if panel_block %}
           {{- panel_block.shopify_attributes -}}
+<<<<<<< HEAD
     {% endif %}
+=======
+        {% endif %}
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
         data-animation="{{ animation_style }}"
         {% if glass_enabled %}
           data-glass-tone="{{ glass_tone }}"
           data-glass-elevation="{{ glass_elevation }}"
+<<<<<<< HEAD
   {% endif %}
+=======
+        {% endif %}
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
         style="{{ panel_style }}"
       >
         {% if section.blocks.size > 0 %}
@@ -141,7 +161,11 @@
               {%- when 'text' -%}
                 <div class="hero-text-block" {{ block.shopify_attributes }}>
                   {{ block.settings.text }}
+<<<<<<< HEAD
       </div>
+=======
+                </div>
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
               {%- when 'button' -%}
                 {%- if block.settings.label != blank -%}
                   <div class="hero-button-block" {{ block.shopify_attributes }}>
@@ -149,12 +173,21 @@
                       href="{{ block.settings.link | default: '#' }}"
                       class="hero-button"
                       {% if block.settings.open_in_new_tab %}
+<<<<<<< HEAD
           target="_blank" rel="noopener"
         {% endif %}
                     >
                       {{ block.settings.label }}
                     </a>
     </div>
+=======
+                        target="_blank" rel="noopener"
+                      {% endif %}
+                    >
+                      {{ block.settings.label }}
+                    </a>
+                  </div>
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
                 {%- endif -%}
             {%- endcase -%}
           {%- endfor -%}
@@ -164,15 +197,25 @@
           <div class="hero-text-block hero-text-block--fallback">
             <h1>The Perfect Brow Duo</h1>
             <p>Everything you need for flawless brows, every day.</p>
+<<<<<<< HEAD
     </div>
+=======
+          </div>
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
         {% endif %}
 
         {% if has_button_blocks == 0 %}
           <div class="hero-button-block hero-button-block--fallback">
             <a href="{{ routes.all_products_collection_url }}" class="hero-button">Shop Now</a>
+<<<<<<< HEAD
   </div>
         {% endif %}
 </div>
+=======
+          </div>
+        {% endif %}
+      </div>
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
     </div>
   </div>
 </section>
@@ -615,6 +658,7 @@
           "label": "Glass tone",
       "options": [
         {
+<<<<<<< HEAD
               "value": "auto",
               "label": "Auto"
             },
@@ -727,11 +771,79 @@
             {
               "value": "right",
               "label": "Right"
-            }
-          ],
-          "default": "center"
+=======
+          "type": "header",
+          "content": "Surface"
         },
         {
+          "type": "checkbox",
+          "id": "enable_glass",
+          "label": "Enable glass effect",
+          "default": true
+        },
+        {
+          "type": "select",
+          "id": "glass_tone",
+          "label": "Glass tone",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Auto"
+            },
+            {
+              "value": "light",
+              "label": "Light"
+            },
+            {
+              "value": "dark",
+              "label": "Dark"
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
+            }
+          ],
+          "default": "auto"
+        },
+        {
+          "type": "select",
+          "id": "glass_elevation",
+          "label": "Glass elevation",
+          "options": [
+            {
+              "value": "low",
+              "label": "Low"
+            },
+            {
+              "value": "medium",
+              "label": "Medium"
+            },
+            {
+              "value": "high",
+              "label": "High"
+            }
+          ],
+          "default": "medium"
+        },
+        {
+          "type": "select",
+          "id": "content_tone",
+          "label": "Text tone",
+          "options": [
+            {
+              "value": "auto",
+              "label": "Auto"
+            },
+            {
+              "value": "dark",
+              "label": "Dark text"
+            },
+            {
+              "value": "light",
+              "label": "Light text"
+            }
+          ],
+          "default": "dark"
+        },
+        {
+<<<<<<< HEAD
           "type": "header",
           "content": "Mobile layout"
         },
@@ -851,6 +963,213 @@
           "label": "Button link"
         },
         {
+=======
+          "type": "range",
+          "id": "panel_glass_opacity",
+          "label": "Glass opacity (desktop)",
+          "min": 40,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 90
+        },
+        {
+          "type": "header",
+          "content": "Desktop layout"
+        },
+        {
+          "type": "range",
+          "id": "panel_max_width",
+          "label": "Panel max width",
+          "min": 360,
+          "max": 960,
+          "step": 20,
+          "unit": "px",
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "panel_padding",
+          "label": "Panel padding",
+          "min": 20,
+          "max": 80,
+          "step": 4,
+          "unit": "px",
+          "default": 40
+        },
+        {
+          "type": "range",
+          "id": "panel_corner_radius",
+          "label": "Corner radius",
+          "min": 12,
+          "max": 48,
+          "step": 4,
+          "unit": "px",
+          "default": 28
+        },
+        {
+          "type": "range",
+          "id": "panel_gap",
+          "label": "Content gap",
+          "min": 12,
+          "max": 60,
+          "step": 4,
+          "unit": "px",
+          "default": 24
+        },
+        {
+          "type": "select",
+          "id": "panel_alignment",
+          "label": "Panel alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "header",
+          "content": "Mobile layout"
+        },
+        {
+          "type": "range",
+          "id": "panel_max_width_mobile",
+          "label": "Mobile panel max width",
+          "min": 280,
+          "max": 640,
+          "step": 20,
+          "unit": "px",
+          "default": 520
+        },
+        {
+          "type": "range",
+          "id": "panel_padding_mobile",
+          "label": "Mobile panel padding",
+          "min": 16,
+          "max": 64,
+          "step": 4,
+          "unit": "px",
+          "default": 32
+        },
+        {
+          "type": "range",
+          "id": "panel_corner_radius_mobile",
+          "label": "Mobile corner radius",
+          "min": 12,
+          "max": 48,
+          "step": 4,
+          "unit": "px",
+          "default": 24
+        },
+        {
+          "type": "range",
+          "id": "panel_gap_mobile",
+          "label": "Mobile content gap",
+          "min": 12,
+          "max": 60,
+          "step": 4,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "select",
+          "id": "panel_alignment_mobile",
+          "label": "Mobile panel alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "panel_glass_opacity_mobile",
+          "label": "Glass opacity (mobile)",
+          "min": 40,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 88
+        },
+        {
+          "type": "header",
+          "content": "Animation"
+        },
+        {
+          "type": "select",
+          "id": "animation_style",
+          "label": "Animation style",
+          "options": [
+            {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "fade",
+              "label": "Fade in"
+            },
+            {
+              "value": "slide",
+              "label": "Slide up"
+            },
+            {
+              "value": "scale",
+              "label": "Scale in"
+            }
+          ],
+          "default": "fade"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text content",
+          "default": "<h1>Your heading</h1><p>Your description text goes here.</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Button label",
+          "default": "Learn more"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        },
+        {
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
           "type": "checkbox",
           "id": "open_in_new_tab",
           "label": "Open in new tab",
@@ -900,11 +1219,19 @@
           }
         },
         {
+<<<<<<< HEAD
               "type": "text",
               "settings": {
             "text": "<p>Everything you need for flawless brows, every day.</p>"
             }
           },
+=======
+          "type": "text",
+          "settings": {
+            "text": "<p>Everything you need for flawless brows, every day.</p>"
+          }
+        },
+>>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
         {
           "type": "button",
           "settings": {
