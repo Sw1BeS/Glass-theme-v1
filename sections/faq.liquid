@@ -142,11 +142,28 @@
   }
 
   .faq-title {
-    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
-    margin-bottom: 1rem;
+    margin: 0;
+    display: inline-block;
     position: relative;
+  }
+
+  .faq-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(
+      90deg,
+      var(--glass-highlight-color, var(--color-primary, #bf8a7a)),
+      var(--glass-accent-color, var(--color-accent, #dab4a6))
+    );
+    border-radius: 2px;
   }
 
   .faq-subtitle {

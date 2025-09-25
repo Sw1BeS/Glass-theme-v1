@@ -190,17 +190,67 @@
 
   <div class="hero-content">
     <div class="hero-container hero-container--align-{{ panel_alignment }} hero-container--mobile-align-{{ panel_alignment_mobile }}">
-      <div
-        class="hero-text glass{% if glass_enabled %} glass-surface{% endif %} hero-text--tone-{{ panel_content_tone }}"
-        {% if panel_block %}{{ panel_block.shopify_attributes }}{% endif %}
-        data-animation="{{ animation_style }}"
-        {% if glass_enabled %}
-          data-glass-tone="{{ glass_tone }}"
-          data-glass-elevation="{{ glass_elevation }}"
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'panel' -%}
+            <div
+              class="hero-text glass{% if glass_enabled %} glass-surface{% endif %} hero-text--tone-{{ panel_content_tone }}"
+              {{ block.shopify_attributes }}
+              data-animation="{{ animation_style }}"
+              {% if glass_enabled %}
+                data-glass-tone="{{ glass_tone }}"
+                data-glass-elevation="{{ glass_elevation }}"
+              {% endif %}
+              style="{{ panel_style }}"
+            >
+              {%- for text_block in section.blocks -%}
+                {%- if text_block.type == 'text' -%}
+                  <div class="hero-text-block" {{ text_block.shopify_attributes }}>
+                    {{ text_block.settings.text }}
+    </div>
+  {%- endif -%}
+              {%- endfor -%}
+
+              {%- for button_block in section.blocks -%}
+                {%- if button_block.type == 'button' and button_block.settings.label != blank -%}
+                  <div class="hero-button-block" {{ button_block.shopify_attributes }}>
+                    <a
+                      href="{{ button_block.settings.link | default: '#' }}"
+                      class="hero-button"
+                      {% if button_block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
+                    >
+                      {{ button_block.settings.label }}
+                    </a>
+    </div>
+      {%- endif -%}
+              {%- endfor -%}
+
+              {% if has_text_blocks == 0 %}
+                <div class="hero-text-block hero-text-block--fallback">
+                  <h1>The Perfect Brow Duo</h1>
+                  <p>Everything you need for flawless brows, every day.</p>
+    </div>
+              {% endif %}
+
+              {% if has_button_blocks == 0 %}
+                <div class="hero-button-block hero-button-block--fallback">
+                  <a href="/collections/all" class="hero-button">Shop Now</a>
+            </div>
+  {% endif %}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {%- unless panel_block -%}
+        <div
+          class="hero-text glass{% if glass_enabled %} glass-surface{% endif %} hero-text--tone-{{ panel_content_tone }}"
+          data-animation="{{ animation_style }}"
+          {% if glass_enabled %}
+            data-glass-tone="{{ glass_tone }}"
+            data-glass-elevation="{{ glass_elevation }}"
     {% endif %}
-        style="{{ panel_style }}"
-      >
-        {% if section.blocks.size > 0 %}
+          style="{{ panel_style }}"
+        >
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when 'text' -%}
@@ -217,25 +267,25 @@
                     >
                       {{ block.settings.label }}
                     </a>
-                  </div>
+    </div>
                 {%- endif -%}
             {%- endcase -%}
           {%- endfor -%}
-  {% endif %}
 
-        {% if has_text_blocks == 0 %}
-          <div class="hero-text-block hero-text-block--fallback">
-            <h1>The Perfect Brow Duo</h1>
-            <p>Everything you need for flawless brows, every day.</p>
-          </div>
-        {% endif %}
-
-        {% if has_button_blocks == 0 %}
-          <div class="hero-button-block hero-button-block--fallback">
-            <a href="/collections/all" class="hero-button">Shop Now</a>
-          </div>
-        {% endif %}
+          {% if has_text_blocks == 0 %}
+            <div class="hero-text-block hero-text-block--fallback">
+              <h1>The Perfect Brow Duo</h1>
+              <p>Everything you need for flawless brows, every day.</p>
     </div>
+          {% endif %}
+
+          {% if has_button_blocks == 0 %}
+            <div class="hero-button-block hero-button-block--fallback">
+              <a href="/collections/all" class="hero-button">Shop Now</a>
+  </div>
+          {% endif %}
+</div>
+      {%- endunless -%}
     </div>
   </div>
 </section>
