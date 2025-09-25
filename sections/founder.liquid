@@ -183,55 +183,31 @@
     <div class="timeline-section">
       <h3 class="timeline-title">Our Journey</h3>
       <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-year">2001</div>
-          <div class="timeline-content">
-            <h4>Started in Beauty Industry</h4>
-            <p>Began career in cosmetic chemistry and product development</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-year">2015</div>
-          <div class="timeline-content">
-            <h4>Clean Beauty Vision</h4>
-            <p>Recognized the need for safer, more effective beauty products</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-year">2020</div>
-          <div class="timeline-content">
-            <h4>IS Beauty Lux Founded</h4>
-            <p>Launched with mission to create salon-worthy results at home</p>
-          </div>
-        </div>
-        <div class="timeline-item">
-          <div class="timeline-year">2024</div>
-          <div class="timeline-content">
-            <h4>Global Expansion</h4>
-            <p>Now serving customers worldwide with trusted beauty solutions</p>
-          </div>
-        </div>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'timeline_item' -%}
+            <div class="timeline-item" {{ block.shopify_attributes }}>
+              <div class="timeline-year">{{ block.settings.year }}</div>
+              <div class="timeline-content">
+                <h4>{{ block.settings.title }}</h4>
+                <p>{{ block.settings.description }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
       </div>
     </div>
 
     <!-- Philosophy Section -->
-    <div class="philosophy-section">
-      <h3 class="philosophy-title">Inspired by Real Women. Made for Everyday Elegance.</h3>
-      <div class="philosophy-content">
-        <p>
-          At IS Beauty Lux™, we believe beauty should feel effortless. Our journey began with a mission: to create
-          self-care essentials that elevate your daily routine — without adding stress, time, or harmful ingredients.
-        </p>
-        <p>
-          With over 20 years of experience in the beauty industry, we carefully formulated every product to be clean,
-          effective, and beautifully designed.
-        </p>
-        <p>
-          Our brow gel and lash shampoo are crafted to deliver salon-worthy results at home, with packaging you'll be
-          proud to display.
-        </p>
-      </div>
-    </div>
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'philosophy' -%}
+        <div class="philosophy-section" {{ block.shopify_attributes }}>
+          <h3 class="philosophy-title">{{ block.settings.title }}</h3>
+          <div class="philosophy-content">
+            {{ block.settings.description }}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
 
     <!-- Achievements -->
     {% if section.settings.achievements != blank %}
@@ -1327,6 +1303,48 @@
       ]
     },
     {
+      "type": "timeline_item",
+      "name": "Timeline Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "year",
+          "label": "Year",
+          "default": "2020"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "IS Beauty Lux Founded"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Launched with mission to create salon-worthy results at home"
+        }
+      ]
+    },
+    {
+      "type": "philosophy",
+      "name": "Philosophy Section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Inspired by Real Women. Made for Everyday Elegance."
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>At IS Beauty Lux™, we believe beauty should feel effortless. Our journey began with a mission: to create self-care essentials that elevate your daily routine — without adding stress, time, or harmful ingredients.</p><p>With over 20 years of experience in the beauty industry, we carefully formulated every product to be clean, effective, and beautifully designed.</p><p>Our brow gel and lash shampoo are crafted to deliver salon-worthy results at home, with packaging you'll be proud to display.</p>"
+        }
+      ]
+    },
+    {
       "type": "achievement",
       "name": "Achievement",
       "settings": [
@@ -1403,6 +1421,29 @@
             "happy_customers": 647,
             "countries_served": 23,
             "ingredients_tested": 187
+          }
+        },
+        {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2020",
+            "title": "IS Beauty Lux Founded",
+            "description": "Launched with mission to create salon-worthy results at home"
+          }
+        },
+        {
+          "type": "timeline_item",
+          "settings": {
+            "year": "2024",
+            "title": "Global Expansion",
+            "description": "Now serving customers worldwide with trusted beauty solutions"
+          }
+        },
+        {
+          "type": "philosophy",
+          "settings": {
+            "title": "Inspired by Real Women. Made for Everyday Elegance.",
+            "description": "<p>At IS Beauty Lux™, we believe beauty should feel effortless. Our journey began with a mission: to create self-care essentials that elevate your daily routine — without adding stress, time, or harmful ingredients.</p><p>With over 20 years of experience in the beauty industry, we carefully formulated every product to be clean, effective, and beautifully designed.</p><p>Our brow gel and lash shampoo are crafted to deliver salon-worthy results at home, with packaging you'll be proud to display.</p>"
           }
         },
         {
