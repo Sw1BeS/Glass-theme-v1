@@ -3,7 +3,7 @@
   Features: 3D effects, glassmorphism, animated particles, interactive connections, premium animations
 {% endcomment %}
 
-<div class="premium-product-composition">
+<div class="product-composition-section" style="{% render 'spacing-style', settings: section.settings %}">
   <div class="composition-container">
     <!-- Premium Section Header -->
     <div class="premium-header glass-surface">
@@ -70,16 +70,16 @@
                 {% if block.settings.product_image != blank %}
                   <!-- Desktop Image -->
                   <div class="product-image-desktop">
-                    {% render 'image', image: block.settings.product_image, alt: block.settings.product_name %}
+                    {% render 'image', image: block.settings.product_image %}
                   </div>
 
                   <!-- Mobile Image -->
                   <div class="product-image-mobile">
                     {% if block.settings.product_image_mobile != blank %}
-                      {% render 'image', image: block.settings.product_image_mobile, alt: block.settings.product_name %}
+                      {% render 'image', image: block.settings.product_image_mobile %}
                     {% else %}
                       <!-- Fallback to desktop image for mobile -->
-                      {% render 'image', image: block.settings.product_image, alt: block.settings.product_name %}
+                      {% render 'image', image: block.settings.product_image %}
                     {% endif %}
                   </div>
                 {% else %}
@@ -112,10 +112,7 @@
                       <div class="point-inner-circle">
                         {% if block.settings.ingredient_1_media != blank %}
                           <div class="point-media">
-                            {% render 'image',
-                              image: block.settings.ingredient_1_media,
-                              alt: block.settings.ingredient_1_name
-                            %}
+                            {% render 'image', image: block.settings.ingredient_1_media %}
                           </div>
                         {% else %}
                           <span class="point-icon">{{ block.settings.ingredient_1_icon | default: '✨' }}</span>
@@ -127,10 +124,7 @@
                         <div class="tooltip-header">
                           {% if block.settings.ingredient_1_media != blank %}
                             <div class="tooltip-media">
-                              {% render 'image',
-                                image: block.settings.ingredient_1_media,
-                                alt: block.settings.ingredient_1_name
-                              %}
+                              {% render 'image', image: block.settings.ingredient_1_media %}
                             </div>
                           {% else %}
                             <div class="tooltip-icon">{{ block.settings.ingredient_1_icon | default: '✨' }}</div>
@@ -159,10 +153,7 @@
                       <div class="point-inner-circle">
                         {% if block.settings.ingredient_2_media != blank %}
                           <div class="point-media">
-                            {% render 'image',
-                              image: block.settings.ingredient_2_media,
-                              alt: block.settings.ingredient_2_name
-                            %}
+                            {% render 'image', image: block.settings.ingredient_2_media %}
                           </div>
                         {% else %}
                           <span class="point-icon">{{ block.settings.ingredient_2_icon | default: '✨' }}</span>
@@ -174,10 +165,7 @@
                         <div class="tooltip-header">
                           {% if block.settings.ingredient_2_media != blank %}
                             <div class="tooltip-media">
-                              {% render 'image',
-                                image: block.settings.ingredient_2_media,
-                                alt: block.settings.ingredient_2_name
-                              %}
+                              {% render 'image', image: block.settings.ingredient_2_media %}
                             </div>
                           {% else %}
                             <div class="tooltip-icon">{{ block.settings.ingredient_2_icon | default: '✨' }}</div>
@@ -206,10 +194,7 @@
                       <div class="point-inner-circle">
                         {% if block.settings.ingredient_3_media != blank %}
                           <div class="point-media">
-                            {% render 'image',
-                              image: block.settings.ingredient_3_media,
-                              alt: block.settings.ingredient_3_name
-                            %}
+                            {% render 'image', image: block.settings.ingredient_3_media %}
                           </div>
                         {% else %}
                           <span class="point-icon">{{ block.settings.ingredient_3_icon | default: '✨' }}</span>
@@ -221,10 +206,7 @@
                         <div class="tooltip-header">
                           {% if block.settings.ingredient_3_media != blank %}
                             <div class="tooltip-media">
-                              {% render 'image',
-                                image: block.settings.ingredient_3_media,
-                                alt: block.settings.ingredient_3_name
-                              %}
+                              {% render 'image', image: block.settings.ingredient_3_media %}
                             </div>
                           {% else %}
                             <div class="tooltip-icon">{{ block.settings.ingredient_3_icon | default: '✨' }}</div>
@@ -309,29 +291,35 @@
       </div>
 
       <div class="summary-content">
-        <h3 class="summary-title">Why These Ingredients Matter</h3>
+        <h3 class="summary-title">{{ section.settings.summary_title | default: 'Why These Ingredients Matter' }}</h3>
         <div class="premium-summary-grid">
           <div class="summary-card glass-surface">
             <div class="card-icon">🌿</div>
-            <h4 class="card-title">Clean & Safe</h4>
+            <h4 class="card-title">{{ section.settings.card1_title | default: 'Clean & Safe' }}</h4>
             <p class="card-text">
-              All ingredients are dermatologist-tested and free from harmful chemicals, parabens, and sulfates.
+              {{
+                section.settings.card1_text
+                | default: 'All ingredients are dermatologist-tested and free from harmful chemicals, parabens, and sulfates.'
+              }}
             </p>
             <div class="card-glow"></div>
           </div>
           <div class="summary-card glass-surface">
             <div class="card-icon">💧</div>
-            <h4 class="card-title">Water-Based</h4>
+            <h4 class="card-title">{{ section.settings.card2_title | default: 'Water-Based' }}</h4>
             <p class="card-text">
-              Our formulas are water-based for gentle, effective care that won't irritate sensitive skin.
+              {{ section.settings.card2_text | default: 'Our formulas are water-based for gentle, effective care that won\'t irritate sensitive skin.' }}
             </p>
             <div class="card-glow"></div>
           </div>
           <div class="summary-card glass-surface">
             <div class="card-icon">⚡</div>
-            <h4 class="card-title">Proven Results</h4>
+            <h4 class="card-title">{{ section.settings.card3_title | default: 'Proven Results' }}</h4>
             <p class="card-text">
-              Each ingredient is carefully selected for its proven benefits and effectiveness in beauty care.
+              {{
+                section.settings.card3_text
+                | default: 'Each ingredient is carefully selected for its proven benefits and effectiveness in beauty care.'
+              }}
             </p>
             <div class="card-glow"></div>
           </div>
@@ -342,11 +330,10 @@
 </div>
 
 <style>
-  .premium-product-composition {
-    padding: 6rem 0;
-    background: {{ section.settings.background_color | default: 'color-mix(in srgb, var(--color-background, #f8f9fa) 88%, transparent)' }};
+  .product-composition-section {
+    padding: 4rem 0;
+    background: var(--color-background, #ffffff);
     position: relative;
-    overflow: hidden;
   }
 
   .composition-container {
@@ -357,17 +344,14 @@
     z-index: 2;
   }
 
-  /* Premium Header */
+  /* Section Header */
   .premium-header {
     text-align: center;
-    margin-bottom: 6rem;
+    margin-bottom: 4rem;
     position: relative;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 24px;
-    padding: 4rem 3rem;
-    overflow: hidden;
+    background: var(--color-secondary-bg, #f8f9fa);
+    border-radius: 12px;
+    padding: 3rem 2rem;
   }
 
   .header-background {
@@ -435,9 +419,10 @@
   }
 
   .premium-title {
-    font-size: 4rem;
-    font-weight: 800;
-    margin: 0 0 2rem 0;
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    color: var(--color-foreground, #2c2c2c);
     position: relative;
   }
 
@@ -449,22 +434,19 @@
   }
 
   .title-line.accent {
-    background: linear-gradient(135deg, {{ section.settings.primary_color | default: 'var(--color-primary, #bf8a7a)' }}, {{ section.settings.accent_color | default: 'var(--color-accent, #dab4a6)' }});
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--color-primary, #bf8a7a);
   }
 
-  .title-line::after {
+  .premium-title::after {
     content: '';
     position: absolute;
     bottom: -8px;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: linear-gradient(90deg, {{ section.settings.primary_color | default: 'var(--color-primary, #bf8a7a)' }}, {{ section.settings.accent_color | default: 'var(--color-accent, #dab4a6)' }});
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--color-primary, #bf8a7a);
     border-radius: 2px;
-    animation: titleGlow 3s ease-in-out infinite alternate;
   }
 
   .premium-subtitle {
@@ -1217,7 +1199,7 @@
 {
   "name": "Product Composition",
   "tag": "section",
-  "class": "premium-product-composition",
+  "class": "product-composition-section",
   "settings": [
     {
       "type": "header",
@@ -1234,6 +1216,48 @@
       "id": "section_subheading",
       "label": "Section Subheading",
       "default": "Discover the premium ingredients that make our products exceptional"
+    },
+    {
+      "type": "text",
+      "id": "summary_title",
+      "label": "Summary Section Title",
+      "default": "Why These Ingredients Matter"
+    },
+    {
+      "type": "text",
+      "id": "card1_title",
+      "label": "Card 1 Title",
+      "default": "Clean & Safe"
+    },
+    {
+      "type": "textarea",
+      "id": "card1_text",
+      "label": "Card 1 Description",
+      "default": "All ingredients are dermatologist-tested and free from harmful chemicals, parabens, and sulfates."
+    },
+    {
+      "type": "text",
+      "id": "card2_title",
+      "label": "Card 2 Title",
+      "default": "Water-Based"
+    },
+    {
+      "type": "textarea",
+      "id": "card2_text",
+      "label": "Card 2 Description",
+      "default": "Our formulas are water-based for gentle, effective care that won't irritate sensitive skin."
+    },
+    {
+      "type": "text",
+      "id": "card3_title",
+      "label": "Card 3 Title",
+      "default": "Proven Results"
+    },
+    {
+      "type": "textarea",
+      "id": "card3_text",
+      "label": "Card 3 Description",
+      "default": "Each ingredient is carefully selected for its proven benefits and effectiveness in beauty care."
     },
     {
       "type": "header",
