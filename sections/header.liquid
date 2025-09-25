@@ -68,9 +68,9 @@
   if header_width_lower contains 'px' or header_width_lower contains 'rem' or header_width_lower contains 'em' or header_width_lower contains 'vh' or header_width_lower contains 'vw' or header_width_lower contains '%' or header_width_lower contains 'ch' or header_width_lower contains 'calc' or header_width_lower contains 'auto'
     assign header_width_css = header_width_value
   else
-    assign header_width_css = header_width_value | append: 'px'
-  endif
-{% endliquid %}
+   assign header_width_css = header_width_value | append: 'px'
+   endif
+ %}
 
 {% capture header_style %}
   {% if glass_blur != blank %}
