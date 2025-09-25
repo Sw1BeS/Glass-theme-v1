@@ -1,475 +1,491 @@
 {% comment %}
-  Header Section - Main site header with logo, navigation, and mobile menu
-  Features: Logo display, desktop menu, mobile burger menu, shopping cart
+  Simple Header: Header IS the glass, content sits on top
+  Layer structure: Background -> Orbs -> Glass (header) -> Content
 {% endcomment %}
 
-<script src="{{ 'header.js' | asset_url }}" type="module" fetchpriority="high"></script>
+{% liquid
+  assign logo_width = section.settings.logo_width | default: '120px'
+  assign logo_width_mobile = section.settings.logo_width_mobile | default: '100px'
+  assign logo_height = section.settings.logo_height | default: '40px'
+  assign logo_height_mobile = section.settings.logo_height_mobile | default: '35px'
+  assign menu_items = section.settings.menu.links
+  assign show_search = section.settings.show_search
+  assign show_cart = section.settings.show_cart
+  assign show_account = section.settings.show_account
+  assign sticky_behavior = section.settings.enable_sticky_header | default: 'always'
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+  assign glass_enabled = section.settings.enable_glass
+  if glass_enabled == null
+    assign glass_enabled = settings.enable_glass_effect
+  endif
+  assign glass_tone = section.settings.glass_tone | default: 'auto'
+  assign glass_elevation = section.settings.glass_elevation | default: 'medium'
 
-<header-component
-  id="header-component"
-  class="header-section section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }}"
-  data-sticky-enabled="{{ section.settings.sticky_header }}"
-  data-sticky-type="{{ section.settings.sticky_type }}"
-  {% if section.settings.transparent_header %}
-    transparent
+  assign glass_blur_preset = section.settings.glass_blur_preset | default: 'global'
+  assign glass_blur = null
+  case glass_blur_preset
+    when 'soft'
+      assign glass_blur = 14
+    when 'balanced'
+      assign glass_blur = 20
+    when 'bold'
+      assign glass_blur = 28
+  endcase
+%}
+
+{% capture header_style %}
+  {% if glass_blur != blank %}
+    --glass-local-blur: {{ glass_blur }}px;
   {% endif %}
+{% endcapture %}
+{% assign header_style_trimmed = header_style | strip %}
+
+<header
+  class="header glass"
+  data-sticky="{{ sticky_behavior }}"
+  {% if glass_enabled %}
+    data-glass-tone="{{ glass_tone }}"
+    data-glass-elevation="{{ glass_elevation }}"
+  {% endif %}
+  {% unless header_style_trimmed == '' %}
+    style="{{ header_style_trimmed }}"
+  {% endunless %}
 >
-  <div class="header-container spacing-style" style="{% render 'spacing-style', settings: section.settings %}">
-    <!-- Desktop Header Row -->
-    <div class="header-row header-row--top" ref="headerRowTop">
-      <!-- Left Column: Logo -->
-      <div class="header-column header-column--left">
-        {% if section.settings.logo != blank %}
-          <a href="{{ routes.root_url }}" class="header-logo">
-            <img
-              src="{{ section.settings.logo | image_url: width: 200 }}"
-              alt="{{ shop.name }}"
-              class="header-logo-image"
-              width="120"
-              height="40"
-              loading="eager"
-            >
-          </a>
-        {% else %}
-          <a href="{{ routes.root_url }}" class="header-logo header-logo--text">
-            <span class="header-logo-text">{{ shop.name }}</span>
-          </a>
-        {% endif %}
-      </div>
+  <!-- Logo - прямо в хедере -->
+  <a href="{{ routes.root_url }}" class="logo-link">
+    {% if section.settings.logo != blank %}
+      <img
+        src="{{ section.settings.logo | image_url: width: 400 }}"
+        alt="{{ shop.name }}"
+        class="logo-image"
+        width="400"
+        height="auto"
+        style="width: {{ logo_width }}; height: {{ logo_height }}; object-fit: contain;"
+        loading="eager"
+      >
+    {% else %}
+      <span class="logo-text">{{ shop.name }}</span>
+    {% endif %}
+  </a>
 
-      <!-- Center Column: Desktop Menu -->
-      <div class="header-column header-column--center">
-        {% if section.settings.menu != blank %}
-          <nav class="header-menu" ref="headerMenu">
-            <ul class="header-menu-list">
-              {% for link in section.settings.menu.links %}
-                <li class="header-menu-item">
-                  <a
-                    href="{{ link.url }}"
-                    class="header-menu-link{% if link.active %} header-menu-link--active{% endif %}"
-                    {% if link.links != blank %}
-                      aria-haspopup="true"
-                      aria-expanded="false"
-                    {% endif %}
-                  >
-                    {{ link.title }}
-                  </a>
+  <!-- Desktop Menu - прямо в хедере -->
+  <nav class="menu-group desktop-only">
+    {% for link in menu_items %}
+      <a href="{{ link.url }}" class="menu-link">{{ link.title }}</a>
+    {% endfor %}
+  </nav>
 
-                  {% if link.links != blank %}
-                    <ul class="header-submenu">
-                      {% for sublink in link.links %}
-                        <li class="header-submenu-item">
-                          <a
-                            href="{{ sublink.url }}"
-                            class="header-submenu-link{% if sublink.active %} header-submenu-link--active{% endif %}"
-                          >
-                            {{ sublink.title }}
-                          </a>
-                        </li>
-                      {% endfor %}
-                    </ul>
-                  {% endif %}
-                </li>
-              {% endfor %}
-            </ul>
-          </nav>
-        {% endif %}
-      </div>
+  <!-- Actions - прямо в хедере -->
+  <div class="action-group">
+    {% if show_search %}
+      <a href="{{ routes.search_url }}" class="action-btn" aria-label="Search">🔍</a>
+    {% endif %}
+    {% if show_account %}
+      <a href="{{ routes.account_url }}" class="action-btn" aria-label="Account">👤</a>
+    {% endif %}
+    {% if show_cart %}
+      <a href="{{ routes.cart_url }}" class="action-btn" aria-label="Cart">
+        🛒 <span class="cart-count">{{ cart.item_count }}</span>
+      </a>
+    {% endif %}
 
-      <!-- Right Column: Actions -->
-      <div class="header-column header-column--right">
-        <!-- Search Icon -->
-        {% if section.settings.show_search %}
-          <button class="header-action header-action--search" aria-label="{{ 'accessibility.open_search_modal' | t }}">
-            <span class="svg-wrapper">
-              {{ 'icon-search.svg' | inline_asset_content }}
-            </span>
-          </button>
-        {% endif %}
+    <!-- Theme Toggle Button -->
+    <button class="theme-fab glass" data-theme-toggle type="button" aria-label="Theme: auto" aria-pressed="mixed">
+      🌙
+    </button>
 
-        <!-- Account Icon -->
-        {% if section.settings.show_account and shop.customer_accounts_enabled %}
-          <a
-            href="{{ routes.account_url }}"
-            class="header-action header-action--account"
-            aria-label="{{ 'accessibility.account' | t }}"
-          >
-            <span class="svg-wrapper">
-              {{ 'icon-account.svg' | inline_asset_content }}
-            </span>
-          </a>
-        {% endif %}
-
-        <!-- Cart Icon -->
-        <a
-          href="{{ routes.cart_url }}"
-          class="header-action header-action--cart"
-          aria-label="{{ 'accessibility.cart' | t }}"
-        >
-          <span class="svg-wrapper">
-            {{ 'icon-cart.svg' | inline_asset_content }}
-          </span>
-          {% if section.settings.show_cart_count and cart.item_count > 0 %}
-            <span class="header-cart-count">{{ cart.item_count }}</span>
-          {% endif %}
-        </a>
-
-        <!-- Mobile Menu Toggle -->
-        <button
-          class="header-action header-action--menu mobile-only"
-          aria-label="{{ 'accessibility.menu' | t }}"
-          ref="mobileMenuToggle"
-        >
-          <span class="svg-wrapper header-menu-icon header-menu-icon--open">
-            {{ 'icon-menu.svg' | inline_asset_content }}
-          </span>
-          <span class="svg-wrapper header-menu-icon header-menu-icon--close">
-            {{ 'icon-close.svg' | inline_asset_content }}
-          </span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile Menu Drawer -->
-    <div class="header-drawer mobile-only" ref="headerDrawerContainer">
-      {% render 'header-drawer', linklist: section.settings.menu, class: 'header-drawer--mobile' %}
-    </div>
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-toggle mobile-only" aria-label="Toggle menu">☰</button>
   </div>
-</header-component>
 
-{% stylesheet %}
-  .header-section {
-    position: relative;
-    z-index: 100;
-    isolation: isolate;
+  <!-- Mobile Menu -->
+  <div class="mobile-menu mobile-only">
+    {% for link in menu_items %}
+      <a href="{{ link.url }}" class="mobile-menu-link">{{ link.title }}</a>
+    {% endfor %}
+  </div>
+</header>
+
+<style>
+  /* CSS Variables for dynamic sizing */
+  :root {
+    --header-logo-width: {{ logo_width }};
+    --header-logo-width-mobile: {{ logo_width_mobile }};
+    --header-logo-height: {{ logo_height }};
+    --header-logo-height-mobile: {{ logo_height_mobile }};
+    --header-height: {{ section.settings.header_height | default: 60 }}px;
+    --header-width: {{ section.settings.header_width | default: 1200 }}px;
   }
 
-  .header-section[data-sticky-enabled='true'] {
-    position: sticky;
-    top: 0;
-  }
-
-  .header-container {
-    max-width: var(--page-width);
-    margin: 0 auto;
-    padding: 0 var(--padding-horizontal);
-  }
-
-  .header-row {
-    display: grid;
-    grid-template-columns: 1fr 2fr 1fr;
-    align-items: center;
-    gap: 1rem;
-    min-height: var(--header-height, 60px);
-  }
-
-  .header-column {
+  .header {
     display: flex;
     align-items: center;
+    gap: clamp(1rem, 3vw, 1.75rem);
+    width: min(100%, var(--header-width, 1200px));
+    margin: clamp(0.5rem, 2vw, 1rem) auto;
+    padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
+    border-radius: clamp(2.25rem, 5vw, 3.5rem);
+    position: relative;
+    z-index: 10;
   }
 
-  .header-column--left {
-    justify-content: flex-start;
+  .header > * {
+    flex-shrink: 0;
   }
 
-  .header-column--center {
-    justify-content: center;
+  .header .menu-link {
+    flex-shrink: 0;
   }
 
-  .header-column--right {
-    justify-content: flex-end;
-    gap: 0.5rem;
+  .header .menu-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
   }
 
-  /* Logo Styles */
-  .header-logo {
-    display: block;
+  /* Logo - просто контент в div */
+  .logo-link {
+    display: flex;
+    align-items: center;
     text-decoration: none;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    transition: transform 0.3s ease;
   }
 
-  .header-logo-image {
-    height: auto;
-    max-height: 40px;
-    width: auto;
+  .logo-link:hover {
+    transform: scale(1.05);
   }
 
-  .header-logo-text {
+  .logo-image {
+    width: var(--header-logo-width) !important;
+    height: var(--header-logo-height) !important;
+    object-fit: contain !important;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+    max-width: none !important;
+    max-height: none !important;
+  }
+
+  .logo-text {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--color-foreground);
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
-  /* Desktop Menu Styles */
-  .header-menu {
-    display: none;
-  }
+  /* Menu - прямо в хедере */
 
-  .header-menu-list {
+  .menu-group {
+    flex: 1 1 auto;
     display: flex;
-    gap: 2rem;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.75rem, 2vw, 1.5rem);
   }
 
-  .header-menu-item {
-    position: relative;
-  }
-
-  .header-menu-link {
-    display: block;
-    padding: 0.5rem 0;
+  .menu-link {
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     text-decoration: none;
-    color: var(--color-foreground);
-    font-weight: 500;
-    transition: color 0.25s ease;
+    font-weight: 600;
+    padding: 0.5rem 0.8rem;
+    border-radius: 999px;
+    transition: all 0.3s ease;
   }
 
-  .header-menu-link:hover,
-  .header-menu-link--active {
-    color: var(--color-primary);
+  .menu-link:hover {
+    background: color-mix(in srgb, var(--glass-global-tint, rgba(255, 255, 255, 0.82)) 65%, transparent);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(20, 26, 34, 0.12);
   }
 
-  /* Submenu Styles */
-  .header-submenu {
+  /* Actions - прямо в хедере */
+
+  .action-group {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-left: auto;
+  }
+
+  .action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    text-decoration: none;
+    border-radius: 999px;
+    transition: all 0.3s ease;
+    position: relative;
+    margin: 0 0.2rem;
+  }
+
+  .action-btn:hover {
+    background: color-mix(in srgb, var(--glass-global-tint, rgba(255, 255, 255, 0.82)) 60%, transparent);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(20, 26, 34, 0.12);
+  }
+
+  .cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 600;
+  }
+
+  /* Mobile Toggle */
+  .mobile-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    font-size: 1.2rem;
+  }
+
+  .mobile-toggle:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
     position: absolute;
     top: 100%;
     left: 0;
-    background: var(--color-background);
-    border: 1px solid var(--color-border);
-    border-radius: 8px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    list-style: none;
-    margin: 0;
-    padding: 0.5rem 0;
-    min-width: 200px;
+    right: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-top: none;
+    border-radius: 0 0 12px 12px;
+    padding: 1rem;
+    transform: translateY(-100%);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-8px);
-    transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease;
-    z-index: 1000;
+    transition: all 0.3s ease;
   }
 
-  .header-menu-item:hover .header-submenu {
+  .mobile-menu.active {
+    transform: translateY(0);
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
   }
 
-  .header-submenu-link {
+  .mobile-menu-link {
     display: block;
-    padding: 0.5rem 1rem;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     text-decoration: none;
-    color: var(--color-foreground);
-    transition: background-color 0.25s ease;
+    font-weight: 500;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 0.5rem;
   }
 
-  .header-submenu-link:hover,
-  .header-submenu-link--active {
-    background-color: var(--color-background-secondary);
+  .mobile-menu-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateX(5px);
   }
 
-  /* Action Buttons */
-  .header-action {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 44px;
-    border: none;
-    background: transparent;
-    color: var(--color-foreground);
-    cursor: pointer;
-    border-radius: 50%;
-    transition: background-color 0.25s ease;
-    text-decoration: none;
-    position: relative;
+  /* Responsive */
+  @media screen and (max-width: 749px) {
+    .header {
+      width: calc(100% - 1rem);
+      margin: 0.5rem auto;
+      padding: 0.6rem 0.85rem;
+      border-radius: 20px;
+    }
+
+    .logo-image {
+      width: var(--header-logo-width-mobile) !important;
+      height: var(--header-logo-height-mobile) !important;
+    }
+
+    .logo-text {
+      font-size: 1.3rem;
+    }
+
+    .action-btn {
+      width: 32px;
+      height: 32px;
+    }
   }
 
-  .header-action:hover {
-    background-color: var(--color-background-secondary);
-  }
-
-  .header-action .svg-wrapper {
-    width: 20px;
-    height: 20px;
-  }
-
-  .header-cart-count {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: var(--color-primary);
-    color: var(--text-on-primary);
-    font-size: 0.75rem;
-    font-weight: 700;
-    min-width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
-  }
-
-  /* Mobile Menu Toggle */
-  .header-action--menu .header-menu-icon--close {
+  /* Utility Classes */
+  .mobile-only {
     display: none;
   }
 
-  .header-drawer.active + .header-row .header-action--menu .header-menu-icon--open {
-    display: none;
-  }
+  @media screen and (max-width: 920px) {
+    .header {
+      flex-wrap: wrap;
+      gap: 0.75rem;
+    }
 
-  .header-drawer.active + .header-row .header-action--menu .header-menu-icon--close {
-    display: block;
-  }
-
-  /* Mobile Drawer */
-  .header-drawer {
-    display: none;
-  }
-
-  .header-drawer.active {
-    display: block;
-  }
-
-  /* Responsive Design */
-  @media (min-width: 768px) {
-    .mobile-only {
+    .desktop-only {
       display: none !important;
     }
 
-    .header-menu {
+    .mobile-only {
       display: block;
     }
 
-    .header-row {
-      min-height: var(--header-height, 70px);
+    .action-group {
+      width: 100%;
+      justify-content: flex-end;
     }
   }
 
-  @media (max-width: 767px) {
-    .header-row {
-      grid-template-columns: 1fr auto;
-      gap: 1rem;
-    }
-
-    .header-column--center {
-      display: none;
-    }
-
-    .header-column--right {
-      gap: 0.5rem;
-    }
-
-    /* Hide all actions except cart and menu on mobile */
-    .header-action--search,
-    .header-action--account {
-      display: none !important;
-    }
-
-    /* Keep only cart and menu burger on mobile */
-    .header-action--cart,
-    .header-action--menu {
-      display: flex;
-    }
-
-    .header-logo-image {
-      max-height: 32px;
-    }
-
-    .header-logo-text {
-      font-size: 1.25rem;
-    }
+  /* Sticky behavior */
+  .header[data-sticky="always"] {
+    position: fixed;
   }
 
-  /* Extra small mobile - only logo and burger menu */
-  @media (max-width: 480px) {
-    .header-row {
-      grid-template-columns: 1fr auto;
-      padding: 0 1rem;
-    }
-
-    .header-column--right {
-      gap: 0.25rem;
-    }
-
-    /* Hide cart on very small screens, keep only burger menu */
-    .header-action--cart {
-      display: none !important;
-    }
-
-    .header-action--menu {
-      display: flex;
-    }
-
-    .header-logo-image {
-      max-height: 28px;
-    }
-
-    .header-logo-text {
-      font-size: 1.1rem;
-    }
+  .header[data-sticky="scroll-up"] {
+    position: fixed;
+    transform: translateY(-100%);
   }
 
-  /* Sticky Header Effects */
-  .header-section[data-sticky-enabled='true'][data-sticky-state='active'] {
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+  .header[data-sticky="scroll-up"].visible {
+    transform: translateY(0);
   }
 
-  /* Transparent Header */
-  .header-section[transparent] {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    background: transparent;
-    z-index: 100;
+  .header[data-sticky="never"] {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    margin: 0.5rem;
   }
+</style>
 
-  .header-section[transparent] .header-logo-text,
-  .header-section[transparent] .header-menu-link,
-  .header-section[transparent] .header-action {
-    color: white;
-  }
+<script>
+  // Mobile menu toggle
+  document.addEventListener('DOMContentLoaded', function () {
+    const mobileToggle = document.querySelector('.mobile-toggle');
+    const mobileMenu = document.querySelector('.mobile-menu');
 
-  .header-section[transparent] .header-action:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
+    if (mobileToggle && mobileMenu) {
+      mobileToggle.addEventListener('click', function () {
+        mobileMenu.classList.toggle('active');
+        mobileToggle.classList.toggle('active');
+      });
+    }
 
-  /* Glass Effects Integration */
-  .header-section.glass-surface {
-    background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
-    border-bottom: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-{% endstylesheet %}
+    // Sticky scroll-up behavior
+    const header = document.querySelector('.header[data-sticky="scroll-up"]');
+    if (header) {
+      let lastScrollY = window.scrollY;
+
+      window.addEventListener('scroll', function () {
+        const currentScrollY = window.scrollY;
+
+        if (currentScrollY > lastScrollY && currentScrollY > 100) {
+          // Scrolling down
+          header.classList.remove('visible');
+        } else {
+          // Scrolling up
+          header.classList.add('visible');
+        }
+
+        lastScrollY = currentScrollY;
+      });
+    }
+
+    // Update logo sizes when settings change (for theme editor)
+    if (window.Shopify && window.Shopify.theme) {
+      window.Shopify.theme.on('section:load', function () {
+        const logoImage = document.querySelector('.logo-image');
+        if (logoImage) {
+          // Force re-render of logo with new size
+          logoImage.style.height = 'var(--header-logo-height)';
+        }
+      });
+    }
+  });
+</script>
 
 {% schema %}
 {
-  "name": "Header",
-  "tag": "header",
-  "class": "header-wrapper",
+  "name": "Simple Header",
   "settings": [
     {
       "type": "header",
-      "content": "Logo"
+      "content": "Header Size"
+    },
+    {
+      "type": "range",
+      "id": "header_height",
+      "label": "Header Height",
+      "min": 40,
+      "max": 120,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "header_width",
+      "label": "Header Width",
+      "min": 800,
+      "max": 1600,
+      "step": 50,
+      "unit": "px",
+      "default": 1200
+    },
+    {
+      "type": "header",
+      "content": "Logo Settings"
     },
     {
       "type": "image_picker",
       "id": "logo",
-      "label": "Logo image",
-      "info": "Recommended size: 240x80px"
+      "label": "Logo"
+    },
+    {
+      "type": "text",
+      "id": "logo_width",
+      "label": "Logo Width (Desktop)",
+      "default": "120px",
+      "info": "Any CSS value: 120px, 200px, 50%, auto, 10rem, etc."
+    },
+    {
+      "type": "text",
+      "id": "logo_width_mobile",
+      "label": "Logo Width (Mobile)",
+      "default": "100px",
+      "info": "Any CSS value: 100px, 150px, 50%, auto, 8rem, etc."
+    },
+    {
+      "type": "text",
+      "id": "logo_height",
+      "label": "Logo Height (Desktop)",
+      "default": "40px",
+      "info": "Any CSS value: 40px, 80px, 50%, auto, 3rem, etc."
+    },
+    {
+      "type": "text",
+      "id": "logo_height_mobile",
+      "label": "Logo Height (Mobile)",
+      "default": "35px",
+      "info": "Any CSS value: 35px, 60px, 50%, auto, 2.5rem, etc."
     },
     {
       "type": "header",
-      "content": "Navigation"
+      "content": "Menu Settings"
     },
     {
       "type": "link_list",
@@ -479,127 +495,124 @@
     },
     {
       "type": "header",
-      "content": "Header Actions"
+      "content": "Action Buttons"
     },
     {
       "type": "checkbox",
       "id": "show_search",
-      "label": "Show search icon",
+      "label": "Show Search",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cart",
+      "label": "Show Cart",
       "default": true
     },
     {
       "type": "checkbox",
       "id": "show_account",
-      "label": "Show account icon",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_cart_count",
-      "label": "Show cart count",
+      "label": "Show Account",
       "default": true
     },
     {
       "type": "header",
-      "content": "Header Behavior"
-    },
-    {
-      "type": "checkbox",
-      "id": "sticky_header",
-      "label": "Sticky header",
-      "default": true
+      "content": "Behavior"
     },
     {
       "type": "select",
-      "id": "sticky_type",
-      "label": "Sticky behavior",
+      "id": "enable_sticky_header",
+      "label": "Sticky Header",
       "options": [
         {
           "value": "always",
-          "label": "Always visible"
+          "label": "Always"
         },
         {
           "value": "scroll-up",
-          "label": "Show on scroll up"
+          "label": "On Scroll Up"
+        },
+        {
+          "value": "never",
+          "label": "Never"
         }
       ],
-      "default": "always",
-      "info": "How the header behaves when sticky is enabled"
+      "default": "always"
+    },
+    {
+      "type": "header",
+      "content": "Glass styling"
     },
     {
       "type": "checkbox",
-      "id": "transparent_header",
-      "label": "Transparent header on homepage",
-      "default": false,
-      "info": "Makes header transparent over hero sections"
-    },
-    {
-      "type": "header",
-      "content": "Layout settings"
+      "id": "enable_glass",
+      "label": "Use glassmorphism background",
+      "default": true,
+      "info": "Falls back to the global glass setting when left unchecked in existing themes."
     },
     {
       "type": "select",
-      "id": "section_width",
-      "label": "Section width",
+      "id": "glass_tone",
+      "label": "Glass tone",
       "options": [
         {
-          "value": "full-width",
-          "label": "Full width"
+          "value": "auto",
+          "label": "Auto"
         },
         {
-          "value": "page-width",
-          "label": "Page width"
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
         }
       ],
-      "default": "full-width"
+      "default": "auto"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "Color scheme",
-      "default": "scheme-1"
+      "type": "select",
+      "id": "glass_elevation",
+      "label": "Glass elevation",
+      "options": [
+        {
+          "value": "low",
+          "label": "Low"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "high",
+          "label": "High"
+        }
+      ],
+      "default": "medium"
     },
     {
-      "type": "header",
-      "content": "Spacing"
-    },
-    {
-      "type": "range",
-      "id": "padding-block-start",
-      "label": "Top padding",
-      "min": 0,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "default": 12
-    },
-    {
-      "type": "range",
-      "id": "padding-block-end",
-      "label": "Bottom padding",
-      "min": 0,
-      "max": 40,
-      "step": 2,
-      "unit": "px",
-      "default": 12
-    }
-  ],
-  "presets": [
-    {
-      "name": "Header",
-      "settings": {
-        "menu": "main-menu",
-        "show_search": true,
-        "show_account": true,
-        "show_cart_count": true,
-        "sticky_header": true,
-        "sticky_type": "always",
-        "transparent_header": false,
-        "section_width": "full-width",
-        "color_scheme": "scheme-1",
-        "padding-block-start": 12,
-        "padding-block-end": 12
-      }
+      "type": "select",
+      "id": "glass_blur_preset",
+      "label": "Blur strength",
+      "options": [
+        {
+          "value": "global",
+          "label": "Use theme default"
+        },
+        {
+          "value": "soft",
+          "label": "Soft (14px)"
+        },
+        {
+          "value": "balanced",
+          "label": "Balanced (20px)"
+        },
+        {
+          "value": "bold",
+          "label": "Bold (28px)"
+        }
+      ],
+      "default": "global"
     }
   ]
 }
