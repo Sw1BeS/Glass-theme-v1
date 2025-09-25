@@ -1655,14 +1655,17 @@
     .product-composition-header {
       text-align: center;
       gap: 1rem;
+      padding: 0 1rem;
     }
 
     .product-composition-title {
-      font-size: 1.75rem;
+      font-size: clamp(1.5rem, 6vw, 2rem);
+      margin-bottom: 1rem;
     }
 
     .product-composition-subtitle {
-      font-size: 1rem;
+      font-size: clamp(0.9rem, 4vw, 1.1rem);
+      max-width: 100%;
     }
 
     .product-composition-products {
@@ -1672,11 +1675,15 @@
 
     .product-composition-product {
       padding: 1.5rem;
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
     }
 
     .product-composition-product-image {
       height: 200px;
       margin-bottom: 1rem;
+      border-radius: 12px;
     }
 
     .product-composition-product-content {
@@ -1684,16 +1691,85 @@
     }
 
     .product-composition-product-title {
-      font-size: 1.25rem;
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
+      margin-bottom: 0.5rem;
     }
 
     .product-composition-product-description {
-      font-size: 0.9rem;
+      font-size: clamp(0.85rem, 3vw, 1rem);
+      line-height: 1.5;
     }
 
     .product-composition-ingredients {
       grid-template-columns: 1fr;
       gap: 1rem;
+      margin: 1.5rem 0;
+    }
+
+    .ingredient-item {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .ingredient-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .ingredient-name {
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .ingredient-description {
+      font-size: clamp(0.8rem, 3vw, 0.95rem);
+    }
+
+    .product-composition-features {
+      margin: 1.5rem 0;
+    }
+
+    .product-composition-features ul {
+      padding-left: 1rem;
+    }
+
+    .product-composition-features li {
+      font-size: clamp(0.85rem, 3vw, 1rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-section {
+      margin: 2rem 0;
+      padding: 1.5rem;
+    }
+
+    .summary-title {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+      margin-bottom: 1rem;
+    }
+
+    .summary-cards {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .summary-card {
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .summary-card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-card-title {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .summary-card-description {
+      font-size: clamp(0.8rem, 3vw, 0.95rem);
     }
 
     .product-composition-ingredient {

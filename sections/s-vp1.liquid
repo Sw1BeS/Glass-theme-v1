@@ -71,7 +71,8 @@
                 loading: 'lazy',
                 sizes: '(min-width: 768px) 600px, 0px',
                 widths: '400, 600, 800',
-                class: 'image'
+                class: 'image',
+                alt: section.settings.image.alt | default: 'Value proposition image'
             }}
           </div>
         {%- endif -%}
@@ -85,7 +86,8 @@
                 loading: 'lazy',
                 sizes: '(max-width: 767px) 300px, 0px',
                 widths: '300, 400',
-                class: 'image'
+                class: 'image',
+                alt: section.settings.image_mobile.alt | default: 'Value proposition image mobile'
             }}
           </div>
         {%- elsif section.settings.image != blank -%}
@@ -97,7 +99,8 @@
                 loading: 'lazy',
                 sizes: '(max-width: 767px) 300px, 0px',
                 widths: '300, 400',
-                class: 'image'
+                class: 'image',
+                alt: section.settings.image.alt | default: 'Value proposition image mobile'
             }}
           </div>
         {%- endif -%}
@@ -185,7 +188,7 @@
   .s-vp1 .description {
     font-size: 1.05rem;
     line-height: 1.65;
-    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
+    color: var(--glass-foreground-muted, color-mix(in srgb, var(--color-foreground, #2c2c2c) 85%, transparent));
   }
 
   .s-vp1 .button {

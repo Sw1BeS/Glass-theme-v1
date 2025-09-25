@@ -1,0 +1,240 @@
+/* Critical CSS for above-the-fold content */
+/* Hero Section Critical Styles */
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.hero-background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-panel {
+  position: relative;
+  width: min(100%, 600px);
+  display: grid;
+  gap: clamp(1.25rem, 3vw, 1.8rem);
+  padding: clamp(1.8rem, 3.5vw, 2.4rem);
+  border-radius: clamp(20px, 5vw, 28px);
+  color: #2c2c2c;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 16px 40px rgba(20, 26, 34, 0.12);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.hero-text-block h1,
+.hero-text-block h2,
+.hero-text-block h3,
+.hero-text-block h4,
+.hero-text-block h5,
+.hero-text-block h6 {
+  font-size: clamp(1.85rem, calc(600px / 12), 3.4rem);
+  font-weight: 700;
+  margin: 0;
+  color: inherit;
+  text-wrap: balance;
+}
+
+.hero-text-block p {
+  font-size: clamp(0.98rem, calc(600px / 28), 1.25rem);
+  line-height: 1.65;
+  color: rgba(44, 44, 44, 0.78);
+  margin: 0;
+}
+
+.hero-button-block {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: clamp(0.75rem, 2vw, 1rem);
+}
+
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  min-width: 160px;
+  width: min(200px, 100%);
+  max-width: 100%;
+  background: linear-gradient(135deg, #bf8a7a 0%, rgba(191, 138, 122, 0.55) 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.hero-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(191, 138, 122, 0.32);
+}
+
+/* Mobile Critical Styles */
+@media (max-width: 767px) {
+  .hero-section {
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  .hero-content {
+    padding: 0 1rem;
+  }
+
+  .hero-panel {
+    width: min(100%, 520px);
+    padding: clamp(1.2rem, 5vw, 1.8rem);
+    gap: clamp(1rem, 2.5vw, 1.5rem);
+    margin: 0 auto;
+    max-width: calc(100vw - 2rem);
+  }
+
+  .hero-background-image--desktop {
+    display: none;
+  }
+
+  .hero-background-image--mobile {
+    display: block;
+  }
+}
+
+/* Header Critical Styles */
+.header {
+  position: relative;
+  z-index: 1000;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+}
+
+.header-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  text-decoration: none;
+}
+
+.header-nav {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.header-nav a {
+  color: #2c2c2c;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.header-nav a:hover {
+  color: #bf8a7a;
+}
+
+/* Mobile Header */
+@media (max-width: 1023px) {
+  .header-nav {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+}
+
+/* Base Typography */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1.6;
+  color: #2c2c2c;
+  overflow-x: hidden;
+}
+
+/* Utility Classes */
+.section {
+  padding: clamp(3rem, 6vw, 4.5rem) 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Loading States */
+.hero-background-image {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-background-image.loaded {
+  opacity: 1;
+}
+
+/* Prevent Layout Shift */
+.hero-panel {
+  will-change: transform;
+}
+
+/* Focus Styles for Accessibility */
+.hero-button:focus,
+.header-nav a:focus,
+.mobile-toggle:focus {
+  outline: 2px solid #bf8a7a;
+  outline-offset: 2px;
+}

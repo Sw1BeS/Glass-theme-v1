@@ -1540,5 +1540,117 @@
       grid-template-columns: 1fr;
       gap: 1rem;
     }
+
+    /* Mobile-specific improvements */
+    .story-header {
+      text-align: center;
+      padding: 0 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .story-title {
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+      margin-bottom: 1rem;
+    }
+
+    .story-subtitle {
+      font-size: clamp(1rem, 4vw, 1.2rem);
+      max-width: 100%;
+    }
+
+    .founder-intro {
+      flex-direction: column;
+      gap: 2rem;
+      text-align: center;
+    }
+
+    .founder-image {
+      order: 1;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .founder-info {
+      order: 2;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .founder-name {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .founder-title {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .founder-story {
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .founder-quote {
+      font-size: clamp(1.1rem, 4vw, 1.3rem);
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .founder-stats {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .stat-number {
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+    }
+
+    .stat-label {
+      font-size: clamp(0.8rem, 3vw, 1rem);
+    }
+
+    .timeline {
+      margin: 2rem 0;
+    }
+
+    .timeline-item {
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .timeline-year {
+      font-size: clamp(1.2rem, 4vw, 1.5rem);
+    }
+
+    .timeline-title {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+    }
+
+    .timeline-description {
+      font-size: clamp(0.9rem, 3vw, 1rem);
+    }
+
+    .philosophy-section {
+      padding: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .philosophy-title {
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
+      margin-bottom: 1rem;
+    }
+
+    .philosophy-description {
+      font-size: clamp(0.9rem, 3vw, 1.1rem);
+    }
   }
 {% endstylesheet %}

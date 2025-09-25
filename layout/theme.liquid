@@ -4,6 +4,11 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
+    <!-- Critical CSS inline for above-the-fold content -->
+    <style>
+      {% render 'critical-css' %}
+    </style>
+
     {%- render 'stylesheets' -%}
 
     {%- if settings.favicon != blank -%}
@@ -29,6 +34,7 @@
     {%- render 'color-schemes' -%}
 
     <!-- Custom IS Beauty Lux Styles -->
+    <link rel="stylesheet" href="{{ 'css-variables.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'glass-effect.css' | asset_url }}">
     <link rel="stylesheet" href="{{ 'custom-styles.css' | asset_url }}">
 
@@ -77,6 +83,7 @@
       data-page-transition-enabled="{{ settings.page_transition_enabled }}"
       data-product-transition="{{ settings.transition_to_main_product }}"
       data-template="{{ template }}"
+      aria-label="Main content"
     >
       {{ content_for_layout }}
     </main>

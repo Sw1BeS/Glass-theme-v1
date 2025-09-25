@@ -4605,33 +4605,33 @@ text-component {
 @media screen and (max-width: 768px) {
   /* Fix body overflow */
   body {
-    overflow-x: hidden !important;
+    overflow-x: hidden;
   }
 
   /* Fix main content alignment */
   main#MainContent {
-    padding: 0 !important;
-    margin: 0 !important;
-    max-width: 100% !important;
+    padding: 0;
+    margin: 0;
+    max-width: 100%;
   }
 
   /* Fix container alignment */
   .container,
   .section-container,
   .content-container {
-    padding-left: 1rem !important;
-    padding-right: 1rem !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    max-width: 100% !important;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
   }
 
   /* Fix section alignment */
   .section {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    margin: 0 !important;
-    max-width: 100% !important;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+    max-width: 100%;
   }
 
   /* Fix grid layouts */
@@ -4639,60 +4639,60 @@ text-component {
   .grid-2,
   .grid-3,
   .grid-4 {
-    grid-template-columns: 1fr !important;
-    gap: 1rem !important;
-    padding: 0 1rem !important;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding: 0 1rem;
   }
 
   /* Fix flex layouts */
   .flex,
   .flex-row {
-    flex-direction: column !important;
-    align-items: center !important;
-    padding: 0 1rem !important;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem;
   }
 
   /* Fix text alignment */
   .text-center-mobile {
-    text-align: center !important;
+    text-align: center;
   }
 
   /* Fix image containers */
   .image-container,
   .media-container {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    padding: 0 1rem !important;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
 
   /* Fix button containers */
   .button-container,
   .button-group {
-    flex-direction: column !important;
-    align-items: center !important;
-    gap: 0.75rem !important;
-    padding: 0 1rem !important;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0 1rem;
   }
 
   /* Fix spacing */
   .mobile-spacing {
-    padding: 1rem !important;
-    margin: 0.5rem !important;
+    padding: 1rem;
+    margin: 0.5rem;
   }
 
   /* Fix overflow */
   .mobile-overflow {
-    overflow-x: hidden !important;
-    overflow-y: auto !important;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   /* Fix all sections */
   .section {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
   }
 
   /* Fix all containers */
@@ -4702,9 +4702,9 @@ text-component {
   .s-vp1-container,
   .s-vp2-container,
   .s-vp3-container {
-    width: 100% !important;
-    max-width: 100% !important;
-    margin: 0 auto !important;
-    padding: 0 1rem !important;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
   }
 }

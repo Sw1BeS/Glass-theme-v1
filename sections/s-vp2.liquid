@@ -82,7 +82,8 @@
               loading: 'lazy',
               sizes: '(min-width: 768px) 750px, 0px',
               widths: '750, 1000, 1500',
-              class: 's-vp2-image'
+              class: 's-vp2-image',
+              alt: section.settings.image.alt | default: 'Value proposition 2 image'
           }}
         </div>
         {%- if section.settings.image_mobile != blank -%}
@@ -94,7 +95,8 @@
                 loading: 'lazy',
                 sizes: '(max-width: 767px) 375px, 0px',
                 widths: '375, 500, 750',
-                class: 'image'
+                class: 'image',
+                alt: section.settings.image_mobile.alt | default: 'Value proposition 2 image mobile'
             }}
           </div>
         {%- else -%}
@@ -106,7 +108,8 @@
                 loading: 'lazy',
                 sizes: '(max-width: 767px) 375px, 0px',
                 widths: '375, 500, 750',
-                class: 'image'
+                class: 'image',
+                alt: section.settings.image.alt | default: 'Value proposition 2 image mobile'
             }}
           </div>
         {%- endif -%}

@@ -12,6 +12,11 @@ class ThemeSwitcher {
       'scheme-7': 'brand-peach'
     };
 
+    // Store event listeners for cleanup
+    this.eventListeners = [];
+    this.observers = [];
+    this.timeouts = [];
+
     this.colorSchemes = {
       'deep-burgundy': {
         name: 'Deep Burgundy',
@@ -216,6 +221,44 @@ class ThemeSwitcher {
 
     // Set up observer for dynamically added elements
     this.setupDynamicElementObserver();
+  }
+
+  // Add event listener with cleanup tracking
+  addEventListener(element, event, handler, options = {}) {
+    element.addEventListener(event, handler, options);
+    this.eventListeners.push({ element, event, handler, options });
+  }
+
+  // Add timeout with cleanup tracking
+  addTimeout(callback, delay) {
+    const timeoutId = setTimeout(callback, delay);
+    this.timeouts.push(timeoutId);
+    return timeoutId;
+  }
+
+  // Add observer with cleanup tracking
+  addObserver(observer) {
+    this.observers.push(observer);
+    return observer;
+  }
+
+  // Cleanup all event listeners, timeouts, and observers
+  destroy() {
+    // Remove all event listeners
+    this.eventListeners.forEach(({ element, event, handler, options }) => {
+      element.removeEventListener(event, handler, options);
+    });
+    this.eventListeners = [];
+
+    // Clear all timeouts
+    this.timeouts.forEach(timeoutId => clearTimeout(timeoutId));
+    this.timeouts = [];
+
+    // Disconnect all observers
+    this.observers.forEach(observer => {
+      if (observer.disconnect) observer.disconnect();
+    });
+    this.observers = [];
   }
 
   createSwitcher() {
@@ -1201,6 +1244,16 @@ class ThemeSwitcher {
 }
 
 // Initialize when DOM is ready
+let themeSwitcherInstance = null;
+
 document.addEventListener('DOMContentLoaded', () => {
-  new ThemeSwitcher();
+  themeSwitcherInstance = new ThemeSwitcher();
+});
+
+// Cleanup on page unload
+window.addEventListener('beforeunload', () => {
+  if (themeSwitcherInstance) {
+    themeSwitcherInstance.destroy();
+    themeSwitcherInstance = null;
+  }
 });
