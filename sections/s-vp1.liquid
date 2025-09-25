@@ -8,7 +8,6 @@
   assign glass_elevation = section.settings.glass_elevation | default: 'medium'
 %}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <div
   class="section section--{{ section.settings.section_width }} vp1-section color-{{ section.settings.color_scheme }} spacing-style"
   {% if glass_enabled %}
