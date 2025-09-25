@@ -76,7 +76,7 @@
           max-width: {{ section.settings.panel_max_width | default: 600 }}px;
           padding: {{ section.settings.panel_padding | default: 40 }}px;
           border-radius: {{ section.settings.panel_border_radius | default: 24 }}px;
-          background: rgba(255, 255, 255, {{ section.settings.panel_opacity | default: 0.85 }});
+          background: var(--glass-surface-color, rgba(255, 255, 255, {{ section.settings.panel_opacity | default: 0.85 }}));
         "
       >
         <div class="hero-panel-content">
@@ -200,8 +200,8 @@
 
   /* ===== GLASS PANEL ===== */
   .hero-panel {
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.3));
+    box-shadow: 0 20px 50px var(--glass-shadow-color, rgba(0, 0, 0, 0.15));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     text-align: center;
@@ -225,7 +225,7 @@
     font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 700;
     margin: 0 0 1rem 0;
-    color: var(--color-foreground, #2c2c2c);
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     line-height: 1.1;
     letter-spacing: -0.02em;
   }
@@ -233,7 +233,7 @@
   .hero-text-block p {
     font-size: 1.1rem;
     line-height: 1.6;
-    color: var(--color-foreground, #2c2c2c);
+    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
     margin: 0;
     opacity: 0.9;
   }
@@ -254,15 +254,15 @@
     line-height: 1.5;
     min-width: 200px;
     height: 52px;
-    background: var(--color-primary, #bf8a7a);
-    color: white;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    background: var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+    color: var(--glass-foreground-strong, #ffffff);
+    box-shadow: 0 4px 15px var(--glass-shadow-color, rgba(0, 0, 0, 0.1));
   }
 
   .hero-button:hover {
     background: var(--color-primary-hover, #a67666);
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px var(--glass-shadow-color, rgba(0, 0, 0, 0.15));
   }
 
   .hero-button:active {
@@ -270,7 +270,7 @@
   }
 
   .hero-button:focus {
-    outline: 2px solid var(--color-primary, #bf8a7a);
+    outline: 2px solid var(--glass-highlight-color, var(--color-primary, #bf8a7a));
     outline-offset: 2px;
   }
 
