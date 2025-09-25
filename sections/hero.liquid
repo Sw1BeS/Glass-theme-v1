@@ -564,8 +564,10 @@
   }
 
   /* Glass effect for text blocks only */
-  .hero .text-block,
-  .hero .group-block-content {
+  .hero .block-content,
+  .hero .group-block-content,
+  .hero [data-block-type='text'],
+  .hero [data-block-type='button'] {
     position: relative;
     background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
     border: 1px solid
@@ -586,8 +588,10 @@
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
-  .hero .text-block::after,
-  .hero .group-block-content::after {
+  .hero .block-content::after,
+  .hero .group-block-content::after,
+  .hero [data-block-type='text']::after,
+  .hero [data-block-type='button']::after {
     content: '';
     position: absolute;
     inset: 1px;
@@ -602,42 +606,91 @@
     z-index: -1;
   }
 
-  .hero .text-block:hover,
-  .hero .group-block-content:hover {
+  .hero .block-content:hover,
+  .hero .group-block-content:hover,
+  .hero [data-block-type='text']:hover,
+  .hero [data-block-type='button']:hover {
     transform: translateY(-3px);
     box-shadow: 0 28px 64px rgba(17, 23, 34, 0.16);
   }
 
-  .hero .text-block h1,
-  .hero .text-block h2,
-  .hero .text-block h3,
-  .hero .text-block h4,
-  .hero .text-block h5,
-  .hero .text-block h6,
+  .hero .block-content h1,
+  .hero .block-content h2,
+  .hero .block-content h3,
+  .hero .block-content h4,
+  .hero .block-content h5,
+  .hero .block-content h6,
   .hero .group-block-content h1,
   .hero .group-block-content h2,
   .hero .group-block-content h3,
   .hero .group-block-content h4,
   .hero .group-block-content h5,
-  .hero .group-block-content h6 {
+  .hero .group-block-content h6,
+  .hero [data-block-type='text'] h1,
+  .hero [data-block-type='text'] h2,
+  .hero [data-block-type='text'] h3,
+  .hero [data-block-type='text'] h4,
+  .hero [data-block-type='text'] h5,
+  .hero [data-block-type='text'] h6 {
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
-  .hero .text-block p,
-  .hero .text-block li,
-  .hero .text-block span,
-  .hero .text-block small,
+  .hero .block-content p,
+  .hero .block-content li,
+  .hero .block-content span,
+  .hero .block-content small,
   .hero .group-block-content p,
   .hero .group-block-content li,
   .hero .group-block-content span,
-  .hero .group-block-content small {
+  .hero .group-block-content small,
+  .hero [data-block-type='text'] p,
+  .hero [data-block-type='text'] li,
+  .hero [data-block-type='text'] span,
+  .hero [data-block-type='text'] small {
     color: var(--glass-foreground-muted, var(--glass-foreground-strong, var(--color-foreground, #2c2c2c)));
+  }
+
+  /* Button specific styling */
+  .hero [data-block-type='button'] a,
+  .hero [data-block-type='button'] button {
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    text-decoration: none;
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
+    border-radius: 8px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+
+  .hero [data-block-type='button'] a:hover,
+  .hero [data-block-type='button'] button:hover {
+    background: var(--color-primary, #bf8a7a);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Secondary button styling */
+  .hero [data-block-type='button'][data-button-style='secondary'] a,
+  .hero [data-block-type='button'][data-button-style='secondary'] button {
+    background: transparent;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    border: 2px solid var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+  }
+
+  .hero [data-block-type='button'][data-button-style='secondary'] a:hover,
+  .hero [data-block-type='button'][data-button-style='secondary'] button:hover {
+    background: var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+    color: white;
   }
 
   /* Responsive adjustments */
   @media (max-width: 768px) {
-    .hero .text-block,
-    .hero .group-block-content {
+    .hero .block-content,
+    .hero .group-block-content,
+    .hero [data-block-type='text'],
+    .hero [data-block-type='button'] {
       padding: 1.5rem;
       margin: 0.5rem 0;
     }
