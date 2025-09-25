@@ -4603,6 +4603,18 @@ text-component {
 
 /* Global Mobile Responsiveness Fixes */
 @media screen and (max-width: 768px) {
+  /* Fix body overflow */
+  body {
+    overflow-x: hidden !important;
+  }
+
+  /* Fix main content alignment */
+  main#MainContent {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
   /* Fix container alignment */
   .container,
   .section-container,
@@ -4611,12 +4623,15 @@ text-component {
     padding-right: 1rem !important;
     margin-left: auto !important;
     margin-right: auto !important;
+    max-width: 100% !important;
   }
 
   /* Fix section alignment */
   .section {
     padding-left: 0 !important;
     padding-right: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
   }
 
   /* Fix grid layouts */
@@ -4626,6 +4641,7 @@ text-component {
   .grid-4 {
     grid-template-columns: 1fr !important;
     gap: 1rem !important;
+    padding: 0 1rem !important;
   }
 
   /* Fix flex layouts */
@@ -4633,6 +4649,7 @@ text-component {
   .flex-row {
     flex-direction: column !important;
     align-items: center !important;
+    padding: 0 1rem !important;
   }
 
   /* Fix text alignment */
@@ -4646,6 +4663,7 @@ text-component {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 auto !important;
+    padding: 0 1rem !important;
   }
 
   /* Fix button containers */
@@ -4654,6 +4672,7 @@ text-component {
     flex-direction: column !important;
     align-items: center !important;
     gap: 0.75rem !important;
+    padding: 0 1rem !important;
   }
 
   /* Fix spacing */
@@ -4666,5 +4685,26 @@ text-component {
   .mobile-overflow {
     overflow-x: hidden !important;
     overflow-y: auto !important;
+  }
+
+  /* Fix all sections */
+  .section {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Fix all containers */
+  .container,
+  .section-container,
+  .content-container,
+  .s-vp1-container,
+  .s-vp2-container,
+  .s-vp3-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 1rem !important;
   }
 }

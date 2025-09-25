@@ -19,9 +19,9 @@
     data-glass-elevation="{{ glass_elevation }}"
   {% endif %}
 >
-  <div class="container section-{{ section.settings.section_width }}">
+  <div class="s-vp2-container section-{{ section.settings.section_width }}">
     <div
-      class="content glass"
+      class="s-vp2-content glass"
     >
       {%- assign header_found = false -%}
       {%- for block in section.blocks -%}
@@ -124,7 +124,7 @@
     padding: clamp(3rem, 6vw, 4.2rem) 0;
   }
 
-  .s-vp2 .container {
+  .s-vp2-container {
     max-width: 1180px;
     margin: 0 auto;
     padding: 0 clamp(1.5rem, 4vw, 2.5rem);
@@ -135,7 +135,7 @@
   }
 
   @media (max-width: 767px) {
-    .s-vp2 .container {
+    .s-vp2-container {
       grid-template-columns: 1fr;
       gap: 2rem;
       padding: 0 1rem;
@@ -143,7 +143,7 @@
       max-width: 100%;
     }
 
-    .s-vp2 .content {
+    .s-vp2-content {
       order: 2;
       padding: 1.5rem;
       margin: 0;
@@ -164,7 +164,7 @@
     }
   }
 
-  .s-vp2 .content {
+  .s-vp2-content {
     display: grid;
     gap: clamp(1.2rem, 3vw, 1.8rem);
     padding: clamp(1.8rem, 3.5vw, 2.4rem);
@@ -172,7 +172,7 @@
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
-  .s-vp2 .content:not(.glass-surface) {
+  .s-vp2-content:not(.glass-surface) {
     background: color-mix(
       in srgb,
       var(--glass-surface-color, rgba(255, 255, 255, 0.1)) 85%,
@@ -184,7 +184,7 @@
     -webkit-backdrop-filter: blur(20px);
   }
 
-  .s-vp2 .content.glass-surface {
+  .s-vp2-content.glass-surface {
     padding: clamp(1.8rem, 3.5vw, 2.4rem);
     border: none;
     box-shadow: none;
