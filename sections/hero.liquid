@@ -69,30 +69,52 @@
 
   <!-- Content Overlay -->
   <div class="hero-content">
-    <div class="hero-container">
-      <div class="hero-text glass">
+    <div class="hero-container hero-container--{{ section.settings.content_vertical }}">
+      <div
+        class="hero-text glass hero-text--{{ section.settings.content_alignment }}"
+        style="
+          max-width: {{ section.settings.content_max_width }}px;
+          padding: {{ section.settings.glass_padding }}px;
+          border-radius: {{ section.settings.glass_border_radius }}px;
+          margin-top: {{ section.settings.content_margin_top }}px;
+          margin-bottom: {{ section.settings.content_margin_bottom }}px;
+        "
+      >
+        {%- assign button_blocks = section.blocks | where: 'type', 'button' -%}
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'text' -%}
               <div class="hero-text-block" {{ block.shopify_attributes }}>
                 {{ block.settings.text }}
               </div>
-            {%- when 'button' -%}
-              {%- if block.settings.label != blank -%}
-                <div class="hero-button-block" {{ block.shopify_attributes }}>
-                  <a
-                    href="{{ block.settings.link | default: '#' }}"
-                    class="hero-button"
-                    {% if block.settings.open_in_new_tab %}
-                      target="_blank" rel="noopener"
-                    {% endif %}
-                  >
-                    {{ block.settings.label }}
-                  </a>
-                </div>
-              {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
+
+        {%- if button_blocks.size > 0 -%}
+          <div
+            class="hero-button-block{% if section.settings.equal_button_width %} equal-width{% endif %}"
+            style="gap: {{ section.settings.button_gap }}px;"
+          >
+            {%- for block in button_blocks -%}
+              {%- if block.settings.label != blank -%}
+                <a
+                  href="{{ block.settings.link | default: '#' }}"
+                  class="hero-button"
+                  style="
+                    min-width: {{ section.settings.button_min_width }}px;
+                    height: {{ section.settings.button_height }}px;
+                  "
+                  {% if block.settings.open_in_new_tab %}
+                    target="_blank" rel="noopener"
+                  {% endif %}
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.label }}
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
 
         <!-- Fallback content for empty states -->
         {%- unless section.blocks.size > 0 -%}
@@ -100,9 +122,30 @@
             <h1>The Perfect Brow Duo</h1>
             <p>Everything you need for flawless brows, every day.</p>
           </div>
-          <div class="hero-button-block">
-            <a href="/products/the-duo" class="hero-button">Shop The Duo - $34.99</a>
-            <a href="#shopify-section-how_to" class="hero-button">Learn How to Use</a>
+          <div
+            class="hero-button-block{% if section.settings.equal_button_width %} equal-width{% endif %}"
+            style="gap: {{ section.settings.button_gap }}px;"
+          >
+            <a
+              href="/products/the-duo"
+              class="hero-button"
+              style="
+                min-width: {{ section.settings.button_min_width }}px;
+                height: {{ section.settings.button_height }}px;
+              "
+            >
+              Shop The Duo - $34.99
+            </a>
+            <a
+              href="#shopify-section-how_to"
+              class="hero-button"
+              style="
+                min-width: {{ section.settings.button_min_width }}px;
+                height: {{ section.settings.button_height }}px;
+              "
+            >
+              Learn How to Use
+            </a>
           </div>
         {%- endunless -%}
       </div>
@@ -111,6 +154,14 @@
 </div>
 
 {% stylesheet %}
+  /* ===== CSS VARIABLES FOR ADMIN SETTINGS ===== */
+  :root {
+    --glass-opacity: 0.78;
+    --button-gap: 16px;
+    --button-min-width: 200px;
+    --button-height: 48px;
+  }
+
   /* ===== CORE HERO SECTION STYLES ===== */
   .hero-section {
     position: relative;
@@ -173,21 +224,45 @@
     padding: 2rem;
   }
 
+  /* ===== VERTICAL POSITIONING ===== */
+  .hero-container--top {
+    align-items: flex-start;
+    padding-top: 4rem;
+  }
+
+  .hero-container--center {
+    align-items: center;
+  }
+
+  .hero-container--bottom {
+    align-items: flex-end;
+    padding-bottom: 4rem;
+  }
+
   /* ===== GLASS EFFECT CONTAINER ===== */
   .hero-text {
     display: grid;
     gap: clamp(1.25rem, 3vw, 1.8rem);
-    padding: clamp(1.8rem, 3.5vw, 2.4rem);
-    border-radius: 22px;
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
-    text-align: center;
-    max-width: 600px;
     width: 100%;
     position: relative;
   }
 
+  /* ===== CONTENT ALIGNMENT ===== */
+  .hero-text--center {
+    text-align: center;
+  }
+
+  .hero-text--left {
+    text-align: left;
+  }
+
+  .hero-text--right {
+    text-align: right;
+  }
+
   .hero-text:not(.glass-surface) {
-    background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
+    background: rgba(255, 255, 255, var(--glass-opacity, 0.78));
     border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
     box-shadow: 0 16px 40px var(--glass-shadow-color, rgba(20, 26, 34, 0.12));
     backdrop-filter: blur(20px);
@@ -224,16 +299,28 @@
   /* ===== BUTTON LAYOUT ===== */
   .hero-button-block {
     display: flex;
-    gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+  }
+
+  /* ===== EQUAL WIDTH BUTTONS ===== */
+  .hero-button-block.equal-width {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--button-gap, 16px);
+  }
+
+  .hero-button-block.equal-width .hero-button {
+    width: 100%;
+    justify-content: center;
   }
 
   /* ===== PRIMARY BUTTON STYLES ===== */
   .hero-button {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 0.4rem;
     padding: 0.85rem 1.8rem;
     border-radius: 999px;
@@ -248,6 +335,8 @@
     border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
     transition: all 0.3s ease;
     will-change: transform;
+    min-width: var(--button-min-width, 200px);
+    height: var(--button-height, 48px);
   }
 
   .hero-button:hover {
@@ -446,6 +535,115 @@
     },
     {
       "type": "header",
+      "content": "Content Positioning"
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content Alignment",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
+      "id": "content_vertical",
+      "label": "Vertical Position",
+      "options": [
+        { "value": "center", "label": "Center" },
+        { "value": "top", "label": "Top" },
+        { "value": "bottom", "label": "Bottom" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "content_max_width",
+      "label": "Content Max Width",
+      "min": 400,
+      "max": 800,
+      "step": 50,
+      "unit": "px",
+      "default": 600
+    },
+    {
+      "type": "header",
+      "content": "Glass Container Settings"
+    },
+    {
+      "type": "range",
+      "id": "glass_padding",
+      "label": "Glass Container Padding",
+      "min": 20,
+      "max": 60,
+      "step": 4,
+      "unit": "px",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "glass_border_radius",
+      "label": "Glass Border Radius",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 22
+    },
+    {
+      "type": "range",
+      "id": "glass_opacity",
+      "label": "Glass Background Opacity",
+      "min": 0.3,
+      "max": 0.9,
+      "step": 0.1,
+      "default": 0.78
+    },
+    {
+      "type": "header",
+      "content": "Button Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "equal_button_width",
+      "label": "Make Buttons Equal Width",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "button_min_width",
+      "label": "Button Minimum Width",
+      "min": 120,
+      "max": 300,
+      "step": 10,
+      "unit": "px",
+      "default": 200
+    },
+    {
+      "type": "range",
+      "id": "button_height",
+      "label": "Button Height",
+      "min": 40,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "button_gap",
+      "label": "Space Between Buttons",
+      "min": 8,
+      "max": 32,
+      "step": 4,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
       "content": "Spacing"
     },
     {
@@ -462,6 +660,26 @@
       "type": "range",
       "id": "padding-block-end",
       "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_margin_top",
+      "label": "Content Top Margin",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "content_margin_bottom",
+      "label": "Content Bottom Margin",
       "min": 0,
       "max": 100,
       "step": 4,
@@ -517,8 +735,20 @@
         "enable_glass": true,
         "glass_tone": "auto",
         "glass_elevation": "medium",
+        "content_alignment": "center",
+        "content_vertical": "center",
+        "content_max_width": 600,
+        "glass_padding": 36,
+        "glass_border_radius": 22,
+        "glass_opacity": 0.78,
+        "equal_button_width": true,
+        "button_min_width": 200,
+        "button_height": 48,
+        "button_gap": 16,
         "padding-block-start": 0,
-        "padding-block-end": 0
+        "padding-block-end": 0,
+        "content_margin_top": 0,
+        "content_margin_bottom": 0
       },
       "blocks": {
         "text_1": {
