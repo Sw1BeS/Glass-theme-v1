@@ -563,7 +563,13 @@
     }
   }
 
-  /* Glass effect for text blocks only */
+  /* Hero content styling - matching other sections */
+  .hero .hero__content-wrapper {
+    position: relative;
+    z-index: var(--layer-flat);
+  }
+
+  /* Text blocks styling */
   .hero .block-content {
     position: relative;
     background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
@@ -594,7 +600,7 @@
     box-shadow: 0 28px 64px rgba(17, 23, 34, 0.16);
   }
 
-  /* Text styling */
+  /* Text styling - using correct CSS variables */
   .hero .block-content h1,
   .hero .block-content h2,
   .hero .block-content h3,
@@ -603,14 +609,17 @@
   .hero .block-content h6 {
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     margin: 0 0 1rem 0;
+    font-weight: 700;
   }
 
   .hero .block-content p {
     color: var(--glass-foreground-muted, var(--color-foreground-muted, #666666));
     margin: 0 0 1rem 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
   }
 
-  /* Button styling */
+  /* Button styling - matching other sections */
   .hero .block-content a {
     display: inline-block;
     padding: 0.75rem 1.5rem;
@@ -621,6 +630,7 @@
     font-weight: 600;
     transition: all 0.3s ease;
     border: none;
+    margin: 0.5rem 0.5rem 0.5rem 0;
   }
 
   .hero .block-content a:hover {
@@ -646,6 +656,14 @@
     .hero .block-content {
       padding: 1.5rem;
       margin: 0.5rem 0;
+    }
+
+    .hero .block-content h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero .block-content p {
+      font-size: 1rem;
     }
   }
 {% endstylesheet %}
