@@ -1,0 +1,1651 @@
+{% comment %}
+  Founder Section - Enhanced storytelling with animations, timeline, and counters
+  Features: Professional layout, animated counters, roadmap timeline, achievements, clean design, theme integration
+{% endcomment %}
+
+<div class="founder-section" style="{% render 'spacing-style', settings: section.settings %}">
+  <div class="founder-container">
+    <!-- Our Story Header -->
+    <div class="story-header">
+      {%- assign header_found = false -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'section_header' -%}
+          {%- assign header_found = true -%}
+          <h2 class="story-title">{{ block.settings.heading | default: 'Our Story' }}</h2>
+          {%- if block.settings.subheading != blank -%}
+            <p class="story-subtitle">{{ block.settings.subheading }}</p>
+          {%- endif -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- unless header_found -%}
+        <h2 class="story-title">{{ section.settings.section_heading | default: 'Meet the Founder' }}</h2>
+        <p class="story-subtitle">
+          {{ section.settings.section_subheading | default: 'The story behind IS Beauty Lux' }}
+        </p>
+      {%- endunless -%}
+    </div>
+
+    <!-- Founder Introduction -->
+    <div class="founder-intro">
+      <div class="founder-image">
+        {% if section.settings.founder_image != blank %}
+          <!-- Desktop Image -->
+          <div class="founder-image-desktop">
+            {% render 'image', image: section.settings.founder_image, alt: section.settings.founder_name %}
+          </div>
+
+          <!-- Mobile Image -->
+          <div class="founder-image-mobile">
+            {% if section.settings.founder_image_mobile != blank %}
+              {% render 'image', image: section.settings.founder_image_mobile, alt: section.settings.founder_name %}
+            {% else %}
+              <!-- Fallback to desktop image for mobile -->
+              {% render 'image', image: section.settings.founder_image, alt: section.settings.founder_name %}
+            {% endif %}
+          </div>
+        {% else %}
+          <div class="founder-placeholder">
+            <div class="placeholder-content">
+              <div class="placeholder-icon">👩‍💼</div>
+              <div class="placeholder-text">
+                <strong>Founder Photo</strong><br>
+                Recommended: 800x1000px<br>
+                Professional headshot with clean background
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="founder-info">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'founder_info' -%}
+              <h2 class="founder-title" {{ block.shopify_attributes }}>
+                {{ block.settings.founder_name | default: section.settings.founder_name }}
+              </h2>
+              <p class="founder-subtitle" {{ block.shopify_attributes }}>
+                {{ block.settings.founder_title | default: section.settings.founder_title }}
+              </p>
+          {%- endcase -%}
+        {%- endfor -%}
+
+        {%- comment -%} Fallback to settings if no founder_info block {%- endcomment -%}
+        {%- assign founder_info_found = false -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'founder_info' -%}
+            {%- assign founder_info_found = true -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- unless founder_info_found -%}
+          {% if section.settings.founder_name != blank %}
+            <h2 class="founder-title">{{ section.settings.founder_name }}</h2>
+          {% endif %}
+          {% if section.settings.founder_title != blank %}
+            <p class="founder-subtitle">{{ section.settings.founder_title }}</p>
+          {% endif %}
+        {%- endunless -%}
+
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'founder_story' -%}
+              <div class="founder-story" {{ block.shopify_attributes }}>
+                {{ block.settings.story | default: section.settings.founder_story }}
+              </div>
+          {%- endcase -%}
+        {%- endfor -%}
+
+        {%- comment -%} Fallback to settings if no founder_story block {%- endcomment -%}
+        {%- assign founder_story_found = false -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'founder_story' -%}
+            {%- assign founder_story_found = true -%}
+            {%- break -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- unless founder_story_found -%}
+          {% if section.settings.founder_story != blank %}
+            <div class="founder-story">
+              {{ section.settings.founder_story }}
+            </div>
+          {% endif %}
+        {%- endunless -%}
+      </div>
+    </div>
+
+    <!-- Founder Quotes Carousel -->
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'founder_quote' -%}
+          <div class="founder-quotes-carousel" {{ block.shopify_attributes }}>
+            <div class="quotes-container">
+              <div class="quote-slide active">
+                <blockquote class="founder-quote">
+                  <p>"{{ block.settings.quote | default: section.settings.founder_quote }}"</p>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+
+    {%- comment -%} Fallback to settings if no founder_quote block {%- endcomment -%}
+    {%- assign founder_quote_found = false -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'founder_quote' -%}
+        {%- assign founder_quote_found = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- unless founder_quote_found -%}
+      <div class="founder-quotes-carousel">
+        <div class="quotes-container">
+          <div class="quote-slide active">
+            <blockquote class="founder-quote">
+              <p>"{{ section.settings.quote_1 }}"</p>
+            </blockquote>
+          </div>
+          <div class="quote-slide">
+            <blockquote class="founder-quote">
+              <p>"{{ section.settings.quote_2 }}"</p>
+            </blockquote>
+          </div>
+          <div class="quote-slide">
+            <blockquote class="founder-quote">
+              <p>"{{ section.settings.quote_3 }}"</p>
+            </blockquote>
+          </div>
+          <div class="quote-slide">
+            <blockquote class="founder-quote">
+              <p>"{{ section.settings.quote_4 }}"</p>
+            </blockquote>
+          </div>
+          <div class="quote-slide">
+            <blockquote class="founder-quote">
+              <p>"{{ section.settings.quote_5 }}"</p>
+            </blockquote>
+          </div>
+        </div>
+        <div class="quote-indicators">
+          <span class="indicator active" data-slide="0"></span>
+          <span class="indicator" data-slide="1"></span>
+          <span class="indicator" data-slide="2"></span>
+          <span class="indicator" data-slide="3"></span>
+          <span class="indicator" data-slide="4"></span>
+        </div>
+      </div>
+    {%- endunless -%}
+
+    <!-- Animated Stats -->
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'founder_stats' -%}
+          <div class="stats-section" {{ block.shopify_attributes }}>
+            <div class="stats-grid">
+              <div class="stat-item">
+                <div
+                  class="stat-number"
+                  data-target="{{ block.settings.years_experience | default: section.settings.years_experience | default: 23 }}"
+                >
+                  0
+                </div>
+                <div class="stat-label">Years of Experience</div>
+              </div>
+              <div class="stat-item">
+                <div
+                  class="stat-number"
+                  data-target="{{ block.settings.happy_customers | default: section.settings.happy_customers | default: 647 }}"
+                >
+                  0
+                </div>
+                <div class="stat-label">Happy Customers</div>
+              </div>
+              <div class="stat-item">
+                <div
+                  class="stat-number"
+                  data-target="{{ block.settings.countries_served | default: section.settings.countries_served | default: 23 }}"
+                >
+                  0
+                </div>
+                <div class="stat-label">Countries Served</div>
+              </div>
+              <div class="stat-item">
+                <div
+                  class="stat-number"
+                  data-target="{{ block.settings.ingredients_tested | default: section.settings.ingredients_tested | default: 187 }}"
+                >
+                  0
+                </div>
+                <div class="stat-label">Ingredients Tested</div>
+              </div>
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+
+    {%- comment -%} Fallback to settings if no founder_stats block {%- endcomment -%}
+    {%- assign founder_stats_found = false -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'founder_stats' -%}
+        {%- assign founder_stats_found = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- unless founder_stats_found -%}
+      <div class="stats-section">
+        <div class="stats-grid">
+          <div class="stat-item">
+            <div class="stat-number" data-target="{{ section.settings.years_experience | default: 23 }}">0</div>
+            <div class="stat-label">Years of Experience</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="{{ section.settings.happy_customers | default: 647 }}">0</div>
+            <div class="stat-label">Happy Customers</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="{{ section.settings.countries_served | default: 23 }}">0</div>
+            <div class="stat-label">Countries Served</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number" data-target="{{ section.settings.ingredients_tested | default: 187 }}">0</div>
+            <div class="stat-label">Ingredients Tested</div>
+          </div>
+        </div>
+      </div>
+    {%- endunless -%}
+
+    <!-- Company Mission -->
+    <div class="mission-section">
+      <h3 class="mission-title">Our Mission</h3>
+      <p class="mission-text">
+        We are IS Beauty Lux™, a self-care brand dedicated to creating safe, effective, and beautifully crafted
+        products.
+      </p>
+      <p class="mission-text">
+        Our mission is to simplify beauty routines with safe formulas, dermatologist-tested, water-based, non-toxic
+        ingredients, and elegant packaging.
+      </p>
+      <p class="mission-text">
+        Inspired by real women. Made for everyday elegance. At IS Beauty Lux™, we believe beauty should feel effortless.
+        Our journey began with a mission: to create self-care essentials that elevate your daily routine — without
+        adding stress, time, or harmful ingredients.
+      </p>
+      <p class="mission-text">
+        With over 20 years of experience in the beauty industry, we carefully formulated every product to be clean,
+        effective, and beautifully designed. Our brow gel and lash shampoo are crafted to deliver salon-worthy results
+        at home, with packaging you'll be proud to display.
+      </p>
+      <p class="mission-text">
+        We believe in transparency, quality, and the power of simplicity. Every ingredient is carefully selected, every
+        formula is rigorously tested, and every product is designed to make you feel confident and beautiful in your own
+        skin.
+      </p>
+      <p class="mission-text">
+        Our commitment to clean beauty goes beyond just ingredients. We believe in ethical sourcing, sustainable
+        packaging, and supporting women-owned businesses throughout our supply chain. Every product we create is a
+        reflection of our values and our promise to you.
+      </p>
+      <p class="mission-text">
+        We understand that beauty routines should be moments of self-care, not sources of stress. That's why we've
+        designed our products to be intuitive, effective, and enjoyable to use. Whether you're a beauty novice or a
+        seasoned expert, our products adapt to your needs and enhance your natural beauty.
+      </p>
+      <p class="mission-text">
+        At IS Beauty Lux™, we're not just creating products – we're building a community of confident, empowered women
+        who believe in the power of clean, effective beauty. Join us on this journey to redefine what beauty means in
+        the modern world.
+      </p>
+    </div>
+
+    <!-- Journey Timeline -->
+    <div class="timeline-section">
+      <h3 class="timeline-title">Our Journey</h3>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2001</div>
+          <div class="timeline-content">
+            <h4>Started in Beauty Industry</h4>
+            <p>Began career in cosmetic chemistry and product development</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2015</div>
+          <div class="timeline-content">
+            <h4>Clean Beauty Vision</h4>
+            <p>Recognized the need for safer, more effective beauty products</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2020</div>
+          <div class="timeline-content">
+            <h4>IS Beauty Lux Founded</h4>
+            <p>Launched with mission to create salon-worthy results at home</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-content">
+            <h4>Global Expansion</h4>
+            <p>Now serving customers worldwide with trusted beauty solutions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Philosophy Section -->
+    <div class="philosophy-section">
+      <h3 class="philosophy-title">Inspired by Real Women. Made for Everyday Elegance.</h3>
+      <div class="philosophy-content">
+        <p>
+          At IS Beauty Lux™, we believe beauty should feel effortless. Our journey began with a mission: to create
+          self-care essentials that elevate your daily routine — without adding stress, time, or harmful ingredients.
+        </p>
+        <p>
+          With over 20 years of experience in the beauty industry, we carefully formulated every product to be clean,
+          effective, and beautifully designed.
+        </p>
+        <p>
+          Our brow gel and lash shampoo are crafted to deliver salon-worthy results at home, with packaging you'll be
+          proud to display.
+        </p>
+      </div>
+    </div>
+
+    <!-- Achievements -->
+    {% if section.settings.achievements != blank %}
+      <div class="founder-achievements">
+        <h3 class="achievements-title">Key Achievements</h3>
+        <div class="achievements-grid">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'achievement' -%}
+              <div class="achievement-item" {{ block.shopify_attributes }}>
+                {% if block.settings.icon != blank %}
+                  <div class="achievement-icon">{{ block.settings.icon }}</div>
+                {% endif %}
+                <div class="achievement-content">
+                  {% if block.settings.title != blank %}
+                    <h4 class="achievement-title">{{ block.settings.title }}</h4>
+                  {% endif %}
+                  {% if block.settings.description != blank %}
+                    <p class="achievement-description">{{ block.settings.description }}</p>
+                  {% endif %}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .founder-section {
+    padding: 4rem 0;
+    background: var(--color-background, #ffffff);
+  }
+
+  .founder-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Story Header */
+  .story-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .story-title {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-foreground, #2c2c2c);
+    margin: 0 0 1rem 0;
+    position: relative;
+  }
+
+  .story-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--color-primary, #bf8a7a);
+    border-radius: 2px;
+    /* animation: glowPulse 2s ease-in-out infinite alternate; */
+  }
+
+  .story-subtitle {
+    font-size: 1.3rem;
+    color: var(--color-primary, #bf8a7a);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  /* Founder Introduction */
+  .founder-intro {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    margin-bottom: 4rem;
+  }
+
+  .founder-image {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .founder-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+
+  .founder-placeholder {
+    background: var(--color-secondary-bg, #f8f9fa);
+    border: 2px solid var(--color-border, #d0d0d0);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    text-align: center;
+    min-height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .placeholder-content {
+    color: var(--color-foreground-muted, #666666);
+  }
+
+  .placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  .placeholder-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .founder-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .founder-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-foreground, #2c2c2c);
+    position: relative;
+  }
+
+  .founder-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--color-primary, #bf8a7a);
+    border-radius: 2px;
+  }
+
+  .founder-subtitle {
+    font-size: 1.2rem;
+    color: var(--color-primary, #bf8a7a);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .founder-story {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--color-foreground, #2c2c2c);
+  }
+
+  .founder-story p {
+    margin: 0 0 1.5rem 0;
+  }
+
+  .founder-story p:last-child {
+    margin-bottom: 0;
+  }
+
+  .founder-achievements {
+    background: var(--color-secondary-bg, #f8f9fa);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid var(--color-border, #d0d0d0);
+  }
+
+  .achievements-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--color-foreground, #2c2c2c);
+    margin: 0 0 1.5rem 0;
+    position: relative;
+  }
+
+  .achievements-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--color-primary, #bf8a7a);
+    border-radius: 2px;
+    /* animation: glowPulse 2s ease-in-out infinite alternate; */
+  }
+
+  .achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 768px) {
+    .achievements-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease-out;
+  }
+
+  .achievement-item.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .achievement-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    background: var(--color-primary, #bf8a7a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .achievement-content {
+    flex: 1;
+  }
+
+  .achievement-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-foreground, #2c2c2c);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .achievement-description {
+    font-size: 0.9rem;
+    color: var(--color-foreground-muted, #666666);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .founder-quote {
+    background: var(--color-primary, #bf8a7a);
+    color: white;
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 0;
+    position: relative;
+    font-style: italic;
+  }
+
+  .founder-quote::before {
+    content: '"';
+    font-size: 4rem;
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    opacity: 0.3;
+  }
+
+  .founder-quote p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0 0 1rem 0;
+  }
+
+  .founder-quote cite {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+
+  /* Founder Quotes Carousel */
+  .founder-quotes-carousel {
+    margin: 3rem 0;
+    position: relative;
+  }
+
+  .quotes-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+  }
+
+  .quote-slide {
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .quote-slide.active {
+    display: block;
+    opacity: 1;
+  }
+
+  .quote-indicators {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--color-border, #d0d0d0);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .indicator.active {
+    background: var(--color-primary, #bf8a7a);
+    transform: scale(1.2);
+  }
+
+  .indicator:hover {
+    background: var(--color-primary, #bf8a7a);
+    opacity: 0.7;
+  }
+
+  /* Stats Section */
+  .stats-section {
+    margin: 4rem 0;
+    padding: 3rem 0;
+    background: var(--color-secondary-bg, #f8f9fa);
+    border-radius: 16px;
+    border: 2px solid var(--color-border, #d0d0d0);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .stat-item {
+    padding: 1rem;
+  }
+
+  .stat-number {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--color-primary, #bf8a7a);
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+    color: var(--color-foreground-muted, #666666);
+    font-weight: 500;
+  }
+
+  /* Mission Section */
+  .mission-section {
+    margin: 4rem 0;
+    text-align: center;
+    padding: 3rem;
+    background: var(--color-tertiary-bg, #f0f0f0);
+    border-radius: 12px;
+  }
+
+  .mission-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-foreground, #2c2c2c);
+    margin: 0 0 2rem 0;
+    position: relative;
+  }
+
+  .mission-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--color-primary, #bf8a7a);
+    border-radius: 2px;
+    /* animation: glowPulse 2s ease-in-out infinite alternate; */
+  }
+
+  .mission-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--color-foreground, #2c2c2c);
+    margin: 0 0 1.5rem 0;
+    text-align: left;
+  }
+
+  /* Timeline Section */
+  .timeline-section {
+    margin: 4rem 0;
+  }
+
+  .timeline-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--color-foreground, #2c2c2c);
+    text-align: center;
+    margin: 0 0 3rem 0;
+    position: relative;
+  }
+
+  .timeline-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--color-primary, #bf8a7a);
+    border-radius: 2px;
+    /* animation: glowPulse 2s ease-in-out infinite alternate; */
+  }
+
+  .timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--color-primary, #bf8a7a);
+    transform: translateX(-50%);
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .timeline-item:nth-child(odd) {
+    flex-direction: row;
+  }
+
+  .timeline-item:nth-child(even) {
+    flex-direction: row-reverse;
+  }
+
+  .timeline-year {
+    background: var(--color-primary, #bf8a7a);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    position: relative;
+    z-index: 2;
+    min-width: 80px;
+    text-align: center;
+  }
+
+  .timeline-year::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-year::after {
+    right: -20px;
+    border-left-color: var(--color-primary, #bf8a7a);
+  }
+
+  .timeline-item:nth-child(even) .timeline-year::after {
+    left: -20px;
+    border-right-color: var(--color-primary, #bf8a7a);
+  }
+
+  .timeline-content {
+    flex: 1;
+    padding: 0 2rem;
+    background: var(--color-secondary-bg, #f8f9fa);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border: 2px solid var(--color-border, #d0d0d0);
+  }
+
+  .timeline-content h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-foreground, #2c2c2c);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .timeline-content p {
+    font-size: 1rem;
+    color: var(--color-foreground-muted, #666666);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* Philosophy Section */
+  .philosophy-section {
+    margin: 4rem 0;
+    text-align: center;
+    padding: 3rem;
+    background: var(--color-background, #ffffff);
+    border-radius: 12px;
+    border: 2px solid var(--color-border, #d0d0d0);
+  }
+
+  .philosophy-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--color-foreground, #2c2c2c);
+    margin: 0 0 2rem 0;
+    font-style: italic;
+    position: relative;
+  }
+
+  .philosophy-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--color-primary, #bf8a7a);
+    border-radius: 2px;
+    /* animation: glowPulse 2s ease-in-out infinite alternate; */
+  }
+
+  .philosophy-content {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .philosophy-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--color-foreground, #2c2c2c);
+    margin: 0 0 1.5rem 0;
+  }
+
+  /* Animations */
+  @keyframes countUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* @keyframes glowPulse {
+    0% {
+      opacity: 0.7;
+      box-shadow: 0 0 5px var(--color-primary, #bf8a7a);
+    }
+    100% {
+      opacity: 1;
+      box-shadow: 0 0 15px var(--color-primary, #bf8a7a);
+    }
+  } */
+
+  .stat-number.animated {
+    animation: countUp 0.8s ease-out;
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes slideInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .timeline-item:nth-child(odd) .timeline-content {
+    animation: slideInLeft 0.6s ease-out;
+  }
+
+  .timeline-item:nth-child(even) .timeline-content {
+    animation: slideInRight 0.6s ease-out;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .founder-section {
+      padding: 2rem 0;
+    }
+
+    .founder-container {
+      padding: 0 1rem;
+    }
+
+    .story-title {
+      font-size: 2.5rem;
+    }
+
+    .founder-intro {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    .founder-title {
+      font-size: 2rem;
+    }
+
+    .founder-placeholder {
+      min-height: 300px;
+      padding: 2rem 1rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .stat-number {
+      font-size: 2.5rem;
+    }
+
+    .timeline::before {
+      left: 20px;
+    }
+
+    .timeline-item {
+      flex-direction: row !important;
+      padding-left: 3rem;
+    }
+
+    .timeline-year {
+      position: absolute;
+      left: -40px;
+      top: 0;
+    }
+
+    .timeline-year::after {
+      display: none;
+    }
+
+    .timeline-content {
+      margin-left: 0;
+      padding: 1rem;
+    }
+
+    .mission-section,
+    .philosophy-section {
+      padding: 2rem 1.5rem;
+    }
+
+    .founder-achievements {
+      padding: 1.5rem;
+    }
+
+    .founder-quote {
+      padding: 1.5rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Animated counter function
+    function animateCounter(element, target, duration = 2000) {
+      let start = 0;
+      const increment = target / (duration / 16);
+
+      function updateCounter() {
+        start += increment;
+        if (start < target) {
+          element.textContent = Math.floor(start);
+          requestAnimationFrame(updateCounter);
+        } else {
+          element.textContent = target;
+          element.classList.add('animated');
+        }
+      }
+
+      updateCounter();
+    }
+
+    // Intersection Observer for stats animation
+    const statsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const statNumbers = entry.target.querySelectorAll('.stat-number');
+            statNumbers.forEach((stat) => {
+              const target = parseInt(stat.getAttribute('data-target'));
+              animateCounter(stat, target);
+            });
+            statsObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.5 }
+    );
+
+    // Observe stats section
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+      statsObserver.observe(statsSection);
+    }
+
+    // Timeline animation on scroll
+    const timelineObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const timelineItems = entry.target.querySelectorAll('.timeline-item');
+            timelineItems.forEach((item, index) => {
+              setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+              }, index * 200);
+            });
+            timelineObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    // Initialize timeline items
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach((item) => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(30px)';
+      item.style.transition = 'all 0.6s ease-out';
+    });
+
+    // Observe timeline section
+    const timelineSection = document.querySelector('.timeline-section');
+    if (timelineSection) {
+      timelineObserver.observe(timelineSection);
+    }
+
+    // Achievements animation on scroll
+    const achievementsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const achievementItems = entry.target.querySelectorAll('.achievement-item');
+            achievementItems.forEach((item, index) => {
+              setTimeout(() => {
+                item.classList.add('animate');
+              }, index * 200);
+            });
+            achievementsObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    // Observe achievements section
+    const achievementsSection = document.querySelector('.founder-achievements');
+    if (achievementsSection) {
+      achievementsObserver.observe(achievementsSection);
+    }
+
+    // Quotes carousel functionality
+    const quotesCarousel = document.querySelector('.founder-quotes-carousel');
+    if (quotesCarousel) {
+      const slides = quotesCarousel.querySelectorAll('.quote-slide');
+      const indicators = quotesCarousel.querySelectorAll('.indicator');
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        // Hide all slides
+        slides.forEach((slide) => slide.classList.remove('active'));
+        indicators.forEach((indicator) => indicator.classList.remove('active'));
+
+        // Show current slide
+        slides[index].classList.add('active');
+        indicators[index].classList.add('active');
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+      }
+
+      // Auto-advance quotes every 4 seconds
+      setInterval(nextSlide, 4000);
+
+      // Manual navigation with indicators
+      indicators.forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          currentSlide = index;
+          showSlide(currentSlide);
+        });
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Meet the Founder",
+  "tag": "section",
+  "class": "founder-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Meet the Founder"
+    },
+    {
+      "type": "text",
+      "id": "section_subheading",
+      "label": "Section Subheading",
+      "default": "The story behind IS Beauty Lux"
+    },
+    {
+      "type": "header",
+      "content": "Founder Information"
+    },
+    {
+      "type": "image_picker",
+      "id": "founder_image",
+      "label": "Founder Photo (Desktop)",
+      "info": "Recommended: 800x1000px, professional headshot"
+    },
+    {
+      "type": "image_picker",
+      "id": "founder_image_mobile",
+      "label": "Founder Photo (Mobile)",
+      "info": "Optional: Different image for mobile devices. Recommended: 600x900px (vertical)"
+    },
+    {
+      "type": "text",
+      "id": "founder_name",
+      "label": "Founder Name",
+      "default": "Irina",
+      "info": "Founder's full name"
+    },
+    {
+      "type": "text",
+      "id": "founder_title",
+      "label": "Founder Title",
+      "default": "Founder & CEO, IS Beauty Lux",
+      "info": "Founder's professional title"
+    },
+    {
+      "type": "richtext",
+      "id": "founder_story",
+      "label": "Founder Story",
+      "default": "<p>After years of struggling to find the perfect eyebrow products, Irina decided to create her own solution. With a background in cosmetic chemistry and a passion for clean beauty, she developed IS Beauty Lux to provide women with professional-quality brow and lash products that are safe, effective, and easy to use.</p><p>Today, IS Beauty Lux helps thousands of women achieve their best brows and lashes with confidence.</p>",
+      "info": "Founder's story and background"
+    },
+    {
+      "type": "number",
+      "id": "years_experience",
+      "label": "Years of Experience",
+      "default": 23,
+      "info": "Years of experience in the industry"
+    },
+    {
+      "type": "number",
+      "id": "happy_customers",
+      "label": "Happy Customers",
+      "default": 647,
+      "info": "Number of satisfied customers"
+    },
+    {
+      "type": "number",
+      "id": "countries_served",
+      "label": "Countries Served",
+      "default": 23,
+      "info": "Number of countries served"
+    },
+    {
+      "type": "number",
+      "id": "ingredients_tested",
+      "label": "Ingredients Tested",
+      "default": 187,
+      "info": "Number of ingredients tested"
+    },
+    {
+      "type": "checkbox",
+      "id": "achievements",
+      "label": "Show Achievements Section",
+      "default": true,
+      "info": "Display achievements section"
+    },
+    {
+      "type": "text",
+      "id": "founder_quote",
+      "label": "Founder Quote",
+      "default": "Every woman deserves to feel confident and beautiful. That's why I created IS Beauty Lux - to make professional-quality beauty accessible to everyone."
+    },
+    {
+      "type": "header",
+      "content": "Mobile Settings"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_vertical_layout",
+      "label": "Vertical Layout on Mobile",
+      "default": true,
+      "info": "Stack content vertically on mobile devices"
+    },
+    {
+      "type": "select",
+      "id": "mobile_text_alignment",
+      "label": "Mobile Text Alignment",
+      "default": "center",
+      "info": "Text alignment on mobile devices",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        }
+      ],
+      "default": "scheme-1",
+      "info": "Choose color scheme for this section"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "options": [
+        {
+          "value": "full",
+          "label": "Full Width"
+        },
+        {
+          "value": "wide",
+          "label": "Wide"
+        },
+        {
+          "value": "narrow",
+          "label": "Narrow"
+        }
+      ],
+      "default": "full",
+      "info": "Control section width"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0,
+      "info": "Top padding for the section"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 0,
+      "info": "Bottom padding for the section"
+    },
+    {
+      "type": "header",
+      "content": "Founder Quotes"
+    },
+    {
+      "type": "text",
+      "id": "quote_1",
+      "label": "Quote 1",
+      "default": "Every woman deserves to feel confident and beautiful. That's why I created IS Beauty Lux - to make professional-quality beauty accessible to everyone."
+    },
+    {
+      "type": "text",
+      "id": "quote_2",
+      "label": "Quote 2",
+      "default": "Clean beauty isn't just about ingredients - it's about empowering women to make informed choices about what they put on their skin."
+    },
+    {
+      "type": "text",
+      "id": "quote_3",
+      "label": "Quote 3",
+      "default": "I believe that beauty should enhance your natural features, not hide them. Our products are designed to celebrate who you are."
+    },
+    {
+      "type": "text",
+      "id": "quote_4",
+      "label": "Quote 4",
+      "default": "After years in the beauty industry, I realized that women needed products that work as hard as they do - effective, safe, and beautiful."
+    },
+    {
+      "type": "text",
+      "id": "quote_5",
+      "label": "Quote 5",
+      "default": "True beauty comes from confidence, and confidence comes from knowing you're using products that are good for you and the planet."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "section_header",
+      "name": "Section Header",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Section Heading",
+          "default": "Our Story"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "Section Subheading",
+          "default": "Where elegance meets simplicity."
+        }
+      ]
+    },
+    {
+      "type": "founder_info",
+      "name": "Founder Information",
+      "settings": [
+        {
+          "type": "text",
+          "id": "founder_name",
+          "label": "Founder Name",
+          "default": "Irina"
+        },
+        {
+          "type": "text",
+          "id": "founder_title",
+          "label": "Founder Title",
+          "default": "Founder & CEO, IS Beauty Lux"
+        }
+      ]
+    },
+    {
+      "type": "founder_story",
+      "name": "Founder Story",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "story",
+          "label": "Story",
+          "default": "<p>After years of struggling to find the perfect eyebrow products, I decided to create my own solution. With a background in cosmetic chemistry and a passion for clean beauty, I developed IS Beauty Lux to provide women with professional-quality brow and lash products.</p>"
+        }
+      ]
+    },
+    {
+      "type": "founder_quote",
+      "name": "Founder Quote",
+      "settings": [
+        {
+          "type": "text",
+          "id": "quote",
+          "label": "Quote",
+          "default": "Every woman deserves to feel confident and beautiful."
+        }
+      ]
+    },
+    {
+      "type": "founder_stats",
+      "name": "Founder Statistics",
+      "settings": [
+        {
+          "type": "number",
+          "id": "years_experience",
+          "label": "Years of Experience",
+          "default": 23
+        },
+        {
+          "type": "number",
+          "id": "happy_customers",
+          "label": "Happy Customers",
+          "default": 647
+        },
+        {
+          "type": "number",
+          "id": "countries_served",
+          "label": "Countries Served",
+          "default": 23
+        },
+        {
+          "type": "number",
+          "id": "ingredients_tested",
+          "label": "Ingredients Tested",
+          "default": 187
+        }
+      ]
+    },
+    {
+      "type": "achievement",
+      "name": "Achievement",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🎓"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Achievement Title",
+          "default": "Masters in Cosmetic Chemistry"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Specialized in clean beauty formulations and sustainable packaging"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 15,
+  "presets": [
+    {
+      "name": "Meet the Founder",
+      "settings": {
+        "founder_name": "Irina",
+        "founder_title": "Founder & CEO, IS Beauty Lux",
+        "founder_story": "<p>After years of struggling to find the perfect eyebrow products, Irina decided to create her own solution. With a background in cosmetic chemistry and a passion for clean beauty, she developed IS Beauty Lux to provide women with professional-quality brow and lash products that are safe, effective, and easy to use.</p><p>Today, IS Beauty Lux helps thousands of women achieve their best brows and lashes with confidence.</p>",
+        "years_experience": 23,
+        "happy_customers": 647,
+        "countries_served": 23,
+        "ingredients_tested": 187,
+        "achievements": true,
+        "color_scheme": "scheme-1",
+        "section_width": "full",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      },
+      "blocks": [
+        {
+          "type": "section_header",
+          "settings": {
+            "heading": "Meet the Founder",
+            "subheading": "The story behind IS Beauty Lux"
+          }
+        },
+        {
+          "type": "founder_info",
+          "settings": {
+            "founder_name": "Iryna",
+            "founder_title": "Founder & CEO, IS Beauty Lux"
+          }
+        },
+        {
+          "type": "founder_story",
+          "settings": {
+            "story": "<p>With over 20 years of experience in the beauty industry — both as a professional and as a beauty lover — I've tested everything. But when it came to brow gels, I kept running into the same problems: either they didn't hold at all, or they glued brows flat to the skin. And worst of all? That awful white residue — like flakes — that ruined the entire look.</p><p>But brows are the final touch. They're the brushstroke that completes your face like art.</p><p>So I decided to create the product I had always been searching for. That's how IS BEAUTY LUX was born — a clean, minimal, and elevated brand for effortless everyday beauty.</p>"
+          }
+        },
+        {
+          "type": "founder_quote",
+          "settings": {
+            "quote": "Every woman deserves to feel confident and beautiful. That's why I created IS Beauty Lux - to make professional-quality beauty accessible to everyone."
+          }
+        },
+        {
+          "type": "founder_stats",
+          "settings": {
+            "years_experience": 23,
+            "happy_customers": 647,
+            "countries_served": 23,
+            "ingredients_tested": 187
+          }
+        },
+        {
+          "type": "achievement",
+          "settings": {
+            "icon": "🎓",
+            "title": "Masters in Cosmetic Chemistry",
+            "description": "Specialized in clean beauty formulations and sustainable packaging"
+          }
+        },
+        {
+          "type": "achievement",
+          "settings": {
+            "icon": "💄",
+            "title": "10+ Years Beauty Industry",
+            "description": "Experience with leading cosmetic brands and product development"
+          }
+        },
+        {
+          "type": "achievement",
+          "settings": {
+            "icon": "🌿",
+            "title": "Clean Beauty Advocate",
+            "description": "Certified in sustainable beauty practices and ingredient safety"
+          }
+        },
+        {
+          "type": "achievement",
+          "settings": {
+            "icon": "⭐",
+            "title": "10,000+ Happy Customers",
+            "description": "Trusted by beauty enthusiasts worldwide for quality and results"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+  /* Founder Image Responsive Display */
+  .founder-image-desktop {
+    display: block;
+  }
+
+  .founder-image-mobile {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .founder-image-desktop {
+      display: none;
+    }
+
+    .founder-image-mobile {
+      display: block;
+    }
+  }
+{% endstylesheet %}

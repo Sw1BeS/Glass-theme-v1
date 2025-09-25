@@ -1,0 +1,467 @@
+{% comment %}
+  FAQ Section - Modern beauty-focused accordion
+  Features: Clean design, smooth animations, beauty industry styling
+{% endcomment %}
+
+{%- liquid
+  assign section_name = 'FAQ'
+  assign default_title = 'Frequently Asked Questions'
+  assign default_subtitle = 'Everything you need to know about our products and services'
+-%}
+
+{% capture content %}
+
+    <div class="faq-accordion">
+      {%- for block in section.blocks -%}
+        <div class="faq-item" {{ block.shopify_attributes }}>
+          <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-{{ forloop.index }}">
+            <span class="question-text">{{ block.settings.question }}</span>
+            <span class="question-icon">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+          </button>
+
+          <div class="faq-answer" id="faq-answer-{{ forloop.index }}" aria-hidden="true">
+            <div class="answer-content">
+              {{ block.settings.answer }}
+            </div>
+
+            {%- if block.settings.additional_info != blank -%}
+              <div class="additional-info">
+                <div class="info-icon">💡</div>
+                <div class="info-content">{{ block.settings.additional_info }}</div>
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {% if section.settings.footer_text != blank %}
+      <div class="faq-footer">
+        <p class="footer-text">{{ section.settings.footer_text }}</p>
+      </div>
+    {% endif %}
+{% endcapture %}
+
+{% render 'section-wrapper',
+  section: section,
+  section_name: section_name,
+  default_title: default_title,
+  default_subtitle: default_subtitle,
+  content: content
+%}
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach((item) => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      const icon = item.querySelector('.question-icon');
+
+      question.addEventListener('click', () => {
+        const isOpen = question.getAttribute('aria-expanded') === 'true';
+
+        // Close all other FAQ items
+        faqItems.forEach((otherItem) => {
+          if (otherItem !== item) {
+            const otherQuestion = otherItem.querySelector('.faq-question');
+            const otherAnswer = otherItem.querySelector('.faq-answer');
+            const otherIcon = otherItem.querySelector('.question-icon');
+
+            otherQuestion.setAttribute('aria-expanded', 'false');
+            otherAnswer.setAttribute('aria-hidden', 'true');
+            otherAnswer.style.maxHeight = null;
+            otherIcon.style.transform = 'rotate(0deg)';
+            otherItem.classList.remove('active');
+          }
+        });
+
+        if (isOpen) {
+          // Close current item
+          question.setAttribute('aria-expanded', 'false');
+          answer.setAttribute('aria-hidden', 'true');
+          answer.style.maxHeight = null;
+          icon.style.transform = 'rotate(0deg)';
+          item.classList.remove('active');
+        } else {
+          // Open current item
+          question.setAttribute('aria-expanded', 'true');
+          answer.setAttribute('aria-hidden', 'false');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+          icon.style.transform = 'rotate(180deg)';
+          item.classList.add('active');
+        }
+      });
+    });
+  });
+</script>
+
+{% stylesheet %}
+  .faq-section {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    background: linear-gradient(135deg, var(--color-secondary-bg, #f8f9fa), var(--color-tertiary-bg, #e9ecef));
+    padding: 4rem 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .faq-container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .faq-header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .faq-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    color: var(--color-foreground, #2c2c2c);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .faq-subtitle {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--color-foreground-muted, #6a6a6a);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .faq-accordion {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    background: var(--color-background, #ffffff);
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+
+  .faq-item:hover {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .faq-item.active {
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+    border-color: var(--color-primary, #bf8a7a);
+  }
+
+  .faq-question {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: 1.5rem 2rem;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .faq-question:hover {
+    background: var(--color-secondary-bg, #f8f9fa);
+  }
+
+  .faq-item.active .faq-question {
+    background: var(--color-primary, #bf8a7a);
+    color: white;
+  }
+
+  .question-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-foreground, #2c2c2c);
+    margin: 0;
+    flex: 1;
+    padding-right: 1rem;
+  }
+
+  .faq-item.active .question-text {
+    color: white;
+  }
+
+  .question-icon {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s ease;
+    color: var(--color-primary, #bf8a7a);
+    flex-shrink: 0;
+  }
+
+  .faq-item.active .question-icon {
+    color: white;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    background: var(--color-background, #ffffff);
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 500px;
+  }
+
+  .answer-content {
+    padding: 2rem;
+    color: var(--color-foreground, #2c2c2c);
+    line-height: 1.8;
+    font-size: 1.15rem;
+    font-weight: 400;
+    position: relative;
+    background: var(--color-background, #ffffff);
+    border-radius: 16px;
+    margin: 1.5rem 2rem 1.5rem 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--color-border, #e0e0e0);
+  }
+
+  .answer-content::after {
+    content: '✨';
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 1.5rem;
+    opacity: 0.6;
+  }
+
+  .answer-content p {
+    margin: 0 0 1.2rem 0;
+    position: relative;
+  }
+
+  .answer-content p:first-child {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-primary, #bf8a7a);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border, #e0e0e0);
+  }
+
+  .answer-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .additional-info {
+    margin: 1rem 2rem 1.5rem 2rem;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .info-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  .info-content {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .faq-footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--color-background, #ffffff);
+    border-radius: 16px;
+    border: 1px solid var(--color-border, #e0e0e0);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  .footer-text {
+    color: var(--color-foreground-muted, #6a6a6a);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .faq-section {
+      padding: 2rem 0;
+    }
+
+    .faq-container {
+      padding: 0 1rem;
+    }
+
+    .faq-header {
+      margin-bottom: 2rem;
+    }
+
+    .faq-question {
+      padding: 1.2rem 1.5rem;
+    }
+
+    .question-text {
+      font-size: 1rem;
+    }
+
+    .answer-content {
+      padding: 1.5rem;
+      font-size: 1rem;
+      margin: 0 1.5rem 1.2rem 1.5rem;
+    }
+
+    .answer-content::after {
+      top: 0.8rem;
+      right: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .answer-content p:first-child {
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.8rem;
+    }
+
+    .additional-info {
+      margin: 1rem 1.5rem 1.2rem 1.5rem;
+      padding: 0.8rem 1.2rem;
+    }
+
+    .faq-footer {
+      margin-top: 2rem;
+      padding: 1.5rem;
+    }
+
+    .footer-text {
+      font-size: 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "tag": "section",
+  "class": "faq-section section-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Find answers to the most common questions about our products and services."
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "Still have questions? Contact our customer support team for personalized assistance."
+    },
+    {
+      "type": "header",
+      "content": "Section Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 48
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Our goal is for every customer to be totally satisfied with their purchase. If this isn't the case, let us know and we'll do our best to work with you to make it right.</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "additional_info",
+          "label": "Additional Information",
+          "info": "Optional additional information or tips (displayed in a highlighted box)"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>Our goal is for every customer to be totally satisfied with their purchase. If this isn't the case, let us know and we'll do our best to work with you to make it right.</p>",
+            "additional_info": "<p>Returns must be made within 30 days of purchase with original packaging.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>We offer free standard shipping on all orders over $50. Standard shipping takes 3-5 business days, while express shipping takes 1-2 business days.</p>",
+            "additional_info": "<p>International shipping is available to select countries with delivery times of 7-14 business days.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your products cruelty-free?",
+            "answer": "<p>Yes! All our products are cruelty-free and we never test on animals. We are proud to be certified by Leaping Bunny.</p>",
+            "additional_info": "<p>We also use sustainable packaging and eco-friendly ingredients whenever possible.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
