@@ -260,7 +260,7 @@
   .section-title {
     font-size: 3rem;
     font-weight: 700;
-    color: var(--color-foreground, #2c2c2c);
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     margin: 0 0 1rem 0;
     position: relative;
   }
@@ -279,7 +279,7 @@
 
   .section-subtitle {
     font-size: 1.3rem;
-    color: var(--color-primary, #bf8a7a);
+    color: var(--glass-highlight-color, var(--color-primary, #bf8a7a));
     font-weight: 500;
     max-width: 600px;
     margin: 0 auto;
@@ -725,7 +725,7 @@
   .product-name {
     font-size: 2.2rem;
     font-weight: 700;
-    color: var(--color-foreground, #2c2c2c);
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     margin: 0;
   }
 
@@ -742,7 +742,7 @@
 
   .product-description {
     font-size: 1.1rem;
-    color: var(--color-foreground-muted, #666666);
+    color: var(--glass-foreground-muted, var(--color-foreground-muted, #666666));
     line-height: 1.7;
     margin: 0 0 2rem 0;
   }
@@ -758,7 +758,7 @@
   .features-title {
     font-size: 1.3rem;
     font-weight: 700;
-    color: var(--color-foreground, #2c2c2c);
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     margin: 0 0 1.5rem 0;
   }
 
@@ -791,7 +791,7 @@
   }
 
   .feature-text {
-    color: var(--color-foreground, #2c2c2c);
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     font-size: 0.95rem;
     font-weight: 500;
   }
@@ -835,7 +835,7 @@
   .summary-title {
     font-size: 2.5rem;
     font-weight: 700;
-    color: var(--color-foreground, #2c2c2c);
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     text-align: center;
     margin: 0 0 3rem 0;
     position: relative;
@@ -877,26 +877,12 @@
     text-align: center;
   }
 
-  .summary-title {
-    font-size: 2rem;
-    font-weight: 600;
-    margin: 0 0 3rem 0;
-  }
-
   .summary-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     max-width: 1000px;
     margin: 0 auto;
-  }
-
-  .summary-card {
-    text-align: center;
-    padding: 2rem;
-    border-radius: 12px;
-    background: var(--color-background, #ffffff);
-    border: 1px solid var(--color-border, #e0e0e0);
   }
 
   .card-icon {
@@ -1019,7 +1005,7 @@
     .summary-title {
       font-size: 2rem;
       font-weight: 700;
-      color: var(--color-foreground, #2c2c2c);
+      color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
       margin-bottom: 2rem;
       position: relative;
     }
