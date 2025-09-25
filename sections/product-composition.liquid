@@ -31,10 +31,10 @@
 
         {%- unless header_found -%}
           <h2 class="premium-title">
-            <span class="title-line">Our Products</span>
+            <span class="title-line">{{ section.settings.section_heading | default: 'Our Products' }}</span>
             <span class="title-line accent">& Ingredients</span>
           </h2>
-          <p class="premium-subtitle">Discover the premium ingredients that make our products exceptional</p>
+          <p class="premium-subtitle">{{ section.settings.section_subheading | default: 'Discover the premium ingredients that make our products exceptional' }}</p>
         {%- endunless -%}
 
         <div class="premium-stats">
@@ -1214,6 +1214,22 @@
   "tag": "section",
   "class": "premium-product-composition",
   "settings": [
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Our Products"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subheading",
+      "label": "Section Subheading",
+      "default": "Discover the premium ingredients that make our products exceptional"
+    },
     {
       "type": "header",
       "content": "Section Settings"

@@ -21,8 +21,8 @@
 
     {%- unless header_found -%}
       <div class="faq-header glass">
-        <h2 class="faq-title">Frequently Asked Questions</h2>
-        <p class="faq-subtitle">Find answers to common questions about our products</p>
+        <h2 class="faq-title">{{ section.settings.section_heading | default: 'Frequently Asked Questions' }}</h2>
+        <p class="faq-subtitle">{{ section.settings.section_subheading | default: 'Find answers to common questions about our products' }}</p>
       </div>
     {%- endunless -%}
 
@@ -374,6 +374,22 @@
   "tag": "section",
   "class": "faq-section section-wrapper",
   "settings": [
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subheading", 
+      "label": "Section Subheading",
+      "default": "Find answers to the most common questions about our products and services."
+    },
     {
       "type": "text",
       "id": "footer_text",

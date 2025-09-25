@@ -8,7 +8,10 @@
   assign step_count = steps.size
 %}
 
-<div class="how-to-use-section color-{{ section.settings.color_scheme }}" style="{% render 'spacing-style', settings: section.settings %}">
+<div
+  class="how-to-use-section color-{{ section.settings.color_scheme }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
   <div class="how-to-use-container">
     <div class="how-to-use-header">
       {%- assign header_found = false -%}
@@ -24,7 +27,9 @@
       {%- endfor -%}
       {%- unless header_found -%}
         <h2 class="how-to-use-title">{{ section.settings.section_heading | default: 'How to Use' }}</h2>
-        <p class="how-to-use-subtitle">{{ section.settings.section_subheading | default: 'Follow these simple steps for perfect results' }}</p>
+        <p class="how-to-use-subtitle">
+          {{ section.settings.section_subheading | default: 'Follow these simple steps for perfect results' }}
+        </p>
       {%- endunless -%}
     </div>
 
@@ -590,7 +595,7 @@
     {
       "type": "text",
       "id": "section_subheading",
-      "label": "Section Subheading", 
+      "label": "Section Subheading",
       "default": "Follow these simple steps for perfect results"
     },
     {
@@ -613,7 +618,7 @@
         {
           "value": "scheme-3",
           "label": "Scheme 3"
-        },
+        }
       ],
       "default": "scheme-1"
     },
