@@ -424,7 +424,7 @@
         "header_margin_top": 8,
         "header_margin_bottom": 8,
         "logo_hover_effect": true,
-        "logo_hover_scale": 1.05,
+        "logo_hover_scale": 105,
         "menu_font_size": 16,
         "menu_font_weight": 600,
         "menu_item_padding": 8,
