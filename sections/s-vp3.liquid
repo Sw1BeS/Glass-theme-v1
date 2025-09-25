@@ -134,6 +134,22 @@
     align-items: center;
   }
 
+  @media (max-width: 767px) {
+    .s-vp3-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+
+    .s-vp3-content {
+      order: 2;
+    }
+
+    .s-vp3-image {
+      order: 1;
+    }
+  }
+
   .s-vp3-content {
     display: grid;
     gap: clamp(1.2rem, 3vw, 1.8rem);

@@ -9,7 +9,7 @@
 %}
 
 <div
-  class="section section--{{ section.settings.section_width }} vp1-section color-{{ section.settings.color_scheme }} spacing-style"
+  class="section section--{{ section.settings.section_width }} s-vp1-section color-{{ section.settings.color_scheme }} spacing-style"
   {% if glass_enabled %}
     data-glass-tone="{{ glass_tone }}"
     data-glass-elevation="{{ glass_elevation }}"
@@ -122,6 +122,22 @@
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: clamp(2.5rem, 4vw, 4rem);
     align-items: center;
+  }
+
+  @media (max-width: 767px) {
+    .vp1-container {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      padding: 0 1rem;
+    }
+
+    .vp1-content {
+      order: 2;
+    }
+
+    .vp1-image {
+      order: 1;
+    }
   }
 
   .vp1-text {
