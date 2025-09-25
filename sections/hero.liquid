@@ -183,109 +183,57 @@
             widths: '600, 800, 1200, 1600',
             class: 'hero-background-image hero-background-image--mobile'
     }}
-      {% endif %}
+  {% endif %}
       <div class="hero-background-overlay"></div>
     </div>
   {% endif %}
 
   <div class="hero-content">
     <div class="hero-container hero-container--align-{{ panel_alignment }} hero-container--mobile-align-{{ panel_alignment_mobile }}">
-      {%- for block in section.blocks -%}
-        {%- case block.type -%}
-          {%- when 'panel' -%}
-            <div
-              class="hero-content-panel glass{% if glass_enabled %} glass-surface{% endif %} hero-content-panel--tone-{{ panel_content_tone }}"
-              {{ block.shopify_attributes }}
-              data-animation="{{ animation_style }}"
-              {% if glass_enabled %}
-                data-glass-tone="{{ glass_tone }}"
-                data-glass-elevation="{{ glass_elevation }}"
-              {% endif %}
-              style="{{ panel_style }}"
-            >
-              {%- for text_block in section.blocks -%}
-                {%- if text_block.type == 'text' -%}
-                  <div class="hero-text-block" {{ text_block.shopify_attributes }}>
-                    {{ text_block.settings.text }}
-    </div>
-  {%- endif -%}
-              {%- endfor -%}
-
-              {%- for button_block in section.blocks -%}
-                {%- if button_block.type == 'button' and button_block.settings.label != blank -%}
-                  <div class="hero-button-block" {{ button_block.shopify_attributes }}>
-                    <a
-                      href="{{ button_block.settings.link | default: '#' }}"
-                      class="hero-button"
-                      {% if button_block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
-                    >
-                      {{ button_block.settings.label }}
-                    </a>
-    </div>
-      {%- endif -%}
-              {%- endfor -%}
-
-              {% if has_text_blocks == 0 %}
-                <div class="hero-text-block hero-text-block--fallback">
-                  <h1>The Perfect Brow Duo</h1>
-                  <p>Everything you need for flawless brows, every day.</p>
-    </div>
-              {% endif %}
-
-              {% if has_button_blocks == 0 %}
-                <div class="hero-button-block hero-button-block--fallback">
-                  <a href="{{ routes.all_products_collection_url }}" class="hero-button">Shop Now</a>
-            </div>
-  {% endif %}
-            </div>
-        {%- endcase -%}
-      {%- endfor -%}
-
-      {%- unless panel_block -%}
-        <div
-          class="hero-content-panel glass{% if glass_enabled %} glass-surface{% endif %} hero-content-panel--tone-{{ panel_content_tone }}"
-          data-animation="{{ animation_style }}"
-          {% if glass_enabled %}
-            data-glass-tone="{{ glass_tone }}"
-            data-glass-elevation="{{ glass_elevation }}"
+      <div
+        class="hero-panel glass{% if glass_enabled %} glass-surface{% endif %} hero-panel--tone-{{ panel_content_tone }}"
+        {% if panel_block %}{{ panel_block.shopify_attributes }}{% endif %}
+        data-animation="{{ animation_style }}"
+        {% if glass_enabled %}
+          data-glass-tone="{{ glass_tone }}"
+          data-glass-elevation="{{ glass_elevation }}"
     {% endif %}
-          style="{{ panel_style }}"
-        >
-          {%- for block in section.blocks -%}
-            {%- case block.type -%}
-              {%- when 'text' -%}
-                <div class="hero-text-block" {{ block.shopify_attributes }}>
-                  {{ block.settings.text }}
+        style="{{ panel_style }}"
+      >
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'text' -%}
+              <div class="hero-text-block" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
       </div>
-              {%- when 'button' -%}
-                {%- if block.settings.label != blank -%}
-                  <div class="hero-button-block" {{ block.shopify_attributes }}>
-                    <a
-                      href="{{ block.settings.link | default: '#' }}"
-                      class="hero-button"
-                      {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
-                    >
-                      {{ block.settings.label }}
-                    </a>
+            {%- when 'button' -%}
+              {%- if block.settings.label != blank -%}
+                <div class="hero-button-block" {{ block.shopify_attributes }}>
+                  <a
+                    href="{{ block.settings.link | default: '#' }}"
+                    class="hero-button"
+                    {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
+                  >
+                    {{ block.settings.label }}
+                  </a>
     </div>
-                {%- endif -%}
-            {%- endcase -%}
-          {%- endfor -%}
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
 
-          {% if has_text_blocks == 0 %}
-            <div class="hero-text-block hero-text-block--fallback">
-              <h1>The Perfect Brow Duo</h1>
-              <p>Everything you need for flawless brows, every day.</p>
+        {% if has_text_blocks == 0 %}
+          <div class="hero-text-block hero-text-block--fallback">
+            <h1>The Perfect Brow Duo</h1>
+            <p>Everything you need for flawless brows, every day.</p>
     </div>
-          {% endif %}
+        {% endif %}
 
-          {% if has_button_blocks == 0 %}
-            <div class="hero-button-block hero-button-block--fallback">
-              <a href="{{ routes.all_products_collection_url }}" class="hero-button">Shop Now</a>
+        {% if has_button_blocks == 0 %}
+          <div class="hero-button-block hero-button-block--fallback">
+            <a href="{{ routes.all_products_collection_url }}" class="hero-button">Shop Now</a>
   </div>
-          {% endif %}
+        {% endif %}
 </div>
-      {%- endunless -%}
     </div>
   </div>
 </section>
@@ -366,7 +314,7 @@
     justify-content: flex-end;
   }
 
-  .hero-content-panel {
+  .hero-panel {
     position: relative;
     width: min(100%, var(--hero-panel-max-width, 600px));
     min-height: max(var(--hero-panel-min-height, 0px), 0px);
@@ -390,7 +338,7 @@
     will-change: transform;
   }
 
-  .hero-content-panel.glass-surface {
+  .hero-panel.glass-surface {
     background: color-mix(
       in srgb,
       var(--glass-surface-color, rgba(255, 255, 255, 0.78)) calc(var(--hero-panel-glass-opacity-effective, 0.9) * 100%),
@@ -440,19 +388,19 @@
     margin: 0;
   }
 
-  .hero-content-panel--tone-light {
+  .hero-panel--tone-light {
     color: var(--text-on-primary, #ffffff);
   }
 
-  .hero-content-panel--tone-light .hero-text-block p {
+  .hero-panel--tone-light .hero-text-block p {
     color: color-mix(in srgb, var(--text-on-primary, #ffffff) 82%, transparent);
   }
 
-  .hero-content-panel--tone-dark {
+  .hero-panel--tone-dark {
     color: var(--color-foreground-strong, var(--color-foreground, #1f1f1f));
   }
 
-  .hero-content-panel--tone-dark .hero-text-block p {
+  .hero-panel--tone-dark .hero-text-block p {
     color: color-mix(in srgb, currentColor 70%, transparent);
   }
 
@@ -490,18 +438,18 @@
     outline-offset: 3px;
   }
 
-  .hero-content-panel[data-animation='none'] .hero-text-block,
-  .hero-content-panel[data-animation='none'] .hero-button-block {
+  .hero-panel[data-animation='none'] .hero-text-block,
+  .hero-panel[data-animation='none'] .hero-button-block {
     animation: none;
   }
 
-  .hero-content-panel[data-animation='slide'] .hero-text-block,
-  .hero-content-panel[data-animation='slide'] .hero-button-block {
+  .hero-panel[data-animation='slide'] .hero-text-block,
+  .hero-panel[data-animation='slide'] .hero-button-block {
     animation-name: heroSlideIn;
   }
 
-  .hero-content-panel[data-animation='scale'] .hero-text-block,
-  .hero-content-panel[data-animation='scale'] .hero-button-block {
+  .hero-panel[data-animation='scale'] .hero-text-block,
+  .hero-panel[data-animation='scale'] .hero-button-block {
     animation-name: heroScaleIn;
   }
 
@@ -552,8 +500,8 @@
       justify-content: flex-end;
     }
 
-    .hero-content-panel,
-    .hero-content-panel.glass-surface {
+    .hero-panel,
+    .hero-panel.glass-surface {
       width: min(100%, var(--hero-panel-max-width-mobile, var(--hero-panel-max-width, 600px)));
       min-height: max(
         var(--hero-panel-min-height-mobile, var(--hero-panel-min-height, 0px)),
@@ -604,7 +552,7 @@
       padding: clamp(1.5rem, 6vw, 2rem);
     }
 
-    .hero-content-panel {
+    .hero-panel {
       width: min(100%, 520px);
     }
   }
@@ -620,13 +568,13 @@
   }
 
   @media (min-width: 1440px) {
-    .hero-content-panel {
+    .hero-panel {
       width: min(100%, 680px);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .hero-content-panel,
+    .hero-panel,
     .hero-text-block,
     .hero-button-block,
     .hero-button {
