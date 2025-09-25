@@ -40,38 +40,15 @@
   padding: 4rem 0;
 }
 
-/* Двойные полоски для заголовков */
+/* Заголовки без полосок */
 .section-title-with-lines {
   position: relative;
   text-align: center;
   margin: 3rem 0;
 }
 
-.section-title-with-lines::before,
-.section-title-with-lines::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  width: 30%;
-  height: 2px;
-  background: var(--color-primary, #bf8a7a);
-  transform: translateY(-50%);
-}
-
-.section-title-with-lines::before {
-  left: 0;
-}
-
-.section-title-with-lines::after {
-  right: 0;
-}
-
 .section-title-with-lines h2,
 .section-title-with-lines h3 {
-  background: var(--color-background, #ece7d7);
-  padding: 0 2rem;
-  position: relative;
-  z-index: 1;
   margin: 0;
 }
 
@@ -119,8 +96,4 @@
     padding: 2rem 0;
   }
 
-  .section-title-with-lines::before,
-  .section-title-with-lines::after {
-    width: 20%;
-  }
 }

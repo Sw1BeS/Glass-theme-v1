@@ -420,7 +420,18 @@
         "logo_height": "40px",
         "logo_height_mobile": "35px",
         "header_opacity": 85,
-        "show_theme_toggle": true
+        "show_theme_toggle": true,
+        "header_margin_top": 8,
+        "header_margin_bottom": 8,
+        "logo_hover_effect": true,
+        "logo_hover_scale": 1.05,
+        "menu_font_size": 16,
+        "menu_font_weight": 600,
+        "menu_item_padding": 8,
+        "menu_item_gap": 12,
+        "action_button_size": 38,
+        "action_button_gap": 4,
+        "action_button_hover_effect": true
       }
     }
   },

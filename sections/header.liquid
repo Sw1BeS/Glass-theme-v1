@@ -136,7 +136,7 @@
     align-items: center;
     gap: clamp(1rem, 3vw, 1.75rem);
     width: min(100%, var(--header-width, 1200px));
-    margin: clamp(0.5rem, 2vw, 1rem) auto;
+    margin: {{ section.settings.header_margin_top | default: 8 }}px auto {{ section.settings.header_margin_bottom | default: 8 }}px;
     padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
     border-radius: clamp(2.25rem, 5vw, 3.5rem);
     position: relative;
@@ -177,7 +177,9 @@
   }
 
   .logo-link:hover {
-    transform: scale(1.05);
+    {% if section.settings.logo_hover_effect %}
+      transform: scale({{ section.settings.logo_hover_scale | default: 1.05 }});
+    {% endif %}
   }
 
   .logo-image {
@@ -202,14 +204,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(0.75rem, 2vw, 1.5rem);
+    gap: {{ section.settings.menu_item_gap | default: 12 }}px;
   }
 
   .menu-link {
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     text-decoration: none;
-    font-weight: 600;
-    padding: 0.5rem 0.8rem;
+    font-weight: {{ section.settings.menu_font_weight | default: 600 }};
+    font-size: {{ section.settings.menu_font_size | default: 16 }}px;
+    padding: {{ section.settings.menu_item_padding | default: 8 }}px {{ section.settings.menu_item_padding | default: 8 | times: 1.5 }}px;
     border-radius: 999px;
     transition: all 0.3s ease;
   }
@@ -227,7 +230,7 @@
   .action-group {
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: {{ section.settings.action_button_gap | default: 4 }}px;
     margin-left: auto;
   }
 
@@ -235,8 +238,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 38px;
-    height: 38px;
+    width: {{ section.settings.action_button_size | default: 38 }}px;
+    height: {{ section.settings.action_button_size | default: 38 }}px;
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     text-decoration: none;
     border-radius: 999px;
@@ -246,11 +249,13 @@
   }
 
   .action-btn:hover {
-    background: var(--glass-surface-color, rgba(255, 255, 255, 0.15));
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px var(--glass-shadow-color, rgba(0, 0, 0, 0.15));
-    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.3));
+    {% if section.settings.action_button_hover_effect %}
+      background: var(--glass-surface-color, rgba(255, 255, 255, 0.15));
+      color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--glass-shadow-color, rgba(0, 0, 0, 0.15));
+      border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.3));
+    {% endif %}
   }
 
   .cart-count {
@@ -455,7 +460,7 @@
   "settings": [
     {
       "type": "header",
-      "content": "Header Size"
+      "content": "Header Size & Position"
     },
     {
       "type": "range",
@@ -476,6 +481,26 @@
       "step": 50,
       "unit": "px",
       "default": 1200
+    },
+    {
+      "type": "range",
+      "id": "header_margin_top",
+      "label": "Top Margin",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "header_margin_bottom",
+      "label": "Bottom Margin",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 8
     },
     {
       "type": "header",
@@ -515,6 +540,23 @@
       "info": "Any CSS value: 35px, 60px, 50%, auto, 2.5rem, etc."
     },
     {
+      "type": "checkbox",
+      "id": "logo_hover_effect",
+      "label": "Enable Logo Hover Effect",
+      "default": true,
+      "info": "Add scale animation on hover"
+    },
+    {
+      "type": "range",
+      "id": "logo_hover_scale",
+      "label": "Logo Hover Scale",
+      "min": 1.0,
+      "max": 1.2,
+      "step": 0.1,
+      "unit": "",
+      "default": 1.05
+    },
+    {
       "type": "header",
       "content": "Menu Settings"
     },
@@ -523,6 +565,46 @@
       "id": "menu",
       "label": "Menu",
       "default": "main-menu"
+    },
+    {
+      "type": "range",
+      "id": "menu_font_size",
+      "label": "Menu Font Size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "menu_font_weight",
+      "label": "Menu Font Weight",
+      "min": 400,
+      "max": 700,
+      "step": 100,
+      "unit": "",
+      "default": 600
+    },
+    {
+      "type": "range",
+      "id": "menu_item_padding",
+      "label": "Menu Item Padding",
+      "min": 4,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "menu_item_gap",
+      "label": "Space Between Menu Items",
+      "min": 8,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 12
     },
     {
       "type": "header",
@@ -544,6 +626,32 @@
       "type": "checkbox",
       "id": "show_account",
       "label": "Show Account",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "action_button_size",
+      "label": "Action Button Size",
+      "min": 28,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 38
+    },
+    {
+      "type": "range",
+      "id": "action_button_gap",
+      "label": "Space Between Action Buttons",
+      "min": 4,
+      "max": 16,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "checkbox",
+      "id": "action_button_hover_effect",
+      "label": "Enable Action Button Hover Effects",
       "default": true
     },
     {
