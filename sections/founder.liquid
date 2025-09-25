@@ -7,256 +7,134 @@
   <div class="founder-container">
     <!-- Our Story Header -->
     <div class="story-header">
-      {%- assign header_found = false -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'section_header' -%}
-          {%- assign header_found = true -%}
-          <h2 class="story-title">{{ block.settings.heading | default: 'Our Story' }}</h2>
+          <h2 class="story-title" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
           {%- if block.settings.subheading != blank -%}
             <p class="story-subtitle">{{ block.settings.subheading }}</p>
           {%- endif -%}
         {%- endif -%}
       {%- endfor -%}
-      
-      {%- unless header_found -%}
-        <h2 class="story-title">{{ section.settings.section_heading | default: 'Meet the Founder' }}</h2>
-        <p class="story-subtitle">{{ section.settings.section_subheading | default: 'The story behind IS Beauty Lux' }}</p>
-      {%- endunless -%}
     </div>
 
     <!-- Founder Introduction -->
     <div class="founder-intro">
       <div class="founder-image">
-        {% if section.settings.founder_image != blank %}
-          <!-- Desktop Image -->
-          <div class="founder-image-desktop">
-            {% render 'image', image: section.settings.founder_image, alt: section.settings.founder_name %}
-          </div>
-
-          <!-- Mobile Image -->
-          <div class="founder-image-mobile">
-            {% if section.settings.founder_image_mobile != blank %}
-              {% render 'image', image: section.settings.founder_image_mobile, alt: section.settings.founder_name %}
-            {% else %}
-              <!-- Fallback to desktop image for mobile -->
-              {% render 'image', image: section.settings.founder_image, alt: section.settings.founder_name %}
-            {% endif %}
-          </div>
-        {% else %}
-          <div class="founder-placeholder">
-            <div class="placeholder-content">
-              <div class="placeholder-icon">👩‍💼</div>
-              <div class="placeholder-text">
-                <strong>Founder Photo</strong><br>
-                Recommended: 800x1000px<br>
-                Professional headshot with clean background
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'founder_image' -%}
+            {% if block.settings.founder_image != blank %}
+              <!-- Desktop Image -->
+              <div class="founder-image-desktop" {{ block.shopify_attributes }}>
+                {% render 'image', image: block.settings.founder_image %}
               </div>
-            </div>
-          </div>
-        {% endif %}
+
+              <!-- Mobile Image -->
+              <div class="founder-image-mobile">
+                {% if block.settings.founder_image_mobile != blank %}
+                  {% render 'image', image: block.settings.founder_image_mobile %}
+                {% else %}
+                  <!-- Fallback to desktop image for mobile -->
+                  {% render 'image', image: block.settings.founder_image %}
+                {% endif %}
+              </div>
+            {% else %}
+              <div class="founder-placeholder">
+                <div class="placeholder-content">
+                  <div class="placeholder-icon">👩‍💼</div>
+                  <div class="placeholder-text">
+                    <strong>Founder Photo</strong><br>
+                    Recommended: 800x1000px<br>
+                    Professional headshot with clean background
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          {%- endif -%}
+        {%- endfor -%}
       </div>
 
       <div class="founder-info">
         {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'founder_info' -%}
-              <h2 class="founder-title" {{ block.shopify_attributes }}>
-                {{ block.settings.founder_name | default: section.settings.founder_name }}
-              </h2>
-              <p class="founder-subtitle" {{ block.shopify_attributes }}>
-                {{ block.settings.founder_title | default: section.settings.founder_title }}
-              </p>
-          {%- endcase -%}
-        {%- endfor -%}
-
-        {%- comment -%} Fallback to settings if no founder_info block {%- endcomment -%}
-        {%- assign founder_info_found = false -%}
-        {%- for block in section.blocks -%}
           {%- if block.type == 'founder_info' -%}
-            {%- assign founder_info_found = true -%}
-            {%- break -%}
+            <h2 class="founder-title" {{ block.shopify_attributes }}>
+              {{ block.settings.founder_name }}
+            </h2>
+            <p class="founder-subtitle" {{ block.shopify_attributes }}>
+              {{ block.settings.founder_title }}
+            </p>
           {%- endif -%}
         {%- endfor -%}
 
-        {%- unless founder_info_found -%}
-          {% if section.settings.founder_name != blank %}
-            <h2 class="founder-title">{{ section.settings.founder_name }}</h2>
-          {% endif %}
-          {% if section.settings.founder_title != blank %}
-            <p class="founder-subtitle">{{ section.settings.founder_title }}</p>
-          {% endif %}
-        {%- endunless -%}
-
-        {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'founder_story' -%}
-              <div class="founder-story" {{ block.shopify_attributes }}>
-                {{ block.settings.story | default: section.settings.founder_story }}
-              </div>
-          {%- endcase -%}
-        {%- endfor -%}
-
-        {%- comment -%} Fallback to settings if no founder_story block {%- endcomment -%}
-        {%- assign founder_story_found = false -%}
         {%- for block in section.blocks -%}
           {%- if block.type == 'founder_story' -%}
-            {%- assign founder_story_found = true -%}
-            {%- break -%}
+            <div class="founder-story" {{ block.shopify_attributes }}>
+              {{ block.settings.story }}
+            </div>
           {%- endif -%}
         {%- endfor -%}
-
-        {%- unless founder_story_found -%}
-          {% if section.settings.founder_story != blank %}
-            <div class="founder-story">
-              {{ section.settings.founder_story }}
-            </div>
-          {% endif %}
-        {%- endunless -%}
       </div>
     </div>
 
     <!-- Founder Quotes Carousel -->
     {%- for block in section.blocks -%}
-      {%- case block.type -%}
-        {%- when 'founder_quote' -%}
-          <div class="founder-quotes-carousel" {{ block.shopify_attributes }}>
-            <div class="quotes-container">
-              <div class="quote-slide active">
-                <blockquote class="founder-quote">
-                  <p>"{{ block.settings.quote | default: section.settings.founder_quote }}"</p>
-                </blockquote>
-              </div>
+      {%- if block.type == 'founder_quote' -%}
+        <div class="founder-quotes-carousel" {{ block.shopify_attributes }}>
+          <div class="quotes-container">
+            <div class="quote-slide active">
+              <blockquote class="founder-quote">
+                <p>"{{ block.settings.quote }}"</p>
+              </blockquote>
             </div>
           </div>
-      {%- endcase -%}
-    {%- endfor -%}
-
-    {%- comment -%} Fallback to settings if no founder_quote block {%- endcomment -%}
-    {%- assign founder_quote_found = false -%}
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'founder_quote' -%}
-        {%- assign founder_quote_found = true -%}
-        {%- break -%}
+        </div>
       {%- endif -%}
     {%- endfor -%}
-
-    {%- unless founder_quote_found -%}
-      <div class="founder-quotes-carousel">
-        <div class="quotes-container">
-          <div class="quote-slide active">
-            <blockquote class="founder-quote">
-              <p>"{{ section.settings.quote_1 }}"</p>
-            </blockquote>
-          </div>
-          <div class="quote-slide">
-            <blockquote class="founder-quote">
-              <p>"{{ section.settings.quote_2 }}"</p>
-            </blockquote>
-          </div>
-          <div class="quote-slide">
-            <blockquote class="founder-quote">
-              <p>"{{ section.settings.quote_3 }}"</p>
-            </blockquote>
-          </div>
-          <div class="quote-slide">
-            <blockquote class="founder-quote">
-              <p>"{{ section.settings.quote_4 }}"</p>
-            </blockquote>
-          </div>
-          <div class="quote-slide">
-            <blockquote class="founder-quote">
-              <p>"{{ section.settings.quote_5 }}"</p>
-            </blockquote>
-          </div>
-        </div>
-        <div class="quote-indicators">
-          <span class="indicator active" data-slide="0"></span>
-          <span class="indicator" data-slide="1"></span>
-          <span class="indicator" data-slide="2"></span>
-          <span class="indicator" data-slide="3"></span>
-          <span class="indicator" data-slide="4"></span>
-        </div>
-      </div>
-    {%- endunless -%}
 
     <!-- Animated Stats -->
     {%- for block in section.blocks -%}
-      {%- case block.type -%}
-        {%- when 'founder_stats' -%}
-          <div class="stats-section" {{ block.shopify_attributes }}>
-            <div class="stats-grid">
-              <div class="stat-item">
-                <div
-                  class="stat-number"
-                  data-target="{{ block.settings.years_experience | default: section.settings.years_experience | default: 23 }}"
-                >
-                  0
-                </div>
-                <div class="stat-label">Years of Experience</div>
+      {%- if block.type == 'founder_stats' -%}
+        <div class="stats-section" {{ block.shopify_attributes }}>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <div
+                class="stat-number"
+                data-target="{{ block.settings.years_experience }}"
+              >
+                0
               </div>
-              <div class="stat-item">
-                <div
-                  class="stat-number"
-                  data-target="{{ block.settings.happy_customers | default: section.settings.happy_customers | default: 647 }}"
-                >
-                  0
-                </div>
-                <div class="stat-label">Happy Customers</div>
+              <div class="stat-label">Years of Experience</div>
+            </div>
+            <div class="stat-item">
+              <div
+                class="stat-number"
+                data-target="{{ block.settings.happy_customers }}"
+              >
+                0
               </div>
-              <div class="stat-item">
-                <div
-                  class="stat-number"
-                  data-target="{{ block.settings.countries_served | default: section.settings.countries_served | default: 23 }}"
-                >
-                  0
-                </div>
-                <div class="stat-label">Countries Served</div>
+              <div class="stat-label">Happy Customers</div>
+            </div>
+            <div class="stat-item">
+              <div
+                class="stat-number"
+                data-target="{{ block.settings.countries_served }}"
+              >
+                0
               </div>
-              <div class="stat-item">
-                <div
-                  class="stat-number"
-                  data-target="{{ block.settings.ingredients_tested | default: section.settings.ingredients_tested | default: 187 }}"
-                >
-                  0
-                </div>
-                <div class="stat-label">Ingredients Tested</div>
+              <div class="stat-label">Countries Served</div>
+            </div>
+            <div class="stat-item">
+              <div
+                class="stat-number"
+                data-target="{{ block.settings.ingredients_tested }}"
+              >
+                0
               </div>
+              <div class="stat-label">Ingredients Tested</div>
             </div>
           </div>
-      {%- endcase -%}
-    {%- endfor -%}
-
-    {%- comment -%} Fallback to settings if no founder_stats block {%- endcomment -%}
-    {%- assign founder_stats_found = false -%}
-    {%- for block in section.blocks -%}
-      {%- if block.type == 'founder_stats' -%}
-        {%- assign founder_stats_found = true -%}
-        {%- break -%}
+        </div>
       {%- endif -%}
     {%- endfor -%}
-
-    {%- unless founder_stats_found -%}
-      <div class="stats-section">
-        <div class="stats-grid">
-          <div class="stat-item">
-            <div class="stat-number" data-target="{{ section.settings.years_experience | default: 23 }}">0</div>
-            <div class="stat-label">Years of Experience</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-target="{{ section.settings.happy_customers | default: 647 }}">0</div>
-            <div class="stat-label">Happy Customers</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-target="{{ section.settings.countries_served | default: 23 }}">0</div>
-            <div class="stat-label">Countries Served</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-number" data-target="{{ section.settings.ingredients_tested | default: 187 }}">0</div>
-            <div class="stat-label">Ingredients Tested</div>
-          </div>
-        </div>
-      </div>
-    {%- endunless -%}
 
     <!-- Company Mission -->
     <div class="mission-section">
@@ -1199,94 +1077,8 @@
       "content": "Section Content"
     },
     {
-      "type": "text",
-      "id": "section_heading",
-      "label": "Section Heading",
-      "default": "Meet the Founder"
-    },
-    {
-      "type": "text",
-      "id": "section_subheading", 
-      "label": "Section Subheading",
-      "default": "The story behind IS Beauty Lux"
-    },
-    {
       "type": "header",
-      "content": "Founder Information"
-    },
-    {
-      "type": "image_picker",
-      "id": "founder_image",
-      "label": "Founder Photo (Desktop)",
-      "info": "Recommended: 800x1000px, professional headshot"
-    },
-    {
-      "type": "image_picker",
-      "id": "founder_image_mobile",
-      "label": "Founder Photo (Mobile)",
-      "info": "Optional: Different image for mobile devices. Recommended: 600x900px (vertical)"
-    },
-    {
-      "type": "text",
-      "id": "founder_name",
-      "label": "Founder Name",
-      "default": "Irina",
-      "info": "Founder's full name"
-    },
-    {
-      "type": "text",
-      "id": "founder_title",
-      "label": "Founder Title",
-      "default": "Founder & CEO, IS Beauty Lux",
-      "info": "Founder's professional title"
-    },
-    {
-      "type": "richtext",
-      "id": "founder_story",
-      "label": "Founder Story",
-      "default": "<p>After years of struggling to find the perfect eyebrow products, Irina decided to create her own solution. With a background in cosmetic chemistry and a passion for clean beauty, she developed IS Beauty Lux to provide women with professional-quality brow and lash products that are safe, effective, and easy to use.</p><p>Today, IS Beauty Lux helps thousands of women achieve their best brows and lashes with confidence.</p>",
-      "info": "Founder's story and background"
-    },
-    {
-      "type": "number",
-      "id": "years_experience",
-      "label": "Years of Experience",
-      "default": 23,
-      "info": "Years of experience in the industry"
-    },
-    {
-      "type": "number",
-      "id": "happy_customers",
-      "label": "Happy Customers",
-      "default": 647,
-      "info": "Number of satisfied customers"
-    },
-    {
-      "type": "number",
-      "id": "countries_served",
-      "label": "Countries Served",
-      "default": 23,
-      "info": "Number of countries served"
-    },
-    {
-      "type": "number",
-      "id": "ingredients_tested",
-      "label": "Ingredients Tested",
-      "default": 187,
-      "info": "Number of ingredients tested"
-    },
-    {
-      "type": "checkbox",
-      "id": "achievements",
-      "label": "Show Achievements Section",
-      "default": true,
-      "info": "Display achievements section"
-    },
-    {
-      "type": "text",
-      "id": "founder_quote",
-      "label": "Founder Quote",
-      "default": "Every woman deserves to feel confident and beautiful. That's why I created IS Beauty Lux - to make professional-quality beauty accessible to everyone."
+      "content": "Section Settings"
     },
     {
       "type": "header",
@@ -1469,6 +1261,30 @@
       ]
     },
     {
+      "type": "founder_image",
+      "name": "Founder Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "founder_image",
+          "label": "Founder Image (Desktop)",
+          "info": "Recommended: 800x1000px"
+        },
+        {
+          "type": "image_picker",
+          "id": "founder_image_mobile",
+          "label": "Founder Image (Mobile)",
+          "info": "Optional: Different image for mobile devices"
+        },
+        {
+          "type": "text",
+          "id": "alt_text",
+          "label": "Alt Text for Image",
+          "default": "Iryna"
+        }
+      ]
+    },
+    {
       "type": "founder_quote",
       "name": "Founder Quote",
       "settings": [
@@ -1476,7 +1292,7 @@
           "type": "text",
           "id": "quote",
           "label": "Quote",
-          "default": "Every woman deserves to feel confident and beautiful."
+          "default": "Every woman deserves to feel confident and beautiful. That's why I created IS Beauty Lux - to make professional-quality beauty accessible to everyone."
         }
       ]
     },
@@ -1540,14 +1356,6 @@
     {
       "name": "Meet the Founder",
       "settings": {
-        "founder_name": "Irina",
-        "founder_title": "Founder & CEO, IS Beauty Lux",
-        "founder_story": "<p>After years of struggling to find the perfect eyebrow products, Irina decided to create her own solution. With a background in cosmetic chemistry and a passion for clean beauty, she developed IS Beauty Lux to provide women with professional-quality brow and lash products that are safe, effective, and easy to use.</p><p>Today, IS Beauty Lux helps thousands of women achieve their best brows and lashes with confidence.</p>",
-        "years_experience": 23,
-        "happy_customers": 647,
-        "countries_served": 23,
-        "ingredients_tested": 187,
-        "achievements": true,
         "color_scheme": "scheme-1",
         "section_width": "full",
         "padding-block-start": 0,
@@ -1566,6 +1374,14 @@
           "settings": {
             "founder_name": "Iryna",
             "founder_title": "Founder & CEO, IS Beauty Lux"
+          }
+        },
+        {
+          "type": "founder_image",
+          "settings": {
+            "founder_image": "shopify://shop_images/IMAGE_2025-09-12_16_06_56.jpg",
+            "founder_image_mobile": "shopify://shop_images/0E8657EA-A706-4A76-A889-3D858E3752F2.jpg",
+            "alt_text": "Iryna"
           }
         },
         {
