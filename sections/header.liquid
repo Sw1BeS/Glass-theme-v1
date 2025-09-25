@@ -41,7 +41,7 @@
 {% assign header_style_trimmed = header_style | strip %}
 
 <header
-  class="header glass"
+  class="header glass color-{{ section.settings.color_scheme | default: 'scheme-1' }}"
   data-sticky="{{ sticky_behavior }}"
   {% if glass_enabled %}
     data-glass-tone="{{ glass_tone }}"
@@ -51,8 +51,6 @@
     style="{{ header_style_trimmed }}"
   {% endunless %}
 >
-  <!-- Debug: Header is loading -->
-  <div style="position: fixed; top: 0; left: 0; background: red; color: white; padding: 5px; z-index: 9999; font-size: 12px;">HEADER LOADED</div>
   <!-- Logo - прямо в хедере -->
   <a href="{{ routes.root_url }}" class="logo-link">
     {% if section.settings.logo != blank %}
@@ -97,10 +95,12 @@
       </a>
     {% endif %}
 
-    <!-- Theme Toggle Button -->
-    <button class="theme-fab glass" data-theme-toggle type="button" aria-label="Theme: auto" aria-pressed="mixed">
-      🌙
-    </button>
+        <!-- Theme Toggle Button -->
+        {% if section.settings.show_theme_toggle %}
+          <button class="theme-fab glass" data-theme-toggle type="button" aria-label="Theme: auto" aria-pressed="mixed">
+            🌙
+          </button>
+        {% endif %}
 
     <!-- Mobile Menu Toggle -->
     <button class="mobile-toggle mobile-only" aria-label="Toggle menu">☰</button>
@@ -141,6 +141,16 @@
     border-radius: clamp(2.25rem, 5vw, 3.5rem);
     position: relative;
     z-index: 10;
+
+    /* Glass Effect */
+    background: var(--glass-surface-color, rgba(255, 255, 255, {{ section.settings.header_opacity | default: 85 | divided_by: 100.0 }}));
+    backdrop-filter: blur(var(--glass-local-blur, 20px));
+    -webkit-backdrop-filter: blur(var(--glass-local-blur, 20px));
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.2));
+    box-shadow: 0 8px 32px var(--glass-shadow-color, rgba(0, 0, 0, 0.1));
+
+    /* Smooth transitions */
+    transition: all 0.3s ease;
   }
 
   .header > * {
@@ -205,9 +215,11 @@
   }
 
   .menu-link:hover {
-    background: color-mix(in srgb, var(--glass-global-tint, rgba(255, 255, 255, 0.82)) 65%, transparent);
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.15));
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(20, 26, 34, 0.12);
+    box-shadow: 0 8px 24px var(--glass-shadow-color, rgba(0, 0, 0, 0.15));
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.3));
   }
 
   /* Actions - прямо в хедере */
@@ -234,9 +246,11 @@
   }
 
   .action-btn:hover {
-    background: color-mix(in srgb, var(--glass-global-tint, rgba(255, 255, 255, 0.82)) 60%, transparent);
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.15));
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(20, 26, 34, 0.12);
+    box-shadow: 0 8px 24px var(--glass-shadow-color, rgba(0, 0, 0, 0.15));
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.3));
   }
 
   .cart-count {
@@ -277,10 +291,10 @@
     top: 100%;
     left: 0;
     right: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.08) 100%);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.15));
+    backdrop-filter: blur(var(--glass-local-blur, 20px));
+    -webkit-backdrop-filter: blur(var(--glass-local-blur, 20px));
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.2));
     border-top: none;
     border-radius: 0 0 12px 12px;
     padding: 1rem;
@@ -288,6 +302,7 @@
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
+    box-shadow: 0 8px 32px var(--glass-shadow-color, rgba(0, 0, 0, 0.1));
   }
 
   .mobile-menu.active {
@@ -304,14 +319,16 @@
     padding: 0.8rem 1rem;
     border-radius: 8px;
     transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.05));
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.1));
     margin-bottom: 0.5rem;
   }
 
   .mobile-menu-link:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.15));
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     transform: translateX(5px);
+    box-shadow: 0 4px 16px var(--glass-shadow-color, rgba(0, 0, 0, 0.1));
   }
 
   /* Responsive */
@@ -555,6 +572,46 @@
     },
     {
       "type": "header",
+      "content": "Color Scheme"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        },
+        {
+          "value": "scheme-4",
+          "label": "Scheme 4"
+        },
+        {
+          "value": "scheme-5",
+          "label": "Scheme 5"
+        },
+        {
+          "value": "scheme-6",
+          "label": "Scheme 6"
+        },
+        {
+          "value": "scheme-7",
+          "label": "Scheme 7"
+        }
+      ],
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
       "content": "Glass styling"
     },
     {
@@ -627,6 +684,28 @@
         }
       ],
       "default": "global"
+    },
+    {
+      "type": "header",
+      "content": "Advanced Settings"
+    },
+    {
+      "type": "range",
+      "id": "header_opacity",
+      "label": "Header Background Opacity",
+      "min": 10,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 85,
+      "info": "Controls the transparency of the header background"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_theme_toggle",
+      "label": "Show Theme Toggle Button",
+      "default": true,
+      "info": "Display the theme switcher button in the header"
     }
   ]
 }
