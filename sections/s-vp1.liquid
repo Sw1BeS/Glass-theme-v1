@@ -126,14 +126,26 @@
       grid-template-columns: 1fr;
       gap: 2rem;
       padding: 0 1rem;
+      margin: 0 auto;
+      max-width: 100%;
     }
 
     .s-vp1 .content {
       order: 2;
+      padding: 1.5rem;
+      margin: 0;
     }
 
     .s-vp1 .image {
       order: 1;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .s-vp1 .image-wrapper {
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
     }
   }
 
@@ -146,9 +158,13 @@
   }
 
   .s-vp1 .content:not(.glass-surface) {
-    background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
-    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
-    box-shadow: 0 16px 40px var(--glass-shadow-color, rgba(20, 26, 34, 0.12));
+    background: color-mix(
+      in srgb,
+      var(--glass-surface-color, rgba(255, 255, 255, 0.1)) 85%,
+      transparent
+    );
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.2));
+    box-shadow: 0 16px 40px var(--glass-shadow-color, rgba(0, 0, 0, 0.1));
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
   }

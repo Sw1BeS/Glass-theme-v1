@@ -10,6 +10,7 @@ body {
   margin: 0;
   min-height: 100svh;
   font-variation-settings: 'slnt' 0;
+  overflow-x: hidden;
 }
 
 :root {
@@ -4597,5 +4598,73 @@ text-component {
   .h6.h6 textarea,
   .h6.h6 select {
     font-size: max(1rem, 100%);
+  }
+}
+
+/* Global Mobile Responsiveness Fixes */
+@media screen and (max-width: 768px) {
+  /* Fix container alignment */
+  .container,
+  .section-container,
+  .content-container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Fix section alignment */
+  .section {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Fix grid layouts */
+  .grid,
+  .grid-2,
+  .grid-3,
+  .grid-4 {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  /* Fix flex layouts */
+  .flex,
+  .flex-row {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  /* Fix text alignment */
+  .text-center-mobile {
+    text-align: center !important;
+  }
+
+  /* Fix image containers */
+  .image-container,
+  .media-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  /* Fix button containers */
+  .button-container,
+  .button-group {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 0.75rem !important;
+  }
+
+  /* Fix spacing */
+  .mobile-spacing {
+    padding: 1rem !important;
+    margin: 0.5rem !important;
+  }
+
+  /* Fix overflow */
+  .mobile-overflow {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
   }
 }
