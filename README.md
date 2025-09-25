@@ -9,16 +9,19 @@
 ## ✨ Features
 
 ### 🎨 **Modern Glass Effect Design**
+
 - Premium glassmorphism aesthetic
 - Smooth animations and transitions
 - Professional beauty brand styling
 
 ### 📱 **Fully Responsive**
+
 - Optimized for all devices
 - Separate mobile/desktop images
 - Touch-friendly interactions
 
 ### ⚙️ **100% Theme Editor Ready**
+
 - All sections fully editable
 - 3 professional color schemes
 - No hardcoded content
@@ -27,6 +30,7 @@
 ## 🏗️ Architecture
 
 ### 📄 **Homepage Sections (9 Total)**
+
 1. **Hero** - Main banner with CTA buttons
 2. **VP1-VP3** - Value propositions with images
 3. **How to Use** - Step-by-step tutorial (up to 6 steps)
@@ -36,11 +40,13 @@
 7. **FAQ** - Expandable questions (up to 15)
 
 ### 🎨 **Color Schemes**
+
 - **Scheme 1:** Porcelain (light warm tones) - Default
 - **Scheme 2:** Peach (peachy shades)
 - **Scheme 3:** Charcoal (dark theme)
 
 ### 🧩 **Block System**
+
 - **70 optimized blocks** (cleaned up from 87)
 - Modular section structure
 - Reusable components
@@ -49,6 +55,7 @@
 ## 🚀 Quick Start
 
 ### Prerequisites
+
 - Shopify Partner Account
 - Shopify CLI v3+
 - Node.js 16+
@@ -56,12 +63,14 @@
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/Sw1BeS/Glass-theme-v1.git
    cd Glass-theme-v1
    ```
 
 2. **Connect to your store**
+
    ```bash
    shopify theme dev
    ```
@@ -74,6 +83,7 @@
 ## 📋 Theme Editor Guide
 
 ### 🎯 **Every Section Includes:**
+
 - ✅ Editable section header
 - ✅ Color scheme selection (1-3)
 - ✅ Section width options
@@ -81,6 +91,7 @@
 - ✅ Content blocks management
 
 ### 🎨 **Customization Options:**
+
 - **Colors:** 3 professional schemes
 - **Layout:** Full-width or page-width
 - **Spacing:** Adjustable padding
@@ -90,12 +101,14 @@
 ## 📊 Technical Specifications
 
 ### 🔧 **Shopify Compliance**
+
 - ✅ OS 2.0 Compatible
 - ✅ Theme Check Passed
 - ✅ Performance Optimized
 - ✅ Accessibility Ready
 
 ### 📁 **File Structure**
+
 ```
 Glass-theme-v1/
 ├── assets/          # CSS, JS, images
@@ -110,6 +123,7 @@ Glass-theme-v1/
 ```
 
 ### 🎯 **Performance**
+
 - Optimized images (WebP support)
 - Minified CSS/JS
 - Lazy loading
@@ -118,12 +132,14 @@ Glass-theme-v1/
 ## 🛠️ Recent Updates
 
 ### 🚨 **Critical Fixes Applied:**
+
 1. **Full Editability** - All sections now 100% editable
 2. **Color Consistency** - Fixed scheme synchronization
 3. **Block Structure** - Proper section headers
 4. **Schema Validation** - Removed invalid schemes
 
 ### 📈 **Improvements:**
+
 - 4/9 sections critically enhanced
 - 16 new customization options
 - 24 validation errors fixed
@@ -146,6 +162,7 @@ Glass-theme-v1/
 ## 🤝 Support
 
 For customization requests or issues:
+
 - 📧 Create an issue in this repository
 - 💬 Check existing documentation
 - 🔍 Review the critical fixes report
@@ -158,4 +175,4 @@ This theme is provided as-is for educational and commercial use.
 
 **🎉 Ready for production!** Upload to your Shopify store and start customizing through the Theme Editor.
 
-*Made with ❤️ for IS Beauty Lux*
+_Made with ❤️ for IS Beauty Lux_
