@@ -23,21 +23,21 @@
   <!-- Background Image -->
   <div class="hero-background">
     {%- if section.settings.image_1 != blank -%}
-    <!-- Desktop Image -->
+      <!-- Desktop Image -->
       <div class="hero-image-desktop">
-    {{
-      section.settings.image_1
+        {{
+          section.settings.image_1
           | image_url: width: 1920
-      | image_tag:
+          | image_tag:
             loading: 'eager',
             sizes: '(min-width: 768px) 100vw, 0px',
             widths: '768, 1024, 1280, 1920',
             class: 'hero-bg-image'
-      }}
-    </div>
+        }}
+      </div>
     {%- endif -%}
 
-      {%- if section.settings.image_1_mobile != blank -%}
+    {%- if section.settings.image_1_mobile != blank -%}
       <!-- Mobile Image -->
       <div class="hero-image-mobile">
         {{
@@ -51,7 +51,7 @@
         }}
       </div>
     {%- elsif section.settings.image_1 != blank -%}
-        <!-- Fallback to desktop image for mobile -->
+      <!-- Fallback to desktop image for mobile -->
       <div class="hero-image-mobile">
         {{
           section.settings.image_1
@@ -61,10 +61,10 @@
             sizes: '(max-width: 767px) 100vw, 0px',
             widths: '375, 414, 768',
             class: 'hero-bg-image'
-    }}
-    </div>
-  {%- endif -%}
-    </div>
+        }}
+      </div>
+    {%- endif -%}
+  </div>
 
   <!-- Content Overlay -->
   <div class="hero-content">
@@ -75,7 +75,7 @@
             {%- when 'text' -%}
               <div class="hero-text-block" {{ block.shopify_attributes }}>
                 {{ block.settings.text }}
-    </div>
+              </div>
             {%- when 'button' -%}
               {%- if block.settings.label != blank -%}
                 <div class="hero-button-block" {{ block.shopify_attributes }}>
@@ -83,12 +83,12 @@
                     href="{{ block.settings.link | default: '#' }}"
                     class="hero-button"
                     {% if block.settings.open_in_new_tab %}
-          target="_blank" rel="noopener"
-        {% endif %}
+                      target="_blank" rel="noopener"
+                    {% endif %}
                   >
                     {{ block.settings.label }}
                   </a>
-    </div>
+                </div>
               {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
@@ -144,7 +144,7 @@
   .hero-content {
     position: relative;
     z-index: 2;
-      width: 100%;
+    width: 100%;
     max-width: 1200px;
     padding: 2rem;
   }
