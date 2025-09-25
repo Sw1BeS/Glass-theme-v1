@@ -3,21 +3,48 @@
   if glass_enabled == null
     assign glass_enabled = settings.enable_glass_effect
   endif
-  assign glass_tone = section.settings.glass_tone | default: 'auto'
-  assign glass_elevation = section.settings.glass_elevation | default: 'medium'
 %}
 
-<div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<div
-  class="section section--{{ section.settings.section_width }} hero-section color-{{ section.settings.color_scheme }} spacing-style"
-  {% if glass_enabled %}
-    data-glass-tone="{{ glass_tone }}"
-    data-glass-elevation="{{ glass_elevation }}"
-  {% endif %}
->
+<div class="hero-section">
+  <!-- Background Image -->
+  {%- if section.settings.image_1 != blank -%}
+    <div class="hero-background">
+      <img
+        src="{{ section.settings.image_1 | image_url: width: 1920 }}"
+        alt="{{ section.settings.image_1.alt | default: 'Hero background' }}"
+        class="hero-bg-image hero-bg-desktop"
+        loading="eager"
+        width="1920"
+        height="1080"
+      >
+    </div>
+  {%- endif -%}
+
+  {%- if section.settings.image_1_mobile != blank -%}
+    <div class="hero-background-mobile">
+      <img
+        src="{{ section.settings.image_1_mobile | image_url: width: 768 }}"
+        alt="{{ section.settings.image_1_mobile.alt | default: 'Hero background mobile' }}"
+        class="hero-bg-image hero-bg-mobile"
+        loading="eager"
+        width="768"
+        height="1024"
+      >
+    </div>
+  {%- endif -%}
+
+  <!-- Content Overlay -->
   <div class="hero-container">
     <div class="hero-content">
-      <div class="hero-text glass">
+      <div
+        class="hero-text glass"
+        style="
+          max-width: {{ section.settings.glass_max_width }}px;
+          padding: {{ section.settings.glass_padding }}px;
+          border-radius: {{ section.settings.glass_border_radius }}px;
+          background: rgba(255, 255, 255, {{ section.settings.glass_opacity }});
+        "
+      >
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'text' -%}
@@ -68,7 +95,31 @@
     overflow: hidden;
   }
 
+  /* Background Images */
+  .hero-background,
+  .hero-background-mobile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  .hero-bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-bg-mobile {
+    display: none;
+  }
+
   .hero-container {
+    position: relative;
+    z-index: 2;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -192,6 +243,14 @@
 
   /* ===== RESPONSIVE DESIGN ===== */
   @media (max-width: 768px) {
+    .hero-bg-desktop {
+      display: none;
+    }
+
+    .hero-bg-mobile {
+      display: block;
+    }
+
     .hero-container {
       padding: 1rem;
     }
@@ -339,6 +398,49 @@
         { "value": "high", "label": "High" }
       ],
       "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "Glass Container Settings"
+    },
+    {
+      "type": "range",
+      "id": "glass_max_width",
+      "label": "Glass Container Max Width",
+      "min": 400,
+      "max": 1000,
+      "step": 50,
+      "unit": "px",
+      "default": 800
+    },
+    {
+      "type": "range",
+      "id": "glass_padding",
+      "label": "Glass Container Padding",
+      "min": 20,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "glass_border_radius",
+      "label": "Glass Border Radius",
+      "min": 8,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "glass_opacity",
+      "label": "Glass Background Opacity",
+      "min": 0.3,
+      "max": 0.9,
+      "step": 0.1,
+      "default": 0.8
     }
   ],
   "blocks": [
@@ -388,7 +490,11 @@
         "color_scheme": "scheme-1",
         "enable_glass": true,
         "glass_tone": "auto",
-        "glass_elevation": "medium"
+        "glass_elevation": "medium",
+        "glass_max_width": 800,
+        "glass_padding": 48,
+        "glass_border_radius": 24,
+        "glass_opacity": 0.8
       },
       "blocks": [
         {
