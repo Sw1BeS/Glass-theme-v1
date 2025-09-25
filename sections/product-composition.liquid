@@ -3,8 +3,11 @@
   Features: 3D effects, glassmorphism, animated particles, interactive connections, premium animations
 {% endcomment %}
 
-<div class="product-composition-section" style="{% render 'spacing-style', settings: section.settings %}">
-  <div class="composition-container">
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} product-composition-section color-{{ section.settings.color_scheme }} spacing-style"
+>
+  <div class="composition-container" style="{% render 'spacing-style', settings: section.settings %}">
     <!-- Premium Section Header -->
     <div class="premium-header glass-surface">
       <div class="header-background">
@@ -331,8 +334,6 @@
 
 <style>
   .product-composition-section {
-    padding: 4rem 0;
-    background: var(--color-background, #ffffff);
     position: relative;
   }
 
@@ -422,19 +423,17 @@
     font-size: 3rem;
     font-weight: 700;
     margin: 0 0 1rem 0;
-    color: var(--color-foreground, #2c2c2c);
     position: relative;
   }
 
   .title-line {
     display: block;
-    color: var(--color-foreground, #2c2c2c);
     position: relative;
     overflow: hidden;
   }
 
   .title-line.accent {
-    color: var(--color-primary, #bf8a7a);
+    color: var(--color-primary);
   }
 
   .premium-title::after {
@@ -445,13 +444,12 @@
     transform: translateX(-50%);
     width: 60px;
     height: 3px;
-    background: var(--color-primary, #bf8a7a);
+    background: var(--color-primary);
     border-radius: 2px;
   }
 
   .premium-subtitle {
     font-size: 1.3rem;
-    color: var(--color-foreground-muted, #666666);
     max-width: 700px;
     margin: 0 auto 3rem auto;
     line-height: 1.7;
@@ -472,16 +470,12 @@
   .stat-number {
     font-size: 3rem;
     font-weight: 800;
-    background: linear-gradient(135deg, {{ section.settings.primary_color | default: 'var(--color-primary, #bf8a7a)' }}, {{ section.settings.accent_color | default: 'var(--color-accent, #dab4a6)' }});
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--color-primary);
     margin-bottom: 0.5rem;
   }
 
   .stat-label {
     font-size: 1rem;
-    color: var(--color-foreground-muted, #666666);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 1px;
