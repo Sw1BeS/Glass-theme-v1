@@ -3,7 +3,10 @@
   Features: Clean design, smooth animations, beauty industry styling
 {% endcomment %}
 
-<div class="faq-section color-{{ section.settings.color_scheme }} section-{{ section.settings.section_width }}" style="{% render 'spacing-style', settings: section.settings %}">
+<div
+  class="faq-section color-{{ section.settings.color_scheme }} section-{{ section.settings.section_width }}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
   <div class="faq-container">
     {%- assign header_found = false -%}
     {%- for block in section.blocks -%}
@@ -22,7 +25,9 @@
     {%- unless header_found -%}
       <div class="faq-header glass">
         <h2 class="faq-title">{{ section.settings.section_heading | default: 'Frequently Asked Questions' }}</h2>
-        <p class="faq-subtitle">{{ section.settings.section_subheading | default: 'Find answers to common questions about our products' }}</p>
+        <p class="faq-subtitle">
+          {{ section.settings.section_subheading | default: 'Find answers to common questions about our products' }}
+        </p>
       </div>
     {%- endunless -%}
 
@@ -386,7 +391,7 @@
     },
     {
       "type": "textarea",
-      "id": "section_subheading", 
+      "id": "section_subheading",
       "label": "Section Subheading",
       "default": "Find answers to the most common questions about our products and services."
     },
@@ -440,7 +445,7 @@
         {
           "value": "scheme-3",
           "label": "Scheme 3"
-        },
+        }
       ],
       "default": "scheme-1"
     },

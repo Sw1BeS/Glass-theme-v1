@@ -34,7 +34,12 @@
             <span class="title-line">{{ section.settings.section_heading | default: 'Our Products' }}</span>
             <span class="title-line accent">& Ingredients</span>
           </h2>
-          <p class="premium-subtitle">{{ section.settings.section_subheading | default: 'Discover the premium ingredients that make our products exceptional' }}</p>
+          <p class="premium-subtitle">
+            {{
+              section.settings.section_subheading
+              | default: 'Discover the premium ingredients that make our products exceptional'
+            }}
+          </p>
         {%- endunless -%}
 
         <div class="premium-stats">
