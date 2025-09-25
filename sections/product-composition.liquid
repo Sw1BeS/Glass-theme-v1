@@ -9,14 +9,7 @@
 >
   <div class="composition-container" style="{% render 'spacing-style', settings: section.settings %}">
     <!-- Premium Section Header -->
-    <div class="premium-header glass-surface">
-      <div class="header-background">
-        <div class="floating-particles"></div>
-        <div class="gradient-orb orb-1"></div>
-        <div class="gradient-orb orb-2"></div>
-        <div class="gradient-orb orb-3"></div>
-      </div>
-
+    <div class="premium-header">
       <div class="header-content">
         {%- assign header_found = false -%}
         {%- for block in section.blocks -%}
@@ -353,69 +346,10 @@
     text-align: center;
     margin-bottom: 4rem;
     position: relative;
-    background: var(--color-secondary-bg, #f8f9fa);
     border-radius: 12px;
     padding: 3rem 2rem;
   }
 
-  .header-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1;
-  }
-
-  .floating-particles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image:
-      radial-gradient(2px 2px at 20px 30px, rgba(191, 138, 122, 0.3), transparent),
-      radial-gradient(2px 2px at 40px 70px, rgba(191, 138, 122, 0.2), transparent),
-      radial-gradient(1px 1px at 90px 40px, rgba(191, 138, 122, 0.4), transparent),
-      radial-gradient(1px 1px at 130px 80px, rgba(191, 138, 122, 0.3), transparent);
-    background-repeat: repeat;
-    background-size: 200px 200px;
-    animation: float 20s linear infinite;
-  }
-
-  .gradient-orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(40px);
-    opacity: 0.6;
-    animation: orbFloat 15s ease-in-out infinite;
-  }
-
-  .orb-1 {
-    width: 300px;
-    height: 300px;
-    background: linear-gradient(45deg, {{ section.settings.primary_color | default: 'var(--color-primary, #bf8a7a)' }}, {{ section.settings.accent_color | default: 'var(--color-accent, #dab4a6)' }});
-    top: -150px;
-    left: 10%;
-    animation-delay: 0s;
-  }
-
-  .orb-2 {
-    width: 200px;
-    height: 200px;
-    background: linear-gradient(45deg, var(--color-accent, #dab4a6), var(--color-primary, #bf8a7a));
-    top: 50px;
-    right: 15%;
-    animation-delay: 5s;
-  }
-
-  .orb-3 {
-    width: 150px;
-    height: 150px;
-    background: linear-gradient(45deg, {{ section.settings.primary_color | default: 'var(--color-primary, #bf8a7a)' }}, {{ section.settings.accent_color | default: 'var(--color-accent, #dab4a6)' }});
-    bottom: -75px;
-    left: 50%;
-    animation-delay: 10s;
-  }
 
   .header-content {
     position: relative;
