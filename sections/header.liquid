@@ -334,6 +334,10 @@
     height: 42px;
     font-size: 1.1rem;
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
   }
 
   #shopify-section-{{ section.id }} .mobile-toggle:hover,
@@ -417,6 +421,7 @@
 
     #shopify-section-{{ section.id }} .header-right {
       gap: 0.4rem;
+      align-items: center;
     }
   }
 

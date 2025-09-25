@@ -205,6 +205,12 @@ class ThemeSwitcher {
       this.switchScheme('brand-porcelain');
     }
 
+    // Listen for Shopify Theme Editor changes
+    this.setupShopifyThemeEditorListener();
+
+    // Listen for window resize to apply mobile styles
+    this.setupResizeListener();
+
     // Apply current theme to all existing elements
     this.applyCurrentThemeToElements();
 
@@ -583,6 +589,58 @@ class ThemeSwitcher {
     });
   }
 
+  setupShopifyThemeEditorListener() {
+    // Listen for Shopify Theme Editor changes
+    if (window.Shopify && window.Shopify.theme) {
+      // Listen for theme editor changes
+      document.addEventListener('shopify:section:load', () => {
+        setTimeout(() => {
+          this.applyCurrentThemeToElements();
+        }, 100);
+      });
+
+      document.addEventListener('shopify:section:reorder', () => {
+        setTimeout(() => {
+          this.applyCurrentThemeToElements();
+        }, 100);
+      });
+
+      document.addEventListener('shopify:section:select', () => {
+        setTimeout(() => {
+          this.applyCurrentThemeToElements();
+        }, 100);
+      });
+    }
+
+    // Listen for any class changes on sections
+    const sectionObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          const target = mutation.target;
+          if (target.classList && Array.from(target.classList).some(cls => cls.startsWith('color-scheme-'))) {
+            this.applyCurrentThemeToElement(target);
+          }
+        }
+      });
+    });
+
+    sectionObserver.observe(document.body, {
+      attributes: true,
+      attributeFilter: ['class'],
+      subtree: true
+    });
+  }
+
+  setupResizeListener() {
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        this.applyCurrentThemeToElements();
+      }, 250);
+    });
+  }
+
   applyCurrentThemeToElement(element) {
     const currentScheme = this.currentScheme || 'brand-porcelain';
     const scheme = this.colorSchemes[currentScheme];
@@ -591,6 +649,32 @@ class ThemeSwitcher {
       Object.entries(scheme.colors).forEach(([property, value]) => {
         element.style.setProperty(property, value);
       });
+
+      // Apply mobile-specific styles
+      this.applyMobileStyles(element, currentScheme);
+    }
+  }
+
+  applyMobileStyles(element, schemeKey) {
+    const scheme = this.colorSchemes[schemeKey];
+    if (!scheme) return;
+
+    // Check if element is mobile-specific
+    const isMobile = window.innerWidth <= 768;
+    if (!isMobile) return;
+
+    // Apply mobile-specific glass effects
+    if (element.classList.contains('glass')) {
+      // Reduce opacity for mobile glass effects
+      element.style.setProperty('--glass-global-opacity', '0.85');
+      element.style.setProperty('--glass-global-border-opacity', '0.6');
+    }
+
+    // Apply mobile-specific colors for better contrast
+    if (element.classList.contains('mobile-menu') || element.classList.contains('mobile-toggle')) {
+      element.style.setProperty('--glass-surface-color', scheme.colors['--color-secondary-bg']);
+      element.style.setProperty('--glass-surface-border-color', scheme.colors['--color-border']);
+      element.style.setProperty('--glass-foreground-strong', scheme.colors['--color-foreground']);
     }
   }
 
