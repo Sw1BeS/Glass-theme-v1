@@ -311,7 +311,10 @@
             <div class="card-icon">💧</div>
             <h4 class="card-title">{{ section.settings.card2_title | default: 'Water-Based' }}</h4>
             <p class="card-text">
-              {{ section.settings.card2_text | default: 'Our formulas are water-based for gentle, effective care that won\'t irritate sensitive skin.' }}
+              {{
+                section.settings.card2_text
+                | default: 'Our formulas are water-based for gentle, effective care that won&apos;t irritate sensitive skin.'
+              }}
             </p>
             <div class="card-glow"></div>
           </div>
