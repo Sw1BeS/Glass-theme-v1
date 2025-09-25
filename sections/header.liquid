@@ -8,10 +8,10 @@
   assign logo_width_mobile = section.settings.logo_width_mobile | default: '100px'
   assign logo_height = section.settings.logo_height | default: '40px'
   assign logo_height_mobile = section.settings.logo_height_mobile | default: '35px'
-  assign menu_items = section.settings.menu.links
-  assign show_search = section.settings.show_search
-  assign show_cart = section.settings.show_cart
-  assign show_account = section.settings.show_account
+  assign menu_items = section.settings.menu.links | default: collections.all
+  assign show_search = section.settings.show_search | default: true
+  assign show_cart = section.settings.show_cart | default: true
+  assign show_account = section.settings.show_account | default: true
   assign sticky_behavior = section.settings.enable_sticky_header | default: 'always'
 
   assign glass_enabled = section.settings.enable_glass
@@ -51,6 +51,8 @@
     style="{{ header_style_trimmed }}"
   {% endunless %}
 >
+  <!-- Debug: Header is loading -->
+  <div style="position: fixed; top: 0; left: 0; background: red; color: white; padding: 5px; z-index: 9999; font-size: 12px;">HEADER LOADED</div>
   <!-- Logo - прямо в хедере -->
   <a href="{{ routes.root_url }}" class="logo-link">
     {% if section.settings.logo != blank %}
@@ -70,9 +72,15 @@
 
   <!-- Desktop Menu - прямо в хедере -->
   <nav class="menu-group desktop-only">
-    {% for link in menu_items %}
-      <a href="{{ link.url }}" class="menu-link">{{ link.title }}</a>
-    {% endfor %}
+    {% if menu_items %}
+      {% for link in menu_items %}
+        <a href="{{ link.url }}" class="menu-link">{{ link.title }}</a>
+      {% endfor %}
+    {% else %}
+      <a href="{{ routes.root_url }}" class="menu-link">Home</a>
+      <a href="{{ routes.collections_url }}" class="menu-link">Collections</a>
+      <a href="{{ routes.all_products_collection_url }}" class="menu-link">Products</a>
+    {% endif %}
   </nav>
 
   <!-- Actions - прямо в хедере -->
@@ -100,9 +108,15 @@
 
   <!-- Mobile Menu -->
   <div class="mobile-menu mobile-only">
-    {% for link in menu_items %}
-      <a href="{{ link.url }}" class="mobile-menu-link">{{ link.title }}</a>
-    {% endfor %}
+    {% if menu_items %}
+      {% for link in menu_items %}
+        <a href="{{ link.url }}" class="mobile-menu-link">{{ link.title }}</a>
+      {% endfor %}
+    {% else %}
+      <a href="{{ routes.root_url }}" class="mobile-menu-link">Home</a>
+      <a href="{{ routes.collections_url }}" class="mobile-menu-link">Collections</a>
+      <a href="{{ routes.all_products_collection_url }}" class="mobile-menu-link">Products</a>
+    {% endif %}
   </div>
 </header>
 

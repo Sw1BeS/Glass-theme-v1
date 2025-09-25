@@ -398,11 +398,35 @@
           "selected_variant_hover_border_color": "transparent"
         }
       }
+    },
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo": "",
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_cart": true,
+        "enable_sticky_header": "always",
+        "enable_glass": true,
+        "glass_tone": "auto",
+        "glass_elevation": "medium",
+        "glass_blur_preset": "global",
+        "header_height": 60,
+        "header_width": 1200,
+        "logo_width": "120px",
+        "logo_width_mobile": "100px",
+        "logo_height": "40px",
+        "logo_height_mobile": "35px"
+      }
     }
   },
   "sections": {
     "header-group": {
       "type": "header-group",
+      "settings": {
+        "color_scheme": "scheme-1"
+      },
       "blocks": {
         "header": {
           "type": "header",
