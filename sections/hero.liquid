@@ -70,85 +70,105 @@
   <!-- Content Overlay -->
   <div class="hero-content">
     <div class="hero-container hero-container--{{ section.settings.content_vertical }}">
-      <div
-        class="hero-text glass hero-text--{{ section.settings.content_alignment }}"
-        style="
-          max-width: {{ section.settings.content_max_width }}px;
-          padding: {{ section.settings.glass_padding }}px;
-          border-radius: {{ section.settings.glass_border_radius }}px;
-          margin-top: {{ section.settings.content_margin_top }}px;
-          margin-bottom: {{ section.settings.content_margin_bottom }}px;
-        "
-      >
-        {%- assign button_blocks = section.blocks | where: 'type', 'button' -%}
-        {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'text' -%}
-              <div class="hero-text-block" {{ block.shopify_attributes }}>
-                {{ block.settings.text }}
-              </div>
-          {%- endcase -%}
-        {%- endfor -%}
-
-        {%- if button_blocks.size > 0 -%}
-          <div
-            class="hero-button-block{% if section.settings.equal_button_width %} equal-width{% endif %}"
-            style="gap: {{ section.settings.button_gap }}px;"
-          >
-            {%- for block in button_blocks -%}
-              {%- if block.settings.label != blank -%}
-                <a
-                  href="{{ block.settings.link | default: '#' }}"
-                  class="hero-button"
-                  style="
-                    min-width: {{ section.settings.button_min_width }}px;
-                    height: {{ section.settings.button_height }}px;
-                  "
-                  {% if block.settings.open_in_new_tab %}
-                    target="_blank" rel="noopener"
-                  {% endif %}
-                  {{ block.shopify_attributes }}
-                >
-                  {{ block.settings.label }}
-                </a>
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'hero_content' -%}
+            <div
+              class="hero-text glass hero-text--{{ block.settings.content_alignment }}"
+              style="
+                max-width: {{ block.settings.content_max_width }}px;
+                padding: {{ block.settings.glass_padding }}px;
+                border-radius: {{ block.settings.glass_border_radius }}px;
+                margin-top: {{ section.settings.content_margin_top }}px;
+                margin-bottom: {{ section.settings.content_margin_bottom }}px;
+                background: rgba(255, 255, 255, {{ block.settings.glass_opacity }});
+              "
+              {{ block.shopify_attributes }}
+            >
+              <!-- Heading -->
+              {%- if block.settings.heading != blank -%}
+                <div class="hero-text-block">
+                  {{ block.settings.heading }}
+                </div>
               {%- endif -%}
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
 
-        <!-- Fallback content for empty states -->
-        {%- unless section.blocks.size > 0 -%}
+              <!-- Description -->
+              {%- if block.settings.description != blank -%}
+                <div class="hero-text-block">
+                  {{ block.settings.description }}
+                </div>
+              {%- endif -%}
+
+              <!-- Buttons -->
+              {%- if block.settings.button1_text != blank or block.settings.button2_text != blank -%}
+                <div
+                  class="hero-button-block{% if block.settings.equal_button_width %} equal-width{% endif %}"
+                  style="gap: {{ block.settings.button_gap }}px;"
+                >
+                  {%- if block.settings.button1_text != blank -%}
+                    <a
+                      href="{{ block.settings.button1_link | default: '#' }}"
+                      class="hero-button hero-button--primary"
+                      style="
+                        min-width: {{ block.settings.button_min_width }}px;
+                        height: {{ block.settings.button_height }}px;
+                      "
+                    >
+                      {{ block.settings.button1_text }}
+                    </a>
+                  {%- endif -%}
+
+                  {%- if block.settings.button2_text != blank -%}
+                    <a
+                      href="{{ block.settings.button2_link | default: '#' }}"
+                      class="hero-button hero-button--secondary"
+                      style="
+                        min-width: {{ block.settings.button_min_width }}px;
+                        height: {{ block.settings.button_height }}px;
+                      "
+                    >
+                      {{ block.settings.button2_text }}
+                    </a>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+
+      <!-- Fallback content for empty states -->
+      {%- unless section.blocks.size > 0 -%}
+        <div
+          class="hero-text glass hero-text--center"
+          style="
+            max-width: 600px;
+            padding: 36px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.8);
+          "
+        >
           <div class="hero-text-block">
             <h1>The Perfect Brow Duo</h1>
             <p>Everything you need for flawless brows, every day.</p>
           </div>
-          <div
-            class="hero-button-block{% if section.settings.equal_button_width %} equal-width{% endif %}"
-            style="gap: {{ section.settings.button_gap }}px;"
-          >
+          <div class="hero-button-block equal-width" style="gap: 16px;">
             <a
               href="/products/the-duo"
-              class="hero-button"
-              style="
-                min-width: {{ section.settings.button_min_width }}px;
-                height: {{ section.settings.button_height }}px;
-              "
+              class="hero-button hero-button--primary"
+              style="min-width: 200px; height: 48px;"
             >
               Shop The Duo - $34.99
             </a>
             <a
               href="#shopify-section-how_to"
-              class="hero-button"
-              style="
-                min-width: {{ section.settings.button_min_width }}px;
-                height: {{ section.settings.button_height }}px;
-              "
+              class="hero-button hero-button--secondary"
+              style="min-width: 200px; height: 48px;"
             >
               Learn How to Use
             </a>
           </div>
-        {%- endunless -%}
-      </div>
+        </div>
+      {%- endunless -%}
     </div>
   </div>
 </div>
@@ -355,7 +375,31 @@
     outline-offset: 2px;
   }
 
+  /* ===== PRIMARY BUTTON STYLES ===== */
+  .hero-button--primary {
+    background: var(--glass-highlight-color, var(--color-primary, #bf8a7a)) !important;
+    color: white !important;
+    border: 2px solid var(--glass-highlight-color, var(--color-primary, #bf8a7a)) !important;
+  }
+
+  .hero-button--primary:hover {
+    background: var(--glass-highlight-color, var(--color-primary, #bf8a7a)) !important;
+    color: white !important;
+  }
+
   /* ===== SECONDARY BUTTON STYLES ===== */
+  .hero-button--secondary {
+    background: transparent !important;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c)) !important;
+    border: 2px solid var(--glass-highlight-color, var(--color-primary, #bf8a7a)) !important;
+  }
+
+  .hero-button--secondary:hover {
+    background: var(--glass-highlight-color, var(--color-primary, #bf8a7a)) !important;
+    color: white !important;
+  }
+
+  /* ===== LEGACY SECONDARY BUTTON STYLES ===== */
   .hero-button[href*='#shopify-section'] {
     background: transparent;
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
@@ -689,37 +733,144 @@
   ],
   "blocks": [
     {
-      "type": "text",
-      "name": "Text",
+      "type": "hero_content",
+      "name": "Hero Content Block",
       "settings": [
+        {
+          "type": "header",
+          "content": "Content"
+        },
         {
           "type": "richtext",
-          "id": "text",
-          "label": "Text Content",
-          "default": "<h1>Your Heading</h1><p>Your description text goes here.</p>"
-        }
-      ]
-    },
-    {
-      "type": "button",
-      "name": "Button",
-      "settings": [
+          "id": "heading",
+          "label": "Heading",
+          "default": "<h1>The Perfect Brow Duo</h1>"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Everything you need for flawless brows, every day.</p>"
+        },
+        {
+          "type": "header",
+          "content": "Buttons"
+        },
         {
           "type": "text",
-          "id": "label",
-          "label": "Button Text",
-          "default": "Learn More"
+          "id": "button1_text",
+          "label": "Primary Button Text",
+          "default": "Shop The Duo - $34.99"
         },
         {
           "type": "url",
-          "id": "link",
-          "label": "Button Link"
+          "id": "button1_link",
+          "label": "Primary Button Link"
+        },
+        {
+          "type": "text",
+          "id": "button2_text",
+          "label": "Secondary Button Text",
+          "default": "Learn How to Use"
+        },
+        {
+          "type": "url",
+          "id": "button2_link",
+          "label": "Secondary Button Link"
+        },
+        {
+          "type": "header",
+          "content": "Glass Container Settings"
+        },
+        {
+          "type": "select",
+          "id": "content_alignment",
+          "label": "Content Alignment",
+          "options": [
+            { "value": "center", "label": "Center" },
+            { "value": "left", "label": "Left" },
+            { "value": "right", "label": "Right" }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "content_max_width",
+          "label": "Content Max Width",
+          "min": 400,
+          "max": 800,
+          "step": 50,
+          "unit": "px",
+          "default": 600
+        },
+        {
+          "type": "range",
+          "id": "glass_padding",
+          "label": "Glass Container Padding",
+          "min": 20,
+          "max": 60,
+          "step": 4,
+          "unit": "px",
+          "default": 36
+        },
+        {
+          "type": "range",
+          "id": "glass_border_radius",
+          "label": "Glass Border Radius",
+          "min": 8,
+          "max": 40,
+          "step": 2,
+          "unit": "px",
+          "default": 22
+        },
+        {
+          "type": "range",
+          "id": "glass_opacity",
+          "label": "Glass Background Opacity",
+          "min": 0.3,
+          "max": 0.9,
+          "step": 0.1,
+          "default": 0.8
+        },
+        {
+          "type": "header",
+          "content": "Button Settings"
         },
         {
           "type": "checkbox",
-          "id": "open_in_new_tab",
-          "label": "Open in New Tab",
-          "default": false
+          "id": "equal_button_width",
+          "label": "Make Buttons Equal Width",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "button_min_width",
+          "label": "Button Minimum Width",
+          "min": 120,
+          "max": 300,
+          "step": 10,
+          "unit": "px",
+          "default": 200
+        },
+        {
+          "type": "range",
+          "id": "button_height",
+          "label": "Button Height",
+          "min": 40,
+          "max": 60,
+          "step": 2,
+          "unit": "px",
+          "default": 48
+        },
+        {
+          "type": "range",
+          "id": "button_gap",
+          "label": "Space Between Buttons",
+          "min": 8,
+          "max": 32,
+          "step": 4,
+          "unit": "px",
+          "default": 16
         }
       ]
     }
@@ -751,36 +902,28 @@
         "content_margin_bottom": 0
       },
       "blocks": {
-        "text_1": {
-          "type": "text",
+        "hero_content_1": {
+          "type": "hero_content",
           "settings": {
-            "text": "<h1>The Perfect Brow Duo</h1>"
-          }
-        },
-        "text_2": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Everything you need for flawless brows, every day.</p>"
-          }
-        },
-        "button_1": {
-          "type": "button",
-          "settings": {
-            "label": "Shop The Duo - $34.99",
-            "link": "/products/the-duo",
-            "open_in_new_tab": false
-          }
-        },
-        "button_2": {
-          "type": "button",
-          "settings": {
-            "label": "Learn How to Use",
-            "link": "#shopify-section-how_to",
-            "open_in_new_tab": false
+            "heading": "<h1>The Perfect Brow Duo</h1>",
+            "description": "<p>Everything you need for flawless brows, every day.</p>",
+            "button1_text": "Shop The Duo - $34.99",
+            "button1_link": "/products/the-duo",
+            "button2_text": "Learn How to Use",
+            "button2_link": "#shopify-section-how_to",
+            "content_alignment": "center",
+            "content_max_width": 600,
+            "glass_padding": 36,
+            "glass_border_radius": 22,
+            "glass_opacity": 0.8,
+            "equal_button_width": true,
+            "button_min_width": 200,
+            "button_height": 48,
+            "button_gap": 16
           }
         }
       },
-      "block_order": ["text_1", "text_2", "button_1", "button_2"]
+      "block_order": ["hero_content_1"]
     }
   ]
 }
