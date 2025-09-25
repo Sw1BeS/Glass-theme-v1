@@ -8,10 +8,10 @@
   assign logo_width_mobile = section.settings.logo_width_mobile | default: '100px'
   assign logo_height = section.settings.logo_height | default: '40px'
   assign logo_height_mobile = section.settings.logo_height_mobile | default: '35px'
-  assign menu_items = section.settings.menu.links | default: collections.all
-  assign show_search = section.settings.show_search | default: true
-  assign show_cart = section.settings.show_cart | default: true
-  assign show_account = section.settings.show_account | default: true
+  assign menu_items = section.settings.menu.links
+  assign show_search = section.settings.show_search
+  assign show_cart = section.settings.show_cart
+  assign show_account = section.settings.show_account
   assign sticky_behavior = section.settings.enable_sticky_header | default: 'always'
 
   assign glass_enabled = section.settings.enable_glass
@@ -22,6 +22,7 @@
   assign glass_elevation = section.settings.glass_elevation | default: 'medium'
 
   assign glass_blur_preset = section.settings.glass_blur_preset | default: 'global'
+  assign glass_blur_custom = section.settings.glass_blur_custom | default: 20
   assign glass_blur = null
   case glass_blur_preset
     when 'soft'
@@ -30,18 +31,69 @@
       assign glass_blur = 20
     when 'bold'
       assign glass_blur = 28
+    when 'custom'
+      assign glass_blur = glass_blur_custom
   endcase
-%}
+
+  assign glass_opacity = section.settings.glass_opacity | default: 82
+  assign glass_border_opacity = section.settings.glass_border_opacity | default: 35
+  assign glass_tint = section.settings.glass_tint | default: 18
+  assign shadow_strength = section.settings.shadow_strength | default: 38
+  assign tint_inverse = 100 | minus: glass_tint
+  assign padding_inline = section.settings.padding_inline | default: 28
+  assign padding_block = section.settings.padding_block | default: 16
+  assign corner_radius = section.settings.corner_radius | default: 32
+  assign content_gap = section.settings.content_gap | default: 18
+  assign content_alignment = section.settings.content_alignment | default: 'space-between'
+
+  assign header_height_raw = section.settings.header_height | default: '60px'
+  assign header_width_raw = section.settings.header_width | default: '1200px'
+
+  assign header_height_value = header_height_raw | strip
+  if header_height_value == ''
+    assign header_height_value = '60px'
+  endif
+  assign header_height_lower = header_height_value | downcase
+  if header_height_lower contains 'px' or header_height_lower contains 'rem' or header_height_lower contains 'em' or header_height_lower contains 'vh' or header_height_lower contains 'vw' or header_height_lower contains '%' or header_height_lower contains 'ch' or header_height_lower contains 'calc' or header_height_lower contains 'auto'
+    assign header_height_css = header_height_value
+  else
+    assign header_height_css = header_height_value | append: 'px'
+  endif
+
+  assign header_width_value = header_width_raw | strip
+  if header_width_value == ''
+    assign header_width_value = '1200px'
+  endif
+  assign header_width_lower = header_width_value | downcase
+  if header_width_lower contains 'px' or header_width_lower contains 'rem' or header_width_lower contains 'em' or header_width_lower contains 'vh' or header_width_lower contains 'vw' or header_width_lower contains '%' or header_width_lower contains 'ch' or header_width_lower contains 'calc' or header_width_lower contains 'auto'
+    assign header_width_css = header_width_value
+  else
+    assign header_width_css = header_width_value | append: 'px'
+  endif
+{% endliquid %}
 
 {% capture header_style %}
   {% if glass_blur != blank %}
     --glass-local-blur: {{ glass_blur }}px;
   {% endif %}
+  --header-glass-opacity: {{ glass_opacity }}%;
+  --header-border-opacity: {{ glass_border_opacity }}%;
+  --header-tint-strength: {{ glass_tint }}%;
+  --header-shadow-strength: {{ shadow_strength }}%;
+  --header-spacing-inline: {{ padding_inline }}px;
+  --header-spacing-block: {{ padding_block }}px;
+  --header-radius: {{ corner_radius }}px;
+  --header-gap: {{ content_gap }}px;
+  --header-justify: {{ content_alignment }};
+  --header-surface-color: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.82)) {{ glass_opacity }}%, transparent);
+  --header-surface-color: color-mix(in srgb, var(--header-surface-color) {{ tint_inverse }}%, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) {{ glass_tint }}%);
+  --header-border-color: color-mix(in srgb, var(--glass-surface-border-color, rgba(255, 255, 255, 0.4)) {{ glass_border_opacity }}%, transparent);
+  --header-shadow-color: color-mix(in srgb, var(--glass-shadow-color, rgba(17, 23, 34, 0.2)) {{ shadow_strength }}%, transparent);
 {% endcapture %}
 {% assign header_style_trimmed = header_style | strip %}
 
 <header
-  class="header glass color-{{ section.settings.color_scheme | default: 'scheme-1' }}"
+  class="header{% if glass_enabled %} glass{% endif %}"
   data-sticky="{{ sticky_behavior }}"
   {% if glass_enabled %}
     data-glass-tone="{{ glass_tone }}"
@@ -69,384 +121,390 @@
   </a>
 
   <!-- Desktop Menu - прямо в хедере -->
-  <nav class="menu-group desktop-only">
-    {% if menu_items %}
-      {% for link in menu_items %}
-        <a href="{{ link.url }}" class="menu-link">{{ link.title }}</a>
-      {% endfor %}
-    {% else %}
-      <a href="{{ routes.root_url }}" class="menu-link">Home</a>
-      <a href="{{ routes.collections_url }}" class="menu-link">Collections</a>
-      <a href="{{ routes.all_products_collection_url }}" class="menu-link">Products</a>
-    {% endif %}
+  <nav class="menu-group desktop-only" aria-label="Primary">
+    {% for link in menu_items %}
+      <a href="{{ link.url }}" class="menu-link">{{ link.title }}</a>
+    {% endfor %}
   </nav>
 
-  <!-- Actions - прямо в хедере -->
-  <div class="action-group">
-    {% if show_search %}
-      <a href="{{ routes.search_url }}" class="action-btn" aria-label="Search">🔍</a>
-    {% endif %}
-    {% if show_account %}
-      <a href="{{ routes.account_url }}" class="action-btn" aria-label="Account">👤</a>
-    {% endif %}
-    {% if show_cart %}
-      <a href="{{ routes.cart_url }}" class="action-btn" aria-label="Cart">
-        🛒 <span class="cart-count">{{ cart.item_count }}</span>
-      </a>
-    {% endif %}
-
-    <!-- Theme Toggle Button -->
-    {% if section.settings.show_theme_toggle %}
-      <button class="theme-fab glass" data-theme-toggle type="button" aria-label="Theme: auto" aria-pressed="mixed">
-        🌙
-      </button>
-    {% endif %}
+  <div class="header-right">
+    <div class="action-group">
+      {% if show_search %}
+        <a href="{{ routes.search_url }}" class="action-btn" aria-label="Search">🔍</a>
+      {% endif %}
+      {% if show_account %}
+        <a href="{{ routes.account_url }}" class="action-btn" aria-label="Account">👤</a>
+      {% endif %}
+      {% if show_cart %}
+        <a href="{{ routes.cart_url }}" class="action-btn" aria-label="Cart">
+          🛒 <span class="cart-count">{{ cart.item_count }}</span>
+        </a>
+      {% endif %}
+    </div>
 
     <!-- Mobile Menu Toggle -->
-    <button class="mobile-toggle mobile-only" aria-label="Toggle menu">☰</button>
+    <button class="mobile-toggle mobile-only" type="button" aria-expanded="false" aria-controls="HeaderMobileMenu-{{ section.id }}" data-mobile-toggle>☰</button>
   </div>
 
   <!-- Mobile Menu -->
-  <div class="mobile-menu mobile-only">
-    {% if menu_items %}
-      {% for link in menu_items %}
-        <a href="{{ link.url }}" class="mobile-menu-link">{{ link.title }}</a>
-      {% endfor %}
-    {% else %}
-      <a href="{{ routes.root_url }}" class="mobile-menu-link">Home</a>
-      <a href="{{ routes.collections_url }}" class="mobile-menu-link">Collections</a>
-      <a href="{{ routes.all_products_collection_url }}" class="mobile-menu-link">Products</a>
-    {% endif %}
+  <div class="mobile-menu" id="HeaderMobileMenu-{{ section.id }}" data-mobile-menu>
+    {% for link in menu_items %}
+      <a href="{{ link.url }}" class="mobile-menu-link">{{ link.title }}</a>
+    {% endfor %}
   </div>
 </header>
 
 <style>
-  /* CSS Variables for dynamic sizing */
-  :root {
+  #shopify-section-{{ section.id }} {
     --header-logo-width: {{ logo_width }};
     --header-logo-width-mobile: {{ logo_width_mobile }};
     --header-logo-height: {{ logo_height }};
     --header-logo-height-mobile: {{ logo_height_mobile }};
-    --header-height: {{ section.settings.header_height | default: 60 }}px;
-    --header-width: {{ section.settings.header_width | default: 1200 }}px;
+    --header-height: {{ header_height_css }};
+    --header-width: {{ header_width_css }};
   }
 
-  .header {
-    display: flex;
-    align-items: center;
-    gap: clamp(1rem, 3vw, 1.75rem);
-    width: min(100%, var(--header-width, 1200px));
-    margin: {{ section.settings.header_margin_top | default: 8 }}px auto {{ section.settings.header_margin_bottom | default: 8 }}px;
-    padding: clamp(0.75rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
-    border-radius: clamp(2.25rem, 5vw, 3.5rem);
+  #shopify-section-{{ section.id }} .header {
     position: relative;
-    z-index: 10;
-
-    /* Glass Effect */
-    background: var(--glass-surface-color, rgba(255, 255, 255, {{ section.settings.header_opacity | default: 85 | times: 0.01 }}));
-    backdrop-filter: blur(var(--glass-local-blur, 20px));
-    -webkit-backdrop-filter: blur(var(--glass-local-blur, 20px));
-    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.2));
-    box-shadow: 0 8px 32px var(--glass-shadow-color, rgba(0, 0, 0, 0.1));
-
-    /* Smooth transitions */
-    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: var(--header-justify, space-between);
+    flex-wrap: wrap;
+    gap: var(--header-gap, clamp(0.75rem, 3vw, 1.6rem));
+    width: min(100%, var(--header-width, 1200px));
+    min-height: var(--header-height, 60px);
+    margin: clamp(0.6rem, 2.2vw, 1.5rem) auto;
+    padding: var(--header-spacing-block, clamp(0.65rem, 2vw, 1rem)) var(--header-spacing-inline, clamp(1rem, 3vw, 2rem));
+    border-radius: var(--header-radius, clamp(1.8rem, 4vw, 3.2rem));
+    box-sizing: border-box;
+    z-index: 20;
+    background: var(--header-surface-color, color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.82)) 82%, transparent));
+    border: 1px solid var(--header-border-color, color-mix(in srgb, var(--glass-surface-border-color, rgba(255, 255, 255, 0.4)) 35%, transparent));
+    box-shadow: 0 18px 42px var(--header-shadow-color, color-mix(in srgb, var(--glass-shadow-color, rgba(17, 23, 34, 0.2)) 35%, transparent));
   }
 
-  .header > * {
+  #shopify-section-{{ section.id }} .header > * {
     flex-shrink: 0;
   }
 
-  .header .menu-link {
-    flex-shrink: 0;
-  }
-
-  .header .menu-group {
-    display: flex;
+  #shopify-section-{{ section.id }} .logo-link {
+    display: inline-flex;
     align-items: center;
-    gap: 0.75rem;
-  }
-
-  /* Logo - просто контент в div */
-  .logo-link {
-    display: flex;
-    align-items: center;
+    gap: 0.6rem;
     text-decoration: none;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
-    transition: transform 0.3s ease;
+    color: var(--color-foreground, #2c2c2c);
+    transition: transform 0.25s ease;
+    min-width: 0;
   }
 
-  .logo-link:hover {
-    {% if section.settings.logo_hover_effect %}
-      transform: scale({{ section.settings.logo_hover_scale | default: 105 | divided_by: 100.0 }});
-    {% endif %}
+  #shopify-section-{{ section.id }} .logo-link:hover {
+    transform: translateY(-2px);
   }
 
-  .logo-image {
+  #shopify-section-{{ section.id }} .logo-image {
     width: var(--header-logo-width) !important;
     height: var(--header-logo-height) !important;
-    object-fit: contain !important;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
-    max-width: none !important;
+    max-width: 100% !important;
     max-height: none !important;
+    object-fit: contain !important;
   }
 
-  .logo-text {
-    font-size: 1.5rem;
+  #shopify-section-{{ section.id }} .logo-text {
+    font-size: clamp(1.35rem, 2.6vw, 1.65rem);
     font-weight: 700;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    color: var(--color-foreground, #2c2c2c);
   }
 
-  /* Menu - прямо в хедере */
-
-  .menu-group {
+  #shopify-section-{{ section.id }} .menu-group {
     flex: 1 1 auto;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: {{ section.settings.menu_item_gap | default: 12 }}px;
+    gap: clamp(0.75rem, 2.5vw, 1.65rem);
+    min-width: min(320px, 100%);
   }
 
-  .menu-link {
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+  #shopify-section-{{ section.id }} .menu-link {
+    color: var(--color-foreground, #2c2c2c);
     text-decoration: none;
-    font-weight: {{ section.settings.menu_font_weight | default: 600 }};
-    font-size: {{ section.settings.menu_font_size | default: 16 }}px;
-    padding: {{ section.settings.menu_item_padding | default: 8 }}px {{ section.settings.menu_item_padding | default: 8 | times: 1.5 }}px;
+    font-weight: 600;
+    padding: 0.55rem 0.9rem;
     border-radius: 999px;
-    transition: all 0.3s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
   }
 
-  .menu-link:hover {
-    background: var(--glass-surface-color, rgba(255, 255, 255, 0.15));
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+  #shopify-section-{{ section.id }} .menu-link:hover,
+  #shopify-section-{{ section.id }} .menu-link:focus-visible {
+    background: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.8)) 70%, transparent);
+    box-shadow: 0 12px 26px rgba(20, 26, 34, 0.12);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px var(--glass-shadow-color, rgba(0, 0, 0, 0.15));
-    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.3));
   }
 
-  /* Actions - прямо в хедере */
-
-  .action-group {
-    display: flex;
+  #shopify-section-{{ section.id }} .header-right {
+    display: inline-flex;
     align-items: center;
-    gap: {{ section.settings.action_button_gap | default: 4 }}px;
+    gap: 0.55rem;
     margin-left: auto;
+    flex-shrink: 0;
   }
 
-  .action-btn {
-    display: flex;
+  #shopify-section-{{ section.id }} .action-group {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+
+  #shopify-section-{{ section.id }} .action-btn {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: {{ section.settings.action_button_size | default: 38 }}px;
-    height: {{ section.settings.action_button_size | default: 38 }}px;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
-    text-decoration: none;
+    width: 40px;
+    height: 40px;
     border-radius: 999px;
-    transition: all 0.3s ease;
+    border: none;
+    background: transparent;
+    color: var(--color-foreground, #2c2c2c);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     position: relative;
-    margin: 0 0.2rem;
+    cursor: pointer;
   }
 
-  .action-btn:hover {
-    {% if section.settings.action_button_hover_effect %}
-      background: var(--glass-surface-color, rgba(255, 255, 255, 0.15));
-      color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px var(--glass-shadow-color, rgba(0, 0, 0, 0.15));
-      border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.3));
-    {% endif %}
+  #shopify-section-{{ section.id }} .action-btn:hover,
+  #shopify-section-{{ section.id }} .action-btn:focus-visible {
+    background: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.78)) 72%, transparent);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(20, 26, 34, 0.12);
+    outline: none;
   }
 
-  .cart-count {
+  #shopify-section-{{ section.id }} .cart-count {
     position: absolute;
-    top: -5px;
-    right: -5px;
-    background: var(--glass-highlight-color, var(--color-primary, #bf8a7a));
-    color: white;
-    border-radius: 50%;
-    width: 18px;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
     height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 0 4px;
+    border-radius: 999px;
+    background: var(--color-primary, #bf8a7a);
+    color: #fff;
     font-size: 0.7rem;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* Mobile Toggle */
-  .mobile-toggle {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
-    font-size: 1.2rem;
+  #shopify-section-{{ section.id }} .mobile-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-radius: 12px;
+    width: 42px;
+    height: 42px;
+    font-size: 1.1rem;
   }
 
-  .mobile-toggle:hover {
-    background: rgba(255, 255, 255, 0.2);
+  #shopify-section-{{ section.id }} .mobile-toggle:hover,
+  #shopify-section-{{ section.id }} .mobile-toggle:focus-visible {
+    background: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.8)) 80%, transparent);
   }
 
-  /* Mobile Menu */
-  .mobile-menu {
+  #shopify-section-{{ section.id }} .mobile-menu {
     position: absolute;
-    top: 100%;
     left: 0;
     right: 0;
-    background: var(--glass-surface-color, rgba(255, 255, 255, 0.15));
-    backdrop-filter: blur(var(--glass-local-blur, 20px));
-    -webkit-backdrop-filter: blur(var(--glass-local-blur, 20px));
-    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.2));
-    border-top: none;
-    border-radius: 0 0 12px 12px;
+    top: calc(100% + 0.5rem);
+    display: none;
+    flex-direction: column;
+    gap: 0.35rem;
+    background: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.85)) 82%, transparent);
+    border: 1px solid color-mix(in srgb, var(--glass-surface-border-color, rgba(255, 255, 255, 0.35)) 85%, transparent);
+    border-radius: 18px;
     padding: 1rem;
-    transform: translateY(-100%);
+    box-shadow: 0 24px 40px rgba(20, 26, 34, 0.16);
     opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    box-shadow: 0 8px 32px var(--glass-shadow-color, rgba(0, 0, 0, 0.1));
+    transform: translateY(-12px);
+    pointer-events: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.25s ease, transform 0.25s ease, max-height 0.25s ease;
+    z-index: 5;
   }
 
-  .mobile-menu.active {
-    transform: translateY(0);
+  #shopify-section-{{ section.id }} .mobile-menu.active {
     opacity: 1;
-    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+    max-height: 420px;
   }
 
-  .mobile-menu-link {
+  #shopify-section-{{ section.id }} .mobile-menu-link {
     display: block;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
     text-decoration: none;
+    color: var(--color-foreground, #2c2c2c);
     font-weight: 500;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    transition: all 0.3s ease;
-    background: var(--glass-surface-color, rgba(255, 255, 255, 0.05));
-    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.1));
-    margin-bottom: 0.5rem;
+    transition: background 0.2s ease, transform 0.2s ease;
   }
 
-  .mobile-menu-link:hover {
-    background: var(--glass-surface-color, rgba(255, 255, 255, 0.15));
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
-    transform: translateX(5px);
-    box-shadow: 0 4px 16px var(--glass-shadow-color, rgba(0, 0, 0, 0.1));
+  #shopify-section-{{ section.id }} .mobile-menu-link:hover,
+  #shopify-section-{{ section.id }} .mobile-menu-link:focus-visible {
+    background: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.8)) 90%, transparent);
+    transform: translateX(4px);
   }
 
-  /* Responsive */
-  @media screen and (max-width: 749px) {
-    .header {
-      width: calc(100% - 1rem);
-      margin: 0.5rem auto;
-      padding: 0.6rem 0.85rem;
-      border-radius: 20px;
+  #shopify-section-{{ section.id }} .mobile-menu-link:last-child {
+    margin-bottom: 0;
+  }
+
+  #shopify-section-{{ section.id }} .mobile-only {
+    display: none;
+  }
+
+  @media (max-width: 1023px) {
+    #shopify-section-{{ section.id }} .mobile-menu {
+      display: flex;
     }
 
-    .logo-image {
+    #shopify-section-{{ section.id }} .header {
+      gap: clamp(0.6rem, 2vw, 1.1rem);
+      padding: clamp(0.5rem, 2vw, 0.75rem) clamp(0.85rem, 4vw, 1.25rem);
+      width: calc(100% - clamp(1rem, 4vw, 2.5rem));
+      flex-wrap: nowrap;
+    }
+
+    #shopify-section-{{ section.id }} .menu-group.desktop-only {
+      display: none !important;
+    }
+
+    #shopify-section-{{ section.id }} .mobile-only {
+      display: inline-flex;
+    }
+
+    #shopify-section-{{ section.id }} .header-right {
+      gap: 0.4rem;
+    }
+  }
+
+  @media (max-width: 680px) {
+    #shopify-section-{{ section.id }} .header {
+      border-radius: clamp(1.2rem, 5vw, 2rem);
+    }
+
+    #shopify-section-{{ section.id }} .header-right {
+      gap: 0.3rem;
+    }
+
+    #shopify-section-{{ section.id }} .logo-image {
       width: var(--header-logo-width-mobile) !important;
       height: var(--header-logo-height-mobile) !important;
     }
 
-    .logo-text {
-      font-size: 1.3rem;
+    #shopify-section-{{ section.id }} .logo-text {
+      font-size: clamp(1.2rem, 5vw, 1.45rem);
     }
 
-    .action-btn {
-      width: 32px;
-      height: 32px;
-    }
-  }
-
-  /* Utility Classes */
-  .mobile-only {
-    display: none;
-  }
-
-  @media screen and (max-width: 920px) {
-    .header {
-      flex-wrap: wrap;
-      gap: 0.75rem;
-    }
-
-    .desktop-only {
-      display: none !important;
-    }
-
-    .mobile-only {
-      display: block;
-    }
-
-    .action-group {
+    #shopify-section-{{ section.id }} .action-btn,
+    #shopify-section-{{ section.id }} .mobile-menu {
+      right: 0;
+      left: 0;
       width: 100%;
-      justify-content: flex-end;
     }
   }
 
-  /* Sticky behavior */
-  .header[data-sticky="always"] {
+  #shopify-section-{{ section.id }} .header[data-sticky="always"],
+  #shopify-section-{{ section.id }} .header[data-sticky="scroll-up"] {
     position: fixed;
+    top: clamp(0.6rem, 2vw, 1.25rem);
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(100% - clamp(1rem, 4vw, 3rem), var(--header-width, 1200px));
+    margin: 0;
   }
 
-  .header[data-sticky="scroll-up"] {
-    position: fixed;
-    transform: translateY(-100%);
+  #shopify-section-{{ section.id }} .header[data-sticky="scroll-up"] {
+    transform: translate(-50%, -120%);
+    transition: transform 0.35s ease;
   }
 
-  .header[data-sticky="scroll-up"].visible {
-    transform: translateY(0);
+  #shopify-section-{{ section.id }} .header[data-sticky="scroll-up"].visible {
+    transform: translate(-50%, 0);
   }
 
-  .header[data-sticky="never"] {
+  #shopify-section-{{ section.id }} .header[data-sticky="never"] {
     position: relative;
     top: auto;
     left: auto;
-    right: auto;
-    margin: 0.5rem;
+    transform: none;
+    width: min(100%, var(--header-width, 1200px));
+  }
+
+  @media (max-width: 1023px) {
+    #shopify-section-{{ section.id }} .header[data-sticky="always"],
+    #shopify-section-{{ section.id }} .header[data-sticky="scroll-up"] {
+      width: calc(100% - clamp(1rem, 4vw, 2.25rem));
+    }
   }
 </style>
 
 <script>
-  // Mobile menu toggle
   document.addEventListener('DOMContentLoaded', function () {
-    const mobileToggle = document.querySelector('.mobile-toggle');
-    const mobileMenu = document.querySelector('.mobile-menu');
+    const section = document.getElementById('shopify-section-{{ section.id }}');
+    if (!section) {
+      return;
+    }
+
+    const mobileToggle = section.querySelector('[data-mobile-toggle]');
+    const mobileMenu = section.querySelector('[data-mobile-menu]');
 
     if (mobileToggle && mobileMenu) {
-      mobileToggle.addEventListener('click', function () {
-        mobileMenu.classList.toggle('active');
-        mobileToggle.classList.toggle('active');
+      const toggleMenu = function () {
+        const isOpen = mobileMenu.classList.toggle('active');
+        mobileToggle.classList.toggle('active', isOpen);
+        mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      };
+
+      mobileToggle.addEventListener('click', toggleMenu);
+
+      mobileMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', function () {
+          if (mobileMenu.classList.contains('active')) {
+            toggleMenu();
+          }
+        });
       });
     }
 
-    // Sticky scroll-up behavior
-    const header = document.querySelector('.header[data-sticky="scroll-up"]');
-    if (header) {
+    const stickyHeader = section.querySelector('.header[data-sticky="scroll-up"]');
+    if (stickyHeader) {
       let lastScrollY = window.scrollY;
-
-      window.addEventListener('scroll', function () {
+      const handleScroll = function () {
         const currentScrollY = window.scrollY;
-
         if (currentScrollY > lastScrollY && currentScrollY > 100) {
-          // Scrolling down
-          header.classList.remove('visible');
+          stickyHeader.classList.remove('visible');
         } else {
-          // Scrolling up
-          header.classList.add('visible');
+          stickyHeader.classList.add('visible');
         }
-
         lastScrollY = currentScrollY;
-      });
+      };
+
+      handleScroll();
+      window.addEventListener('scroll', handleScroll, { passive: true });
     }
 
-    // Update logo sizes when settings change (for theme editor)
-    if (window.Shopify && window.Shopify.theme) {
-      window.Shopify.theme.on('section:load', function () {
-        const logoImage = document.querySelector('.logo-image');
+    if (window.Shopify && window.Shopify.designMode) {
+      document.addEventListener('shopify:section:load', function (event) {
+        if (event.detail.sectionId !== '{{ section.id }}') {
+          return;
+        }
+        const updatedSection = document.getElementById('shopify-section-{{ section.id }}');
+        if (!updatedSection) {
+          return;
+        }
+        const logoImage = updatedSection.querySelector('.logo-image');
         if (logoImage) {
-          // Force re-render of logo with new size
           logoImage.style.height = 'var(--header-logo-height)';
         }
       });
@@ -460,47 +518,21 @@
   "settings": [
     {
       "type": "header",
-      "content": "Header Size & Position"
+      "content": "Header Size"
     },
     {
-      "type": "range",
+      "type": "text",
       "id": "header_height",
-      "label": "Header Height",
-      "min": 40,
-      "max": 120,
-      "step": 5,
-      "unit": "px",
-      "default": 60
+      "label": "Header height",
+      "default": "60px",
+      "info": "Accepts CSS lengths such as 60px, 4.5rem, 50vh. Enter digits only to use pixels."
     },
     {
-      "type": "range",
+      "type": "text",
       "id": "header_width",
-      "label": "Header Width",
-      "min": 800,
-      "max": 1600,
-      "step": 50,
-      "unit": "px",
-      "default": 1200
-    },
-    {
-      "type": "range",
-      "id": "header_margin_top",
-      "label": "Top Margin",
-      "min": 0,
-      "max": 50,
-      "step": 2,
-      "unit": "px",
-      "default": 8
-    },
-    {
-      "type": "range",
-      "id": "header_margin_bottom",
-      "label": "Bottom Margin",
-      "min": 0,
-      "max": 50,
-      "step": 2,
-      "unit": "px",
-      "default": 8
+      "label": "Header max width",
+      "default": "1200px",
+      "info": "Accepts CSS lengths (e.g. 1200px, 85vw, calc(100% - 3rem))."
     },
     {
       "type": "header",
@@ -540,26 +572,6 @@
       "info": "Any CSS value: 35px, 60px, 50%, auto, 2.5rem, etc."
     },
     {
-      "type": "checkbox",
-      "id": "logo_hover_effect",
-      "label": "Enable Logo Hover Effect",
-      "default": true,
-      "info": "Add scale animation on hover"
-    },
-    {
-      "type": "select",
-      "id": "logo_hover_scale",
-      "label": "Logo Hover Scale",
-      "options": [
-        { "value": "100", "label": "No Scale (100%)" },
-        { "value": "105", "label": "Slight Scale (105%)" },
-        { "value": "110", "label": "Medium Scale (110%)" },
-        { "value": "115", "label": "Strong Scale (115%)" },
-        { "value": "120", "label": "Maximum Scale (120%)" }
-      ],
-      "default": "105"
-    },
-    {
       "type": "header",
       "content": "Menu Settings"
     },
@@ -568,48 +580,6 @@
       "id": "menu",
       "label": "Menu",
       "default": "main-menu"
-    },
-    {
-      "type": "range",
-      "id": "menu_font_size",
-      "label": "Menu Font Size",
-      "min": 12,
-      "max": 20,
-      "step": 1,
-      "unit": "px",
-      "default": 16
-    },
-    {
-      "type": "select",
-      "id": "menu_font_weight",
-      "label": "Menu Font Weight",
-      "options": [
-        { "value": "400", "label": "Normal" },
-        { "value": "500", "label": "Medium" },
-        { "value": "600", "label": "Semi Bold" },
-        { "value": "700", "label": "Bold" }
-      ],
-      "default": "600"
-    },
-    {
-      "type": "range",
-      "id": "menu_item_padding",
-      "label": "Menu Item Padding",
-      "min": 4,
-      "max": 20,
-      "step": 2,
-      "unit": "px",
-      "default": 8
-    },
-    {
-      "type": "range",
-      "id": "menu_item_gap",
-      "label": "Space Between Menu Items",
-      "min": 8,
-      "max": 32,
-      "step": 2,
-      "unit": "px",
-      "default": 12
     },
     {
       "type": "header",
@@ -631,32 +601,6 @@
       "type": "checkbox",
       "id": "show_account",
       "label": "Show Account",
-      "default": true
-    },
-    {
-      "type": "range",
-      "id": "action_button_size",
-      "label": "Action Button Size",
-      "min": 28,
-      "max": 48,
-      "step": 2,
-      "unit": "px",
-      "default": 38
-    },
-    {
-      "type": "range",
-      "id": "action_button_gap",
-      "label": "Space Between Action Buttons",
-      "min": 4,
-      "max": 16,
-      "step": 2,
-      "unit": "px",
-      "default": 4
-    },
-    {
-      "type": "checkbox",
-      "id": "action_button_hover_effect",
-      "label": "Enable Action Button Hover Effects",
       "default": true
     },
     {
@@ -682,46 +626,6 @@
         }
       ],
       "default": "always"
-    },
-    {
-      "type": "header",
-      "content": "Color Scheme"
-    },
-    {
-      "type": "select",
-      "id": "color_scheme",
-      "label": "Color Scheme",
-      "options": [
-        {
-          "value": "scheme-1",
-          "label": "Scheme 1"
-        },
-        {
-          "value": "scheme-2",
-          "label": "Scheme 2"
-        },
-        {
-          "value": "scheme-3",
-          "label": "Scheme 3"
-        },
-        {
-          "value": "scheme-4",
-          "label": "Scheme 4"
-        },
-        {
-          "value": "scheme-5",
-          "label": "Scheme 5"
-        },
-        {
-          "value": "scheme-6",
-          "label": "Scheme 6"
-        },
-        {
-          "value": "scheme-7",
-          "label": "Scheme 7"
-        }
-      ],
-      "default": "scheme-1"
     },
     {
       "type": "header",
@@ -794,31 +698,144 @@
         {
           "value": "bold",
           "label": "Bold (28px)"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
         }
       ],
       "default": "global"
     },
     {
+      "type": "range",
+      "id": "glass_blur_custom",
+      "label": "Custom blur (px)",
+      "min": 4,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 20,
+      "info": "Used when blur strength is set to Custom."
+    },
+    {
       "type": "header",
-      "content": "Advanced Settings"
+      "content": "Glass intensity"
     },
     {
       "type": "range",
-      "id": "header_opacity",
-      "label": "Header Background Opacity",
-      "min": 10,
+      "id": "glass_opacity",
+      "label": "Surface opacity",
+      "min": 0,
       "max": 100,
-      "step": 5,
+      "step": 1,
       "unit": "%",
-      "default": 85,
-      "info": "Controls the transparency of the header background"
+      "default": 82
     },
     {
-      "type": "checkbox",
-      "id": "show_theme_toggle",
-      "label": "Show Theme Toggle Button",
-      "default": true,
-      "info": "Display the theme switcher button in the header"
+      "type": "range",
+      "id": "glass_border_opacity",
+      "label": "Border visibility",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 35
+    },
+    {
+      "type": "range",
+      "id": "glass_tint",
+      "label": "Tint mix",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "shadow_strength",
+      "label": "Shadow strength",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 38
+    },
+    {
+      "type": "header",
+      "content": "Spacing & layout"
+    },
+    {
+      "type": "range",
+      "id": "padding_inline",
+      "label": "Horizontal padding",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 28
+    },
+    {
+      "type": "range",
+      "id": "padding_block",
+      "label": "Vertical padding",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 80,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "content_gap",
+      "label": "Gap between groups",
+      "min": 0,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content distribution",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "Packed left"
+        },
+        {
+          "value": "center",
+          "label": "Centered"
+        },
+        {
+          "value": "flex-end",
+          "label": "Packed right"
+        },
+        {
+          "value": "space-between",
+          "label": "Spread"
+        },
+        {
+          "value": "space-around",
+          "label": "Space around"
+        },
+        {
+          "value": "space-evenly",
+          "label": "Space evenly"
+        }
+      ],
+      "default": "space-between"
     }
   ]
 }
