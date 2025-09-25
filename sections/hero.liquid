@@ -23,21 +23,21 @@
   <!-- Background Image -->
   <div class="hero-background">
     {%- if section.settings.image_1 != blank -%}
-    <!-- Desktop Image -->
+      <!-- Desktop Image -->
       <div class="hero-image-desktop">
-    {{
-      section.settings.image_1
+        {{
+          section.settings.image_1
           | image_url: width: 1920
-      | image_tag:
+          | image_tag:
             loading: 'eager',
             sizes: '(min-width: 768px) 100vw, 0px',
             widths: '768, 1024, 1280, 1920',
             class: 'hero-bg-image'
-      }}
-    </div>
+        }}
+      </div>
     {%- endif -%}
 
-      {%- if section.settings.image_1_mobile != blank -%}
+    {%- if section.settings.image_1_mobile != blank -%}
       <!-- Mobile Image -->
       <div class="hero-image-mobile">
         {{
@@ -51,7 +51,7 @@
         }}
       </div>
     {%- elsif section.settings.image_1 != blank -%}
-        <!-- Fallback to desktop image for mobile -->
+      <!-- Fallback to desktop image for mobile -->
       <div class="hero-image-mobile">
         {{
           section.settings.image_1
@@ -61,26 +61,26 @@
             sizes: '(max-width: 767px) 100vw, 0px',
             widths: '375, 414, 768',
             class: 'hero-bg-image'
-    }}
-    </div>
-  {%- endif -%}
-    </div>
+        }}
+      </div>
+    {%- endif -%}
+  </div>
 
   <!-- Content Overlay -->
   <div class="hero-content">
     <div class="hero-container hero-container--{{ section.settings.group_alignment }}">
       <!-- Hero Content Group -->
-      <div 
-        class="hero-content-group glass" 
+      <div
+        class="hero-content-group glass"
         data-group-id="hero-content"
-  style="
+        style="
           max-width: {{ section.settings.group_max_width }}px;
           padding: {{ section.settings.group_padding }}rem;
         "
       >
         <!-- Debug: Show blocks count -->
         <!-- Blocks count: {{ section.blocks.size }} -->
-        
+
         {%- for block in section.blocks -%}
           <!-- Block {{ forloop.index }}: {{ block.type }} -->
           {%- case block.type -%}
@@ -95,22 +95,22 @@
                     href="{{ block.settings.link | default: '#' }}"
                     class="hero-button"
                     {% if block.settings.open_in_new_tab %}
-          target="_blank" rel="noopener"
-        {% endif %}
+                      target="_blank" rel="noopener"
+                    {% endif %}
                   >
                     {{ block.settings.label }}
                   </a>
-    </div>
+                </div>
               {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
-        
+
         <!-- Fallback content if no blocks -->
         {%- if section.blocks.size == 0 -%}
           <div class="hero-text-block">
             <h1>The Perfect Brow Duo</h1>
             <p>Everything you need for flawless brows, every day.</p>
-    </div>
+          </div>
           <div class="hero-button-block">
             <a href="/products/the-duo" class="hero-button">Shop The Duo - $34.99</a>
             <a href="#shopify-section-how_to" class="hero-button">Learn How to Use</a>
@@ -202,7 +202,7 @@
     box-shadow: 0 24px 48px var(--glass-shadow-color, rgba(17, 23, 34, 0.14));
     padding: 3rem;
     max-width: 700px;
-      width: 100%;
+    width: 100%;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     isolation: isolate;
