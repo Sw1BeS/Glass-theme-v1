@@ -24,21 +24,21 @@
   <!-- Background Image -->
   <div class="hero-background">
     {%- if section.settings.image_1 != blank -%}
-      <!-- Desktop Image -->
+    <!-- Desktop Image -->
       <div class="hero-image-desktop">
-        {{
-          section.settings.image_1
+    {{
+      section.settings.image_1
           | image_url: width: 1920
-          | image_tag:
+      | image_tag:
             loading: 'eager',
             sizes: '(min-width: 768px) 100vw, 0px',
             widths: '768, 1024, 1280, 1920',
             class: 'hero-bg-image'
-        }}
-      </div>
+      }}
+    </div>
     {%- endif -%}
 
-    {%- if section.settings.image_1_mobile != blank -%}
+      {%- if section.settings.image_1_mobile != blank -%}
       <!-- Mobile Image -->
       <div class="hero-image-mobile">
         {{
@@ -52,7 +52,7 @@
         }}
       </div>
     {%- elsif section.settings.image_1 != blank -%}
-      <!-- Fallback to desktop image for mobile -->
+        <!-- Fallback to desktop image for mobile -->
       <div class="hero-image-mobile">
         {{
           section.settings.image_1
@@ -62,96 +62,67 @@
             sizes: '(max-width: 767px) 100vw, 0px',
             widths: '375, 414, 768',
             class: 'hero-bg-image'
-        }}
-      </div>
-    {%- endif -%}
-  </div>
+    }}
+    </div>
+  {%- endif -%}
+    </div>
 
   <!-- Content Overlay -->
   <div class="hero-content">
-    <div class="hero-container hero-container--{{ section.settings.content_vertical }}">
+    <div class="hero-container">
       <div
-        class="hero-text glass hero-text--{{ section.settings.content_alignment }}"
+        class="hero-panel glass"
         style="
-          max-width: {{ section.settings.content_max_width }}px;
-          padding: {{ section.settings.glass_padding }}px;
-          border-radius: {{ section.settings.glass_border_radius }}px;
-          margin-top: {{ section.settings.content_margin_top }}px;
-          margin-bottom: {{ section.settings.content_margin_bottom }}px;
+          max-width: {{ section.settings.panel_max_width | default: 600 }}px;
+          padding: {{ section.settings.panel_padding | default: 40 }}px;
+          border-radius: {{ section.settings.panel_border_radius | default: 24 }}px;
+          background: rgba(255, 255, 255, {{ section.settings.panel_opacity | default: 0.85 }});
         "
       >
-        {%- assign button_blocks = section.blocks | where: 'type', 'button' -%}
-        {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'text' -%}
-              <div class="hero-text-block" {{ block.shopify_attributes }}>
-                {{ block.settings.text }}
-              </div>
-          {%- endcase -%}
-        {%- endfor -%}
+        <div class="hero-panel-content">
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
+              {%- when 'text' -%}
+                <div class="hero-text-block" {{ block.shopify_attributes }}>
+                  {{ block.settings.text }}
+    </div>
+              {%- when 'button' -%}
+                {%- if block.settings.label != blank -%}
+                  <a
+                    href="{{ block.settings.link | default: '#' }}"
+                    class="hero-button"
+                    {% if block.settings.open_in_new_tab %}
+                      target="_blank" rel="noopener"
+                    {% endif %}
+                    {{ block.shopify_attributes }}
+                  >
+                    {{ block.settings.label }}
+                  </a>
+      {%- endif -%}
+            {%- endcase -%}
+          {%- endfor -%}
 
-        {%- if button_blocks.size > 0 -%}
-          <div
-            class="hero-button-block{% if section.settings.equal_button_width %} equal-width{% endif %}"
-            style="gap: {{ section.settings.button_gap }}px;"
-          >
-            {%- for block in button_blocks -%}
-              {%- if block.settings.label != blank -%}
-                <a
-                  href="{{ block.settings.link | default: '#' }}"
-                  class="hero-button"
-                  style="
-                    min-width: {{ section.settings.button_min_width }}px;
-                    height: {{ section.settings.button_height }}px;
-                  "
-                  {% if block.settings.open_in_new_tab %}
-                    target="_blank" rel="noopener"
-                  {% endif %}
-                  {{ block.shopify_attributes }}
-                >
-                  {{ block.settings.label }}
-                </a>
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
-
-        <!-- Fallback content for empty states -->
-        {%- unless section.blocks.size > 0 -%}
-          <div class="hero-text-block">
-            <h1>The Perfect Brow Duo</h1>
-            <p>Everything you need for flawless brows, every day.</p>
-          </div>
-          <div
-            class="hero-button-block{% if section.settings.equal_button_width %} equal-width{% endif %}"
-            style="gap: {{ section.settings.button_gap }}px;"
-          >
-            <a
-              href="/products/the-duo"
-              class="hero-button"
-              style="
-                min-width: {{ section.settings.button_min_width }}px;
-                height: {{ section.settings.button_height }}px;
-              "
-            >
+          <!-- Fallback content for empty states -->
+          {%- unless section.blocks.size > 0 -%}
+            <div class="hero-text-block">
+              <h1>The Perfect Brow Duo</h1>
+              <p>Everything you need for flawless brows, every day.</p>
+    </div>
+            <a href="/products/the-duo" class="hero-button">
               Shop The Duo - $34.99
             </a>
-            <a
-              href="#shopify-section-how_to"
-              class="hero-button"
-              style="
-                min-width: {{ section.settings.button_min_width }}px;
-                height: {{ section.settings.button_height }}px;
-              "
-            >
+            <a href="#shopify-section-how_to" class="hero-button">
               Learn How to Use
             </a>
+          {%- endunless -%}
+            </div>
           </div>
-        {%- endunless -%}
-      </div>
+        </div>
     </div>
-  </div>
-</div>
+            </div>
+          </div>
+        </div>
+    </div>
 
 {% stylesheet %}
   /* ===== CSS VARIABLES FOR ADMIN SETTINGS ===== */
@@ -212,11 +183,6 @@
     position: relative;
     z-index: 2;
     width: 100%;
-    max-width: 1200px;
-    padding: 2rem;
-  }
-
-  .hero-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -224,55 +190,29 @@
     padding: 2rem;
   }
 
-  /* ===== VERTICAL POSITIONING ===== */
-  .hero-container--top {
-    align-items: flex-start;
-    padding-top: 4rem;
-  }
-
-  .hero-container--center {
-    align-items: center;
-  }
-
-  .hero-container--bottom {
-    align-items: flex-end;
-    padding-bottom: 4rem;
-  }
-
-  /* ===== GLASS EFFECT CONTAINER ===== */
-  .hero-text {
-    display: grid;
-    gap: clamp(1.25rem, 3vw, 1.8rem);
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+  .hero-container {
     width: 100%;
-    position: relative;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  /* ===== CONTENT ALIGNMENT ===== */
-  .hero-text--center {
-    text-align: center;
-  }
-
-  .hero-text--left {
-    text-align: left;
-  }
-
-  .hero-text--right {
-    text-align: right;
-  }
-
-  .hero-text:not(.glass-surface) {
-    background: rgba(255, 255, 255, var(--glass-opacity, 0.8));
-    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
-    box-shadow: 0 16px 40px var(--glass-shadow-color, rgba(20, 26, 34, 0.12));
+  /* ===== GLASS PANEL ===== */
+  .hero-panel {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    text-align: center;
+    width: 100%;
   }
 
-  .hero-text.glass-surface {
-    padding: clamp(1.8rem, 3.5vw, 2.4rem);
-    border: none;
-    box-shadow: none;
+  .hero-panel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
   }
 
   /* ===== TYPOGRAPHY STYLES ===== */
@@ -282,72 +222,91 @@
   .hero-text-block h4,
   .hero-text-block h5,
   .hero-text-block h6 {
-    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
     font-weight: 700;
-    margin: 0;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
-    line-height: 1.2;
+    margin: 0 0 1rem 0;
+    color: var(--color-foreground, #2c2c2c);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
   }
 
   .hero-text-block p {
-    font-size: 1.05rem;
-    line-height: 1.65;
-    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-foreground, #2c2c2c);
     margin: 0;
+    opacity: 0.9;
   }
 
-  /* ===== BUTTON LAYOUT ===== */
-  .hero-button-block {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-  }
-
-  /* ===== EQUAL WIDTH BUTTONS ===== */
-  .hero-button-block.equal-width {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--button-gap, 16px);
-  }
-
-  .hero-button-block.equal-width .hero-button {
-    width: 100%;
-    justify-content: center;
-  }
-
-  /* ===== PRIMARY BUTTON STYLES ===== */
+  /* ===== BUTTON STYLES ===== */
   .hero-button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
-    padding: 0.85rem 1.8rem;
-    border-radius: 999px;
-    text-decoration: none;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
     font-weight: 600;
-    color: var(--text-on-primary, #ffffff);
-    background: linear-gradient(
-      135deg,
-      var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 0%,
-      var(--color-primary, #bf8a7a) 100%
-    );
-    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
+    text-decoration: none;
     transition: all 0.3s ease;
-    will-change: transform;
-    min-width: var(--button-min-width, 200px);
-    height: var(--button-height, 48px);
+    cursor: pointer;
+    border: 2px solid transparent;
+    font-size: 1rem;
+    line-height: 1.5;
+    min-width: 200px;
+    height: 52px;
+    background: var(--color-primary, #bf8a7a);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
 
   .hero-button:hover {
+    background: var(--color-primary-hover, #a67666);
     transform: translateY(-2px);
-    box-shadow: 0 24px 48px
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .hero-button:active {
+    transform: translateY(0);
   }
 
   .hero-button:focus {
-    outline: 2px solid var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+    outline: 2px solid var(--color-primary, #bf8a7a);
     outline-offset: 2px;
+  }
+
+  /* ===== MOBILE STYLES ===== */
+  @media (max-width: 767px) {
+    .hero-content {
+      padding: 1rem;
+    }
+
+    .hero-panel {
+      max-width: 100% !important;
+    }
+
+    .hero-panel-content {
+      gap: 1.25rem;
+    }
+
+    .hero-text-block h1,
+    .hero-text-block h2,
+    .hero-text-block h3,
+    .hero-text-block h4,
+    .hero-text-block h5,
+    .hero-text-block h6 {
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+    }
+
+    .hero-text-block p {
+      font-size: 1rem;
+    }
+
+    .hero-button {
+      padding: 0.875rem 2rem;
+      min-width: 180px;
+      height: 48px;
+      font-size: 0.95rem;
+    }
   }
 
   .hero-button:focus-visible {
@@ -395,7 +354,7 @@
     }
 
     .hero-button {
-      width: 100%;
+    width: 100%;
       max-width: 280px;
       justify-content: center;
     }
@@ -689,7 +648,7 @@
   ],
   "blocks": [
     {
-      "type": "text",
+          "type": "text",
       "name": "Text",
       "settings": [
         {
@@ -701,11 +660,11 @@
       ]
     },
     {
-      "type": "button",
+          "type": "button",
       "name": "Button",
       "settings": [
         {
-          "type": "text",
+              "type": "text",
           "id": "label",
           "label": "Button Text",
           "default": "Learn More"
@@ -729,7 +688,7 @@
     {
       "name": "Hero",
       "category": "Banners",
-      "settings": {
+          "settings": {
         "section_width": "full-width",
         "color_scheme": "scheme-1",
         "enable_glass": true,
@@ -745,27 +704,27 @@
         "button_min_width": 200,
         "button_height": 48,
         "button_gap": 16,
-        "padding-block-start": 0,
-        "padding-block-end": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
         "content_margin_top": 0,
         "content_margin_bottom": 0
-      },
-      "blocks": {
+          },
+          "blocks": {
         "text_1": {
-          "type": "text",
-          "settings": {
+                  "type": "text",
+                  "settings": {
             "text": "<h1>The Perfect Brow Duo</h1>"
           }
         },
         "text_2": {
-          "type": "text",
-          "settings": {
+                  "type": "text",
+                  "settings": {
             "text": "<p>Everything you need for flawless brows, every day.</p>"
           }
         },
         "button_1": {
           "type": "button",
-          "settings": {
+              "settings": {
             "label": "Shop The Duo - $34.99",
             "link": "/products/the-duo",
             "open_in_new_tab": false
@@ -773,7 +732,7 @@
         },
         "button_2": {
           "type": "button",
-          "settings": {
+      "settings": {
             "label": "Learn How to Use",
             "link": "#shopify-section-how_to",
             "open_in_new_tab": false
