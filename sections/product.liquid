@@ -1,0 +1,101 @@
+{%- comment -%}
+  Clean Product Section for IS BEAUTY LUX
+  Features: Glass effect, responsive design, theme integration
+{%- endcomment -%}
+
+<div class="section product-section">
+  <div class="product__container">
+    <div class="product__media">
+      {% if product.featured_image %}
+        <div class="product__image">
+          <img
+            src="{{ product.featured_image | image_url: width: 800 }}"
+            alt="{{ product.featured_image.alt | escape }}"
+            class="product__main-image"
+          >
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="product__content">
+      <h1 class="product__title">{{ product.title }}</h1>
+
+      {% if product.price %}
+        <div class="product__price">
+          {% if product.compare_at_price > product.price %}
+            <span class="price price--sale">{{ product.price | money }}</span>
+            <span class="price price--compare">{{ product.compare_at_price | money }}</span>
+          {% else %}
+            <span class="price">{{ product.price | money }}</span>
+          {% endif %}
+        </div>
+      {% endif %}
+
+      {% if product.description != blank %}
+        <div class="product__description">
+          {{ product.description }}
+        </div>
+      {% endif %}
+
+      <form action="{{ routes.cart_add_url }}" method="post" enctype="multipart/form-data" class="product__form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+
+        <div class="product__quantity">
+          <label for="quantity">Quantity</label>
+          <input type="number" id="quantity" name="quantity" value="1" min="1" class="product__quantity-input">
+        </div>
+
+        <button type="submit" class="button product__add-to-cart">
+          Add to Cart
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "brand-porcelain",
+          "label": "Brand Porcelain"
+        },
+        {
+          "value": "classic-rose",
+          "label": "Classic Rose"
+        },
+        {
+          "value": "deep-burgundy",
+          "label": "Deep Burgundy"
+        },
+        {
+          "value": "sage-green",
+          "label": "Sage Green"
+        },
+        {
+          "value": "midnight-blue",
+          "label": "Midnight Blue"
+        },
+        {
+          "value": "warm-terracotta",
+          "label": "Warm Terracotta"
+        }
+      ],
+      "default": "brand-porcelain"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product"
+    }
+  ]
+}
+{% endschema %}

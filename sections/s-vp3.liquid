@@ -1,0 +1,398 @@
+{% comment %}
+  VP3 Section - Value Proposition 3
+  Features: Image on one side, text content on the other, responsive layout
+{% endcomment %}
+
+{% liquid
+  assign glass_enabled = section.settings.enable_glass
+  if glass_enabled == null
+    assign glass_enabled = settings.enable_glass_effect
+  endif
+  assign glass_tone = section.settings.glass_tone | default: 'auto'
+  assign glass_elevation = section.settings.glass_elevation | default: 'medium'
+%}
+
+<div
+  class="s-vp3-section color-{{ section.settings.color_scheme }}"
+  {% if glass_enabled %}
+    data-glass-tone="{{ glass_tone }}"
+    data-glass-elevation="{{ glass_elevation }}"
+  {% endif %}
+>
+  <div class="s-vp3-container section-{{ section.settings.section_width }}">
+    <div
+      class="s-vp3-content glass"
+    >
+      {%- assign header_found = false -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'section_header' -%}
+            {%- assign header_found = true -%}
+            <h2 class="s-vp3-title" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+          {%- when 'text' -%}
+            <div class="s-vp3-description" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {%- when 'button' -%}
+            {%- if block.settings.button_text != blank -%}
+              <a href="{{ block.settings.button_link }}" class="s-vp3-button" {{ block.shopify_attributes }}>
+                {{ block.settings.button_text }}
+              </a>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {%- unless header_found -%}
+        <h2 class="s-vp3-title">{{ section.settings.heading | default: '3-Step Routine Made Simple' }}</h2>
+      {%- endunless -%}
+
+      {%- assign text_found = false -%}
+      {%- assign button_found = false -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'text' -%}
+            {%- assign text_found = true -%}
+          {%- when 'button' -%}
+            {%- assign button_found = true -%}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {%- unless text_found -%}
+        <div class="s-vp3-description">
+          {{
+            section.settings.text
+            | default: '<p>Follow our simple 3-step routine: cleanse, condition, and style. Each product works together to give you salon-quality results at home in just minutes.</p>'
+          }}
+        </div>
+      {%- endunless -%}
+
+      {%- unless button_found -%}
+        {%- if section.settings.button_text != blank -%}
+          <a href="{{ section.settings.button_link }}" class="s-vp3-button">
+            {{ section.settings.button_text }}
+          </a>
+        {%- endif -%}
+      {%- endunless -%}
+    </div>
+    <div class="s-vp3-media">
+      {%- if section.settings.image != blank -%}
+        <div class="s-vp3-image-desktop">
+          {{
+            section.settings.image
+            | image_url: width: 1500
+            | image_tag:
+              loading: 'lazy',
+              sizes: '(min-width: 768px) 750px, 0px',
+              widths: '750, 1000, 1500',
+              class: 's-vp3-image'
+          }}
+        </div>
+        {%- if section.settings.image_mobile != blank -%}
+          <div class="s-vp3-image-mobile">
+            {{
+              section.settings.image_mobile
+              | image_url: width: 750
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 767px) 375px, 0px',
+                widths: '375, 500, 750',
+                class: 's-vp3-image'
+            }}
+          </div>
+        {%- else -%}
+          <div class="s-vp3-image-mobile">
+            {{
+              section.settings.image
+              | image_url: width: 750
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 767px) 375px, 0px',
+                widths: '375, 500, 750',
+                class: 's-vp3-image'
+            }}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="s-vp3-placeholder">
+          <p>Add an image for VP3</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .s-vp3-section {
+    padding: clamp(3rem, 6vw, 4.2rem) 0;
+  }
+
+  .s-vp3-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 4vw, 2.5rem);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  .s-vp3-content {
+    display: grid;
+    gap: clamp(1.2rem, 3vw, 1.8rem);
+    padding: clamp(1.8rem, 3.5vw, 2.4rem);
+    border-radius: 22px;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+  }
+
+  .s-vp3-content:not(.glass-surface) {
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
+    box-shadow: 0 18px 40px var(--glass-shadow-color, rgba(20, 26, 34, 0.12));
+  }
+
+  .s-vp3-content.glass-surface {
+    padding: clamp(1.8rem, 3.5vw, 2.4rem);
+    border: none;
+    box-shadow: none;
+  }
+
+  .s-vp3-title {
+    font-size: clamp(2rem, 4.2vw, 3rem);
+    font-weight: 700;
+    margin: 0;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+  }
+
+  .s-vp3-description {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
+  }
+
+  .s-vp3-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.9rem 2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    background: linear-gradient(
+      135deg,
+      var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 0%,
+      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 55%, transparent) 100%
+    );
+    color: var(--text-on-primary, #ffffff);
+    border: 1px solid transparent;
+    box-shadow: 0 20px 40px
+      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 25%, transparent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .s-vp3-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 26px 52px
+      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
+  }
+
+  .s-vp3-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .s-vp3-image-desktop,
+  .s-vp3-image-mobile {
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 20px 46px rgba(20, 26, 34, 0.14);
+  }
+
+  .s-vp3-image {
+    width: 100%;
+    display: block;
+  }
+
+  .s-vp3-image-desktop {
+    display: block;
+  }
+
+  .s-vp3-image-mobile {
+    display: none;
+  }
+
+  @media (max-width: 900px) {
+    .s-vp3-container {
+      grid-template-columns: 1fr;
+    }
+
+    .s-vp3-content,
+    .s-vp3-content.glass-surface {
+      padding: clamp(1.5rem, 5vw, 1.9rem);
+    }
+
+    .s-vp3-container {
+      gap: clamp(2rem, 5vw, 3rem);
+    }
+
+    .s-vp3-image-desktop {
+      display: none;
+    }
+
+    .s-vp3-image-mobile {
+      display: block;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Value Proposition 3",
+  "blocks": [
+    {
+      "type": "section_header",
+      "name": "Section Header",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Professional Results at Home"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Get salon-quality brow care results in the comfort of your own home. Our professional-grade formula delivers consistent, beautiful results every time.</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Shop Now"
+        },
+        {
+          "type": "text",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/products/the-duo"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Image",
+      "info": "Optional: Different image for mobile devices"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        { "value": "scheme-1", "label": "Scheme 1" },
+        { "value": "scheme-2", "label": "Scheme 2" },
+        { "value": "scheme-3", "label": "Scheme 3" },
+        { "value": "scheme-4", "label": "Scheme 4" },
+        { "value": "scheme-5", "label": "Scheme 5" },
+        { "value": "scheme-6", "label": "Scheme 6" }
+      ],
+      "default": "scheme-3"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "options": [
+        { "value": "full-width", "label": "Full Width" },
+        { "value": "page-width", "label": "Page Width" }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "header",
+      "content": "Glass styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_glass",
+      "label": "Enable glass panel",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "glass_tone",
+      "label": "Panel tone",
+      "options": [
+        { "value": "auto", "label": "Auto" },
+        { "value": "light", "label": "Light" },
+        { "value": "dark", "label": "Dark" }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "glass_elevation",
+      "label": "Panel elevation",
+      "options": [
+        { "value": "low", "label": "Low" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "high", "label": "High" }
+      ],
+      "default": "medium"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Value Proposition 3",
+      "blocks": [
+        {
+          "type": "section_header",
+          "settings": {
+            "heading": "Professional Results at Home"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>Get salon-quality brow care results in the comfort of your own home. Our professional-grade formula delivers consistent, beautiful results every time.</p>"
+          }
+        },
+        {
+          "type": "button",
+          "settings": {
+            "button_text": "Shop Now",
+            "button_link": "/products/the-duo"
+          }
+        }
+      ],
+      "settings": {
+        "color_scheme": "scheme-3",
+        "section_width": "full-width"
+      }
+    }
+  ]
+}
+{% endschema %}

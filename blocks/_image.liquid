@@ -1,0 +1,305 @@
+
+
+{%- doc -%}
+  Renders an image block.
+
+  @param {string} [loading] - The html loading attribute
+  @param {string} [placeholder] - The placeholder image name to use when no image is provided, defaults to 'hero-apparel-2'
+{%- enddoc -%}
+
+{% assign block_settings = block.settings %}
+{% assign image = closest.collection.featured_image | default: closest.product.featured_image %}
+{% assign alt = closest.collection.title | default: closest.product.title %}
+
+{% liquid
+  assign width = '100%'
+  assign media_width_desktop = '100vw'
+  assign media_width_mobile = '100vw'
+  assign sizes = 'auto, (min-width: 750px) ' | append: media_width_desktop | append: ', ' | append: media_width_mobile
+  assign widths = '240, 352, 832, 1200, 1600, 1920, 2560'
+%}
+
+{% if image %}
+  <image-block
+    ratio="{{ block_settings.ratio }}"
+    height="{{ block_settings.height }}"
+    style="--border-radius: {{ block_settings.border_radius }}px;"
+    {{ block.shopify_attributes }}
+  >
+    {{
+      image
+      | image_url: width: 2560
+      | image_tag: width: width, widths: widths, sizes: sizes, loading: loading, alt: alt
+    }}
+  </image-block>
+{% else %}
+  <image-block
+    ratio="{{ block_settings.ratio }}"
+    height="{{ block_settings.height }}"
+    style="--border-radius: {{ block_settings.border_radius }}px;"
+    {{ block.shopify_attributes }}
+  >
+    <div class="placeholder-content">
+      <div class="placeholder-icon">🖼️</div>
+      <h4 class="placeholder-title">{{ block_settings.placeholder_title | default: 'Add Image' }}</h4>
+      <div class="placeholder-specs">
+        <div class="spec-item">
+          <span class="spec-label">🌐 Web:</span>
+          <span class="spec-value">{{ block_settings.placeholder_web_size | default: '1200×800px' }}</span>
+        </div>
+        <div class="spec-item">
+          <span class="spec-label">📱 Mobile:</span>
+          <span class="spec-value">{{ block_settings.placeholder_mobile_size | default: '600×400px' }}</span>
+        </div>
+        <div class="spec-item spec-creative">
+          <span class="spec-label">💡 Tip:</span>
+          <span class="spec-value">{{ block_settings.placeholder_creative | default: 'Professional product photography with clean background' }}</span>
+        </div>
+      </div>
+    </div>
+  </image-block>
+{% endif %}
+
+{% stylesheet %}
+  image-block {
+    --image-height-basis: 10rem;
+    --image-height-small: calc(var(--image-height-basis) * 2);
+    --image-height-medium: calc(var(--image-height-basis) * 3);
+    --image-height-large: calc(var(--image-height-basis) * 4);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: var(--ratio);
+    width: 100%;
+    max-width: calc(var(--image-height) * var(--ratio));
+    height: var(--image-height);
+    overflow: hidden;
+
+    @media screen and (min-width: 750px) {
+      --image-height-small: calc(var(--image-height-basis) * 2.5);
+      --image-height-medium: calc(var(--image-height-basis) * 3.5);
+      --image-height-large: calc(var(--image-height-basis) * 4.5);
+    }
+
+    @media screen and (max-width: 749px) {
+      height: auto;
+    }
+
+    &[height='small'] {
+      --image-height: var(--image-height-small);
+    }
+
+    &[height='medium'] {
+      --image-height: var(--image-height-medium);
+    }
+
+    &[height='large'] {
+      --image-height: var(--image-height-large);
+    }
+
+    &[ratio='portrait'] {
+      --ratio: 4 / 5;
+    }
+
+    &[ratio='square'] {
+      --ratio: 1 / 1;
+
+      @media screen and (min-width: 750px) {
+        max-width: var(--image-height);
+      }
+    }
+
+    &[ratio='landscape'] {
+      --ratio: 16 / 9;
+    }
+
+    img {
+      object-fit: cover;
+      width: 100%;
+      height: auto;
+      aspect-ratio: var(--ratio);
+      border-radius: var(--border-radius);
+    }
+  }
+
+  /* Placeholder Styles */
+  image-block .placeholder-content {
+    background: linear-gradient(135deg, var(--color-tertiary-bg, #f8f9fa), var(--color-quaternary-bg, #e9ecef));
+    border: 2px dashed var(--color-primary, #bf8a7a);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+  }
+
+  .placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .placeholder-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-primary, #bf8a7a);
+    margin: 0 0 1.5rem 0;
+  }
+
+  .placeholder-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .spec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(191, 138, 122, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(191, 138, 122, 0.2);
+    min-width: 200px;
+  }
+
+  .spec-label {
+    font-weight: 600;
+    color: var(--color-foreground, #5a5e5a);
+    font-size: 0.9rem;
+  }
+
+  .spec-value {
+    font-weight: 700;
+    color: var(--color-primary, #bf8a7a);
+    font-size: 0.9rem;
+    font-family: monospace;
+  }
+
+  .spec-creative {
+    background: rgba(191, 138, 122, 0.15);
+    border: 1px solid rgba(191, 138, 122, 0.3);
+  }
+
+  .spec-creative .spec-label {
+    color: var(--color-primary, #bf8a7a);
+    font-weight: 700;
+  }
+
+  .spec-creative .spec-value {
+    font-family: inherit;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-foreground, #5a5e5a);
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.resource_reference_collection_card_image"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:settings.height",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "large"
+    },
+    {
+      "type": "select",
+      "id": "ratio",
+      "label": "t:settings.ratio",
+      "options": [
+        {
+          "value": "portrait",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        },
+        {
+          "value": "landscape",
+          "label": "t:options.landscape"
+        }
+      ],
+      "default": "portrait"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Placeholder Settings"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_title",
+      "label": "Placeholder Title",
+      "default": "Add Image",
+      "info": "Title shown in placeholder when no image is uploaded"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_creative",
+      "label": "Placeholder Creative Description",
+      "default": "Professional product photography with clean background",
+      "info": "Creative description for the placeholder image"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_web_size",
+      "label": "Web Size Recommendation",
+      "default": "1200×800px",
+      "info": "Recommended size for desktop/web viewing"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_mobile_size",
+      "label": "Mobile Size Recommendation",
+      "default": "600×400px",
+      "info": "Recommended size for mobile viewing"
+    }
+  ]
+}
+{% endschema %}

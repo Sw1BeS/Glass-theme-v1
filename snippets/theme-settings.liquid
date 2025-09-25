@@ -1,0 +1,86 @@
+{%- comment -%}
+  Theme Settings for IS Beauty Lux
+  Provides global theme configuration options
+{%- endcomment -%}
+
+{%- liquid
+  assign theme_settings = settings.theme_settings | default: blank
+
+  if theme_settings == blank
+    assign theme_settings = '{}'
+  endif
+
+  assign settings_json = theme_settings | parse_json
+-%}
+
+<script>
+  window.ISBeautyLux = window.ISBeautyLux || {};
+  window.ISBeautyLux.settings = {
+    // Theme Settings
+    theme: {
+      name: '{{ settings.theme_name | default: "IS Beauty Lux" }}',
+      version: '{{ settings.theme_version | default: "1.0.0" }}',
+      description: '{{ settings.theme_description | default: "Premium beauty theme with advanced customization" }}'
+    },
+
+    // Color Scheme Settings
+    colors: {
+      defaultScheme: '{{ settings.default_color_scheme | default: "deep-burgundy" }}',
+      autoContrast: {{ settings.auto_contrast | default: true }},
+      customPrimary: '{{ settings.custom_primary_color | default: "" }}',
+      customAccent: '{{ settings.custom_accent_color | default: "" }}'
+    },
+
+    // Animation Settings
+    animations: {
+      enabled: {{ settings.animations_enabled | default: true }},
+      duration: {{ settings.animation_duration | default: 300 }},
+      easing: '{{ settings.animation_easing | default: "ease-in-out" }}',
+      particles: {{ settings.particles_enabled | default: true }},
+      spotlight: {{ settings.spotlight_enabled | default: true }},
+      shimmer: {{ settings.shimmer_enabled | default: true }}
+    },
+
+    // Layout Settings
+    layout: {
+      containerWidth: '{{ settings.container_width | default: "1200px" }}',
+      sectionSpacing: {{ settings.section_spacing | default: 2 }},
+      headerHeight: '{{ settings.header_height | default: "80px" }}',
+      footerHeight: '{{ settings.footer_height | default: "200px" }}'
+    },
+
+    // Typography Settings
+    typography: {
+      fontFamily: '{{ settings.font_family | default: "Inter" }}',
+      headingFont: '{{ settings.heading_font | default: "Inter" }}',
+      baseFontSize: '{{ settings.base_font_size | default: "16px" }}',
+      headingScale: {{ settings.heading_scale | default: 1.2 }}
+    },
+
+    // Performance Settings
+    performance: {
+      lazyLoading: {{ settings.lazy_loading | default: true }},
+      imageOptimization: {{ settings.image_optimization | default: true }},
+      minifyCSS: {{ settings.minify_css | default: true }},
+      minifyJS: {{ settings.minify_js | default: true }}
+    },
+
+    // SEO Settings
+    seo: {
+      metaTitle: '{{ settings.meta_title | default: "IS Beauty Lux - Premium Beauty Products" }}',
+      metaDescription: '{{ settings.meta_description | default: "Discover our premium beauty products with clean ingredients and professional results." }}',
+      ogImage: '{{ settings.og_image | default: "" }}',
+      twitterCard: '{{ settings.twitter_card | default: "summary_large_image" }}'
+    },
+
+    // Analytics Settings
+    analytics: {
+      googleAnalytics: '{{ settings.google_analytics | default: "" }}',
+      facebookPixel: '{{ settings.facebook_pixel | default: "" }}',
+      trackingEnabled: {{ settings.tracking_enabled | default: true }}
+    },
+
+    // Custom Settings
+    custom: {{ settings_json | json }}
+  };
+</script>

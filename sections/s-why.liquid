@@ -1,0 +1,316 @@
+{% comment %}
+  Why Section - Why Buy Together
+  Features: Image on one side, text content on the other, responsive layout
+{% endcomment %}
+
+<div class="s-why-section color-{{ section.settings.color_scheme }}">
+  <div class="s-why-container section-{{ section.settings.section_width }}">
+    <div class="s-why-content glass">
+      {%- assign header_found = false -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'section_header' -%}
+            {%- assign header_found = true -%}
+            <h2 class="s-why-title" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+          {%- when 'text' -%}
+            <div class="s-why-description" {{ block.shopify_attributes }}>{{ block.settings.text }}</div>
+          {%- when 'button' -%}
+            {%- if block.settings.button_text != blank -%}
+              <a href="{{ block.settings.button_link }}" class="s-why-button" {{ block.shopify_attributes }}>
+                {{ block.settings.button_text }}
+              </a>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {%- unless header_found -%}
+        <h2 class="s-why-title">{{ section.settings.heading | default: 'Why Buy Together?' }}</h2>
+      {%- endunless -%}
+
+      {%- assign text_found = false -%}
+      {%- assign button_found = false -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'text' -%}
+            {%- assign text_found = true -%}
+          {%- when 'button' -%}
+            {%- assign button_found = true -%}
+        {%- endcase -%}
+      {%- endfor -%}
+
+      {%- unless text_found -%}
+        <div class="s-why-description">
+          {{
+            section.settings.text
+            | default: '<p>Our products are designed to work together as a complete system. When used together, they provide maximum benefits and optimal results for your brow care routine.</p>'
+          }}
+        </div>
+      {%- endunless -%}
+
+      {%- unless button_found -%}
+        {%- if section.settings.button_text != blank -%}
+          <a href="{{ section.settings.button_link }}" class="s-why-button">
+            {{ section.settings.button_text }}
+          </a>
+        {%- endif -%}
+      {%- endunless -%}
+    </div>
+    <div class="s-why-media">
+      {%- if section.settings.image != blank -%}
+        <div class="s-why-image-desktop">
+          {{
+            section.settings.image
+            | image_url: width: 1500
+            | image_tag:
+              loading: 'lazy',
+              sizes: '(min-width: 768px) 750px, 0px',
+              widths: '750, 1000, 1500',
+              class: 's-why-image'
+          }}
+        </div>
+        {%- if section.settings.image_mobile != blank -%}
+          <div class="s-why-image-mobile">
+            {{
+              section.settings.image_mobile
+              | image_url: width: 750
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 767px) 375px, 0px',
+                widths: '375, 500, 750',
+                class: 's-why-image'
+            }}
+          </div>
+        {%- else -%}
+          <div class="s-why-image-mobile">
+            {{
+              section.settings.image
+              | image_url: width: 750
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 767px) 375px, 0px',
+                widths: '375, 500, 750',
+                class: 's-why-image'
+            }}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <div class="s-why-placeholder">
+          <p>Add an image for Why Buy Together</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .s-why-section {
+    padding: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .s-why-container {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: 40px;
+    max-width: var(--page-width);
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .s-why-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .s-why-title {
+    font-size: 2.5em;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .s-why-description {
+    font-size: 1.1em;
+    line-height: 1.6;
+  }
+
+  .s-why-button {
+    display: inline-block;
+    padding: 12px 25px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .s-why-media {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .s-why-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .s-why-image-desktop {
+    display: block;
+  }
+
+  .s-why-image-mobile {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .s-why-container {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .s-why-image-desktop {
+      display: none;
+    }
+
+    .s-why-image-mobile {
+      display: block;
+    }
+
+    .s-why-title {
+      font-size: 2em;
+    }
+
+    .s-why-description {
+      font-size: 1em;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Why Buy Together",
+  "blocks": [
+    {
+      "type": "section_header",
+      "name": "Section Header",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Why Buy Together?"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>When you buy both products together, you get the complete brow care system at a special price. Perfect for maintaining beautiful, healthy brows every day.</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Buy The Duo"
+        },
+        {
+          "type": "text",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_link",
+      "label": "Button Link",
+      "default": "/products/the-duo"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Mobile Image",
+      "info": "Optional: Different image for mobile devices"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        { "value": "scheme-1", "label": "Scheme 1" },
+        { "value": "scheme-2", "label": "Scheme 2" },
+        { "value": "scheme-3", "label": "Scheme 3" },
+        { "value": "scheme-4", "label": "Scheme 4" },
+        { "value": "scheme-5", "label": "Scheme 5" },
+        { "value": "scheme-6", "label": "Scheme 6" }
+      ],
+      "default": "scheme-4"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "options": [
+        { "value": "full-width", "label": "Full Width" },
+        { "value": "page-width", "label": "Page Width" }
+      ],
+      "default": "full-width"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Buy Together",
+      "blocks": [
+        {
+          "type": "section_header",
+          "settings": {
+            "heading": "Why Buy Together?"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>When you buy both products together, you get the complete brow care system at a special price. Perfect for maintaining beautiful, healthy brows every day.</p>"
+          }
+        },
+        {
+          "type": "button",
+          "settings": {
+            "button_text": "Get The Duo",
+            "button_link": "/products/the-duo"
+          }
+        }
+      ],
+      "settings": {
+        "color_scheme": "scheme-4",
+        "section_width": "full-width"
+      }
+    }
+  ]
+}
+{% endschema %}

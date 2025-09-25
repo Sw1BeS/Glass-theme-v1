@@ -1,0 +1,86 @@
+{%- doc -%}
+  Glass Group: Стеклянный контейнер для группировки элементов
+  Используется для создания логических блоков с единым стеклянным фоном
+  
+  @param {string} title - заголовок группы
+  @param {string} subtitle - подзаголовок группы  
+  @param {string} class - дополнительные CSS классы
+  @param {string} style - дополнительные стили
+{%- enddoc -%}
+
+{%- liquid
+  assign group_class = 'glass-group'
+  if class != blank
+    assign group_class = group_class | append: ' ' | append: class
+  endif
+-%}
+
+<div class="{{ group_class }}" style="{{ style }}">
+  {% if title != blank or subtitle != blank %}
+    <div class="glass-group__header">
+      {% if title != blank %}
+        <h2 class="glass-group__title">{{ title }}</h2>
+      {% endif %}
+      {% if subtitle != blank %}
+        <p class="glass-group__subtitle">{{ subtitle }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+  
+  <div class="glass-group__content">
+    {{ content }}
+  </div>
+</div>
+
+<style>
+  .glass-group {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    margin: 1rem 0;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-group__header {
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .glass-group__title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: var(--color-foreground, #2c2c2c);
+  }
+
+  .glass-group__subtitle {
+    font-size: 1.1rem;
+    margin: 0;
+    color: var(--color-foreground-light, #666);
+  }
+
+  .glass-group__content {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: 768px) {
+    .glass-group {
+      padding: 1.5rem;
+      margin: 0.5rem 0;
+    }
+    
+    .glass-group__title {
+      font-size: 1.5rem;
+    }
+    
+    .glass-group__subtitle {
+      font-size: 1rem;
+    }
+  }
+</style>

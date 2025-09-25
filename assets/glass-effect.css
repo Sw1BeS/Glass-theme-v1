@@ -1,0 +1,134 @@
+/* Glass Effect CSS - Adaptive Implementation */
+
+/* Glass overlay wrappers */
+.media-block__media-wrapper,
+.image-block__image-wrapper {
+  position: relative !important;
+}
+
+/* Glass overlay base styles with 0-100 parameters */
+.glass-overlay {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+
+  /* Adaptive background based on darkness (0-100) */
+  background: rgba(
+    calc(255 - var(--glass-darkness, 10) * 2.55),
+    calc(255 - var(--glass-darkness, 10) * 2.55),
+    calc(255 - var(--glass-darkness, 10) * 2.55),
+    calc(var(--glass-opacity, 15) / 100)
+  ) !important;
+
+  /* Adaptive blur (0-100 -> 0-50px) */
+  backdrop-filter: blur(calc(var(--glass-blur, 20) / 100 * 50px)) !important;
+  -webkit-backdrop-filter: blur(
+    calc(var(--glass-blur, 20) / 100 * 50px)
+  ) !important;
+
+  mix-blend-mode: overlay !important;
+}
+
+/* Placeholder glass effect - enabled by default with adaptive colors */
+.placeholder-image {
+  background: rgba(
+    calc(255 - var(--glass-darkness, 10) * 2.55),
+    calc(255 - var(--glass-darkness, 10) * 2.55),
+    calc(255 - var(--glass-darkness, 10) * 2.55),
+    calc(var(--glass-opacity, 15) / 100)
+  ) !important;
+  backdrop-filter: blur(calc(var(--glass-blur, 20) / 100 * 50px)) !important;
+  -webkit-backdrop-filter: blur(
+    calc(var(--glass-blur, 20) / 100 * 50px)
+  ) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Theme-adaptive glass defaults */
+/* Light themes - subtle glass */
+.theme-brightness-light .glass-overlay,
+.theme-brightness-light .placeholder-image {
+  --glass-opacity: 15;
+  --glass-blur: 20;
+  --glass-darkness: 5;
+}
+
+/* Medium themes - balanced glass */
+.theme-brightness-medium .glass-overlay,
+.theme-brightness-medium .placeholder-image {
+  --glass-opacity: 25;
+  --glass-blur: 30;
+  --glass-darkness: 15;
+}
+
+/* Dark themes - prominent glass */
+.theme-brightness-dark .glass-overlay,
+.theme-brightness-dark .placeholder-image {
+  --glass-opacity: 35;
+  --glass-blur: 40;
+  --glass-darkness: 25;
+}
+
+/* Disable glass effect when toggled off */
+.glass-effect-disabled .placeholder-image {
+  background: rgba(245, 245, 245, 0.8) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: none !important;
+}
+
+.glass-effect-disabled .glass-overlay {
+  display: none !important;
+}
+
+/* Glass effect indicator - only show in theme editor */
+.liquid-glass-enabled .media-block::after,
+.liquid-glass-enabled .image-block::after {
+  content: '💎 Glass';
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  z-index: 10;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Hide indicator when glass is disabled */
+.glass-effect-disabled .media-block::after,
+.glass-effect-disabled .image-block::after {
+  display: none !important;
+}
+
+/* Responsive glass effects */
+@media (max-width: 768px) {
+  .glass-overlay,
+  .placeholder-image {
+    backdrop-filter: blur(calc(var(--glass-blur, 20) / 100 * 25px)) !important;
+    -webkit-backdrop-filter: blur(
+      calc(var(--glass-blur, 20) / 100 * 25px)
+    ) !important;
+  }
+}
+
+/* Performance optimizations */
+.glass-overlay,
+.placeholder-image {
+  will-change: backdrop-filter;
+  transform: translateZ(0);
+}

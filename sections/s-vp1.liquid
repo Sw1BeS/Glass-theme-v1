@@ -1,0 +1,423 @@
+{%- doc -%}
+  Value Proposition 1 - Safe for Delicate Skin
+  Features: Image + text layout, responsive design
+{%- enddoc -%}
+
+{% liquid
+  assign glass_enabled = section.settings.enable_glass
+  if glass_enabled == null
+    assign glass_enabled = settings.enable_glass_effect
+  endif
+  assign glass_tone = section.settings.glass_tone | default: 'auto'
+  assign glass_elevation = section.settings.glass_elevation | default: 'medium'
+%}
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+<div
+  class="section section--{{ section.settings.section_width }} vp1-section color-{{ section.settings.color_scheme }} spacing-style"
+  {% if glass_enabled %}
+    data-glass-tone="{{ glass_tone }}"
+    data-glass-elevation="{{ glass_elevation }}"
+  {% endif %}
+>
+  <div class="vp1-container">
+    <div class="vp1-content">
+      <div
+        class="vp1-text glass"
+      >
+        {%- assign header_found = false -%}
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'section_header' -%}
+              {%- assign header_found = true -%}
+              <h2 class="vp1-title" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+            {%- when 'text' -%}
+              <div class="vp1-description" {{ block.shopify_attributes }}>
+                {{ block.settings.text }}
+              </div>
+            {%- when 'button' -%}
+              {%- if block.settings.button_text != blank -%}
+                <a
+                  href="{{ block.settings.button_link | default: '#' }}"
+                  class="vp1-button"
+                  {{ block.shopify_attributes }}
+                >
+                  {{ block.settings.button_text }}
+                </a>
+              {%- endif -%}
+          {%- endcase -%}
+        {%- endfor -%}
+
+        {%- unless header_found -%}
+          <h2 class="vp1-title">{{ section.settings.heading | default: 'Safe for Your Most Delicate Skin' }}</h2>
+        {%- endunless -%}
+
+        {%- unless section.blocks.size > 0 -%}
+          <div class="vp1-description">
+            {{
+              section.settings.text
+              | default: '<p>Formulated specifically for the sensitive eye area. Our pH-balanced formula removes impurities without irritation, perfect for daily use on natural brows and extensions.</p>'
+            }}
+          </div>
+          {%- if section.settings.button_text != blank -%}
+            <a href="{{ section.settings.button_link | default: '#' }}" class="vp1-button">
+              {{ section.settings.button_text }}
+            </a>
+          {%- endif -%}
+        {%- endunless -%}
+      </div>
+    </div>
+
+    <div class="vp1-media">
+      <div class="vp1-image-wrapper">
+        {%- if section.settings.image != blank -%}
+          <div class="vp1-image-desktop">
+            {{
+              section.settings.image
+              | image_url: width: 800
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(min-width: 768px) 600px, 0px',
+                widths: '400, 600, 800',
+                class: 'vp1-image'
+            }}
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.image_mobile != blank -%}
+          <div class="vp1-image-mobile">
+            {{
+              section.settings.image_mobile
+              | image_url: width: 400
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 767px) 300px, 0px',
+                widths: '300, 400',
+                class: 'vp1-image'
+            }}
+          </div>
+        {%- elsif section.settings.image != blank -%}
+          <div class="vp1-image-mobile">
+            {{
+              section.settings.image
+              | image_url: width: 400
+              | image_tag:
+                loading: 'lazy',
+                sizes: '(max-width: 767px) 300px, 0px',
+                widths: '300, 400',
+                class: 'vp1-image'
+            }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .vp1-section {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+  }
+
+  .vp1-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 4vw, 2.5rem);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: clamp(2.5rem, 4vw, 4rem);
+    align-items: center;
+  }
+
+  .vp1-text {
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 1.8rem);
+    padding: clamp(1.8rem, 3.5vw, 2.4rem);
+    border-radius: 22px;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+  }
+
+  .vp1-text:not(.glass-surface) {
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
+    box-shadow: 0 16px 40px var(--glass-shadow-color, rgba(20, 26, 34, 0.12));
+  }
+
+  .vp1-text.glass-surface {
+    padding: clamp(1.8rem, 3.5vw, 2.4rem);
+    border: none;
+    box-shadow: none;
+  }
+
+  .vp1-title {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 700;
+    margin: 0;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+  }
+
+  .vp1-description {
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
+  }
+
+  .vp1-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.85rem 1.8rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--text-on-primary, #ffffff);
+    background: linear-gradient(
+      135deg,
+      var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 0%,
+      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 55%, transparent) 100%
+    );
+    border: 1px solid transparent;
+    box-shadow: 0 18px 36px
+      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 25%, transparent);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .vp1-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 24px 48px
+      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
+  }
+
+  .vp1-media {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .vp1-image-wrapper {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    width: min(100%, 560px);
+    box-shadow: 0 20px 46px rgba(20, 26, 34, 0.14);
+  }
+
+  .vp1-image {
+    width: 100%;
+    display: block;
+  }
+
+  .vp1-image-desktop {
+    display: block;
+  }
+
+  .vp1-image-mobile {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .vp1-container {
+      grid-template-columns: 1fr;
+    }
+
+    .vp1-text,
+    .vp1-text.glass-surface {
+      padding: clamp(1.5rem, 5vw, 1.9rem);
+    }
+
+    .vp1-image-desktop {
+      display: none;
+    }
+
+    .vp1-image-mobile {
+      display: block;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Value Proposition 1",
+  "tag": "section",
+  "class": "vp1-wrapper",
+  "blocks": [
+    {
+      "type": "section_header",
+      "name": "Section Header",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Safe for Your Most Delicate Skin"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Description",
+          "default": "<p>Formulated specifically for the sensitive eye area. Our pH-balanced formula removes impurities without irritation, perfect for daily use on natural brows and extensions.</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button Text",
+          "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image (Desktop)"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "Image (Mobile)"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "scheme-1",
+          "label": "Scheme 1"
+        },
+        {
+          "value": "scheme-2",
+          "label": "Scheme 2"
+        },
+        {
+          "value": "scheme-3",
+          "label": "Scheme 3"
+        }
+      ],
+      "default": "scheme-1"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "Section Width",
+      "options": [
+        {
+          "value": "full-width",
+          "label": "Full Width"
+        },
+        {
+          "value": "page-width",
+          "label": "Page Width"
+        }
+      ],
+      "default": "full-width"
+    },
+    {
+      "type": "header",
+      "content": "Glass styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_glass",
+      "label": "Enable glass panel",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "glass_tone",
+      "label": "Panel tone",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "glass_elevation",
+      "label": "Panel elevation",
+      "options": [
+        {
+          "value": "low",
+          "label": "Low"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "high",
+          "label": "High"
+        }
+      ],
+      "default": "medium"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Value Proposition 1",
+      "blocks": [
+        {
+          "type": "section_header",
+          "settings": {
+            "heading": "Safe for Your Most Delicate Skin"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>Formulated specifically for the sensitive eye area. Our pH-balanced formula removes impurities without irritation, perfect for daily use on natural brows and extensions.</p>"
+          }
+        },
+        {
+          "type": "button",
+          "settings": {
+            "button_text": "Learn More",
+            "button_link": "/collections/eye-care"
+          }
+        }
+      ],
+      "settings": {
+        "color_scheme": "scheme-1",
+        "section_width": "full-width"
+      }
+    }
+  ]
+}
+{% endschema %}

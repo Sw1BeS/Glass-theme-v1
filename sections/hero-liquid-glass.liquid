@@ -1,0 +1,501 @@
+{%- doc -%}
+  Hero Liquid Glass Section - Apple-inspired glassmorphism hero
+  Features: Apple liquid glass design principles, adaptive glass effects
+{%- enddoc -%}
+
+{% liquid
+  assign media_count = 0
+  if section.settings.image_1 != blank
+    assign media_count = media_count | plus: 1
+  endif
+  if section.settings.image_2 != blank
+    assign media_count = media_count | plus: 1
+  endif
+  if section.settings.image_3 != blank
+    assign media_count = media_count | plus: 1
+  endif
+  if section.settings.video != blank
+    assign media_count = media_count | plus: 1
+  endif
+
+  assign hero_height = section.settings.hero_height | default: '100vh'
+  assign glass_opacity = section.settings.glass_opacity | default: 20
+  assign glass_blur = section.settings.glass_blur | default: 25
+  assign glass_brightness = section.settings.glass_brightness | default: 110
+  assign content_glass_enabled = section.settings.enable_glass
+  if content_glass_enabled == nil
+    assign content_glass_enabled = settings.enable_glass_effect
+  endif
+  assign content_glass_tone = section.settings.glass_tone | default: 'auto'
+  assign content_glass_elevation = section.settings.glass_elevation | default: 'medium'
+  assign blur_preset = section.settings.content_glass_blur | default: 'global'
+  assign content_glass_blur = nil
+  case blur_preset
+    when 'soft'
+      assign content_glass_blur = 16
+    when 'balanced'
+      assign content_glass_blur = 24
+    when 'bold'
+      assign content_glass_blur = 32
+  endcase
+%}
+
+<div class="hero-liquid-glass-wrapper" style="--hero-height: {{ hero_height }};">
+  <div class="hero-liquid-glass-background">
+    {%- if section.settings.image_1 != blank -%}
+      <div class="hero-bg-image hero-bg-image-1">
+        {{
+          section.settings.image_1
+          | image_url: width: 3840
+          | image_tag: loading: 'eager', sizes: '100vw', widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+        }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.image_2 != blank -%}
+      <div class="hero-bg-image hero-bg-image-2">
+        {{
+          section.settings.image_2
+          | image_url: width: 3840
+          | image_tag: loading: 'lazy', sizes: '100vw', widths: '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
+        }}
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.video != blank -%}
+      <div class="hero-bg-video">
+        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false }}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div
+    class="hero-liquid-glass-overlay"
+    style="
+      --glass-overlay-strength: {{ glass_opacity }}%;
+      --glass-overlay-blur: {{ glass_blur }}px;
+      --glass-overlay-brightness: {{ glass_brightness }}%;
+    "
+  >
+    <div class="hero-liquid-glass-content">
+      <div
+        class="hero-content-wrapper{% if content_glass_enabled %} glass-surface{% else %} hero-content-wrapper--plain{% endif %}"
+        {% if content_glass_enabled %}
+          data-glass-tone="{{ content_glass_tone }}"
+          data-glass-elevation="{{ content_glass_elevation }}"
+          data-disable-hover="true"
+          {% if content_glass_blur %}
+            style="--glass-local-blur: {{ content_glass_blur }}px;"
+          {% endif %}
+        {% endif %}
+      >
+        {%- if section.settings.heading != blank -%}
+          <h1 class="hero-heading">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+
+        {%- if section.settings.text != blank -%}
+          <div class="hero-text">{{ section.settings.text }}</div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank and section.settings.button_link != blank -%}
+          <div class="hero-buttons">
+            <a
+              href="{{ section.settings.button_link }}"
+              class="hero-button-primary{% if content_glass_enabled %} glass-button{% endif %}"
+            >
+              {{ section.settings.button_label }}
+            </a>
+            {%- if section.settings.button_label_2 != blank and section.settings.button_link_2 != blank -%}
+              <a
+                href="{{ section.settings.button_link_2 }}"
+                class="hero-button-secondary{% if content_glass_enabled %} glass-button glass-button--soft{% endif %}"
+              >
+                {{ section.settings.button_label_2 }}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .hero-liquid-glass-wrapper {
+    position: relative;
+    height: var(--hero-height, 100vh);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-liquid-glass-background {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .hero-bg-image,
+  .hero-bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-bg-image-1 {
+    z-index: 1;
+  }
+
+  .hero-bg-image-2 {
+    z-index: 2;
+    opacity: 0.3;
+    mix-blend-mode: overlay;
+  }
+
+  .hero-bg-video {
+    z-index: 1;
+  }
+
+  .hero-liquid-glass-overlay {
+    position: absolute;
+    inset: 0;
+    background: color-mix(
+      in srgb,
+      var(--glass-global-tint) var(--glass-overlay-strength, 20%),
+      transparent
+    );
+    backdrop-filter: blur(var(--glass-overlay-blur, 25px))
+      brightness(var(--glass-overlay-brightness, 110%));
+    -webkit-backdrop-filter: blur(var(--glass-overlay-blur, 25px))
+      brightness(var(--glass-overlay-brightness, 110%));
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-liquid-glass-content {
+    width: min(92%, 820px);
+    text-align: center;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .hero-content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.2rem, 3vw, 2rem);
+  }
+
+  .hero-content-wrapper--plain {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border-radius: 24px;
+    background: color-mix(
+      in srgb,
+      var(--glass-global-tint) 35%,
+      transparent
+    );
+    border: 1px solid color-mix(
+      in srgb,
+      var(--glass-surface-border-color, rgba(255, 255, 255, 0.3)) 40%,
+      transparent
+    );
+    box-shadow: 0 24px 56px rgba(20, 26, 34, 0.14);
+  }
+
+  .hero-heading {
+    font-size: clamp(2.5rem, 5vw, 4.25rem);
+    font-weight: 700;
+    line-height: 1.08;
+    margin: 0;
+    background: linear-gradient(
+      135deg,
+      var(--glass-foreground-strong, var(--color-foreground, #2c2c2c)),
+      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 70%, transparent)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 18px 35px rgba(20, 26, 34, 0.18);
+  }
+
+  .hero-text {
+    font-size: clamp(1.1rem, 2.6vw, 1.35rem);
+    line-height: 1.6;
+    margin: 0;
+    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
+  }
+
+  .hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .hero-button-primary,
+  .hero-button-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 1rem 2.2rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+  }
+
+  .hero-button-primary {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--glass-highlight-color) 95%, transparent) 0%,
+      color-mix(in srgb, var(--color-accent, #dcb7a7) 85%, transparent) 100%
+    );
+    color: var(--text-on-primary, #ffffff);
+    box-shadow: 0 22px 40px color-mix(in srgb, var(--glass-highlight-color) 25%, transparent);
+  }
+
+  .hero-button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 28px 52px color-mix(in srgb, var(--glass-highlight-color) 32%, transparent);
+  }
+
+  .hero-button-secondary {
+    background: color-mix(in srgb, var(--glass-global-tint) 68%, transparent);
+    color: var(--color-foreground, #2c2c2c);
+    border-color: color-mix(
+      in srgb,
+      var(--glass-surface-border-color, rgba(255, 255, 255, 0.35)) 55%,
+      transparent
+    );
+  }
+
+  .hero-button-secondary:hover {
+    transform: translateY(-2px);
+    background: color-mix(in srgb, var(--glass-global-tint) 78%, transparent);
+  }
+
+  @media (max-width: 768px) {
+    .hero-content-wrapper--plain,
+    .hero-content-wrapper.glass-surface {
+      padding: clamp(1.25rem, 5vw, 1.75rem);
+    }
+
+    .hero-buttons {
+      flex-direction: column;
+    }
+
+    .hero-button-primary,
+    .hero-button-secondary {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Hero Liquid Glass",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Hero Settings"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Luxury Beauty Experience"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Discover premium skincare products with Apple-inspired liquid glass design</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Primary Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Primary Button Link"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Secondary Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Secondary Button Link"
+    },
+    {
+      "type": "select",
+      "id": "hero_height",
+      "label": "Hero Height",
+      "options": [
+        {
+          "value": "50vh",
+          "label": "Small (50vh)"
+        },
+        {
+          "value": "75vh",
+          "label": "Medium (75vh)"
+        },
+        {
+          "value": "100vh",
+          "label": "Full Screen (100vh)"
+        }
+      ],
+      "default": "100vh"
+    },
+    {
+      "type": "header",
+      "content": "Background Media"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_1",
+      "label": "Primary Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_2",
+      "label": "Secondary Background Image (Optional)"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Background Video (Optional)"
+    },
+    {
+      "type": "header",
+      "content": "Liquid Glass Settings"
+    },
+    {
+      "type": "range",
+      "id": "glass_opacity",
+      "label": "Glass Opacity",
+      "min": 5,
+      "max": 50,
+      "step": 5,
+      "default": 20,
+      "unit": "%",
+      "info": "Adjust glass overlay transparency"
+    },
+    {
+      "type": "range",
+      "id": "glass_blur",
+      "label": "Glass Blur",
+      "min": 10,
+      "max": 50,
+      "step": 5,
+      "default": 25,
+      "unit": "px",
+      "info": "Adjust backdrop blur intensity"
+    },
+    {
+      "type": "range",
+      "id": "glass_brightness",
+      "label": "Glass Brightness",
+      "min": 80,
+      "max": 150,
+      "step": 10,
+      "default": 110,
+      "unit": "%",
+      "info": "Adjust overall brightness"
+    },
+    {
+      "type": "header",
+      "content": "Content Glass Styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_glass",
+      "label": "Wrap content in glass panel",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "glass_tone",
+      "label": "Content glass tone",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "glass_elevation",
+      "label": "Elevation",
+      "options": [
+        {
+          "value": "low",
+          "label": "Low"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "high",
+          "label": "High"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "content_glass_blur",
+      "label": "Content blur preset",
+      "options": [
+        {
+          "value": "global",
+          "label": "Use global setting"
+        },
+        {
+          "value": "soft",
+          "label": "Soft (16px)"
+        },
+        {
+          "value": "balanced",
+          "label": "Balanced (24px)"
+        },
+        {
+          "value": "bold",
+          "label": "Bold (32px)"
+        }
+      ],
+      "default": "global"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Liquid Glass"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,153 @@
+{%- comment -%}
+  Clean Features Section for IS BEAUTY LUX
+  Features: Glass cards, responsive grid, theme integration
+{%- endcomment -%}
+
+<div class="section features-section">
+  <div class="section-header">
+    {% if section.settings.heading != blank %}
+      <h2 class="section-title">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="section-subtitle">{{ section.settings.subheading }}</p>
+    {% endif %}
+  </div>
+
+  <div class="features-grid">
+    {% for block in section.blocks %}
+      <div class="feature-card" {{ block.shopify_attributes }}>
+        {% if block.settings.icon != blank %}
+          <div class="feature-icon">{{ block.settings.icon }}</div>
+        {% endif %}
+
+        {% if block.settings.heading != blank %}
+          <h3 class="feature-heading">{{ block.settings.heading }}</h3>
+        {% endif %}
+
+        {% if block.settings.text != blank %}
+          <p class="feature-text">{{ block.settings.text }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Features",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Choose IS BEAUTY LUX?"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Premium Quality, Exceptional Results"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "brand-porcelain",
+          "label": "Brand Porcelain"
+        },
+        {
+          "value": "classic-rose",
+          "label": "Classic Rose"
+        },
+        {
+          "value": "deep-burgundy",
+          "label": "Deep Burgundy"
+        },
+        {
+          "value": "sage-green",
+          "label": "Sage Green"
+        },
+        {
+          "value": "midnight-blue",
+          "label": "Midnight Blue"
+        },
+        {
+          "value": "warm-terracotta",
+          "label": "Warm Terracotta"
+        }
+      ],
+      "default": "brand-porcelain"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "✨"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Feature Title"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "Feature description goes here."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🧴",
+            "heading": "Premium Ingredients",
+            "text": "Only the finest, dermatologist-tested ingredients for safe and effective beauty care."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "🌿",
+            "heading": "100% Natural",
+            "text": "Cruelty-free and vegan certified products that respect both you and the environment."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "✨",
+            "heading": "Professional Results",
+            "text": "Salon-quality results you can achieve in the comfort of your own home."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "💎",
+            "heading": "Luxury Experience",
+            "text": "Indulge in a premium beauty experience with our elegant packaging and formulations."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

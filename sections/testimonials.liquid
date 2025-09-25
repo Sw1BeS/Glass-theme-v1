@@ -1,0 +1,168 @@
+{%- comment -%}
+  Clean Testimonials Section for IS BEAUTY LUX
+  Features: Glass cards, responsive grid, theme integration
+{%- endcomment -%}
+
+<div class="section testimonials-section">
+  <div class="section-header">
+    {% if section.settings.heading != blank %}
+      <h2 class="section-title">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="section-subtitle">{{ section.settings.subheading }}</p>
+    {% endif %}
+  </div>
+
+  <div class="testimonials-grid">
+    {% for block in section.blocks %}
+      <div class="testimonial-card" {{ block.shopify_attributes }}>
+        <div class="testimonial-rating">
+          {% assign rating = block.settings.rating | default: 5 %}
+          {% for i in (1..5) %}
+            <span class="star {% if i <= rating %}filled{% endif %}">★</span>
+          {% endfor %}
+        </div>
+
+        {% if block.settings.text != blank %}
+          <blockquote class="testimonial-text">
+            "{{ block.settings.text }}"
+          </blockquote>
+        {% endif %}
+
+        <div class="testimonial-author">
+          {% if block.settings.author != blank %}
+            <h4 class="author-name">{{ block.settings.author }}</h4>
+          {% endif %}
+
+          {% if block.settings.product != blank %}
+            <p class="author-product">{{ block.settings.product }}</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Real results from real customers"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "Color Scheme",
+      "options": [
+        {
+          "value": "brand-porcelain",
+          "label": "Brand Porcelain"
+        },
+        {
+          "value": "classic-rose",
+          "label": "Classic Rose"
+        },
+        {
+          "value": "deep-burgundy",
+          "label": "Deep Burgundy"
+        },
+        {
+          "value": "sage-green",
+          "label": "Sage Green"
+        },
+        {
+          "value": "midnight-blue",
+          "label": "Midnight Blue"
+        },
+        {
+          "value": "warm-terracotta",
+          "label": "Warm Terracotta"
+        }
+      ],
+      "default": "brand-porcelain"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Testimonial Text",
+          "default": "This product is amazing! I love how it makes me feel."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name",
+          "default": "Sarah M."
+        },
+        {
+          "type": "text",
+          "id": "product",
+          "label": "Product Used",
+          "default": "IS BEAUTY LUX Eyebrow Gel"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "The best eyebrow gel I've ever used! The brush is perfect for precise application and the formula is gentle on my sensitive skin.",
+            "author": "Sarah M.",
+            "product": "IS BEAUTY LUX Eyebrow Gel"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Amazing quality and beautiful packaging. I love how it makes my brows look naturally full and defined.",
+            "author": "Emma L.",
+            "product": "IS BEAUTY LUX Eyebrow Gel"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Finally found a product that works! My brows stay in place all day without any flaking or smudging.",
+            "author": "Jessica K.",
+            "product": "IS BEAUTY LUX Eyebrow Gel"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

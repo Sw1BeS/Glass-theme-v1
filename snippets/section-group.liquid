@@ -1,0 +1,64 @@
+{%- doc -%}
+  Section Group: Логическая группировка секций
+  Создает контейнер для связанных секций с единым стилем
+  
+  @param {string} group_class - CSS класс группы
+  @param {string} group_style - дополнительные стили
+  @param {boolean} has_glass - применять стеклянный эффект
+{%- enddoc -%}
+
+{%- liquid
+  assign group_id = 'group-' | append: group_class | handle
+  assign container_class = 'section-group'
+  if group_class != blank
+    assign container_class = container_class | append: ' ' | append: group_class
+  endif
+  if has_glass
+    assign container_class = container_class | append: ' glass-group'
+  endif
+-%}
+
+<div id="{{ group_id }}" class="{{ container_class }}" style="{{ group_style }}">
+  <div class="section-group__container">
+    {{ content }}
+  </div>
+</div>
+
+<style>
+  .section-group {
+    position: relative;
+    padding: 2rem 0;
+  }
+
+  .section-group__container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .section-group.glass-group {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    margin: 1rem;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+
+  .section-group.glass-group .section-group__container {
+    padding: 0;
+  }
+
+  @media (max-width: 768px) {
+    .section-group {
+      padding: 1rem 0;
+    }
+    
+    .section-group.glass-group {
+      margin: 0.5rem;
+      padding: 1.5rem;
+    }
+  }
+</style>

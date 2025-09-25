@@ -1,0 +1,176 @@
+
+{% liquid
+  assign unset_image_tag = false
+  if block.settings.image_position == 'contain'
+    assign unset_image_tag = true
+  endif
+%}
+
+{% render 'media', unset_image_tag: unset_image_tag, section_id: section.id, block: block %}
+
+{% schema %}
+{
+  "name": "t:names.media",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "t:settings.type",
+      "options": [
+        {
+          "value": "image",
+          "label": "t:options.image"
+        },
+        {
+          "value": "video",
+          "label": "t:options.video"
+        }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image (Desktop)",
+      "visible_if": "{{ block.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mobile",
+      "label": "t:settings.image (Mobile)",
+      "info": "Optional: Different image for mobile devices",
+      "visible_if": "{{ block.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:settings.link",
+      "visible_if": "{{ block.settings.media_type == 'image'  }}"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video",
+      "visible_if": "{{ block.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_loop",
+      "label": "t:settings.loop",
+      "default": true,
+      "visible_if": "{{ block.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "video_autoplay",
+      "label": "t:settings.autoplay",
+      "default": false,
+      "visible_if": "{{ block.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "t:settings.image_position",
+      "options": [
+        {
+          "value": "cover",
+          "label": "t:options.cover"
+        },
+        {
+          "value": "contain ",
+          "label": "t:options.contain"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ block.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "select",
+      "id": "video_position",
+      "label": "t:settings.video_position",
+      "options": [
+        {
+          "value": "cover",
+          "label": "t:options.cover"
+        },
+        {
+          "value": "contain",
+          "label": "t:options.contain"
+        }
+      ],
+      "default": "cover",
+      "visible_if": "{{ block.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "header",
+      "content": "Placeholder Settings"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_title",
+      "label": "Placeholder Title",
+      "default": "Add Media Content",
+      "info": "Title shown in placeholder when no media is uploaded"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_icon",
+      "label": "Placeholder Icon",
+      "default": "🖼️",
+      "info": "Emoji or icon to show when no media is uploaded"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_creative",
+      "label": "Placeholder Creative Description",
+      "default": "High-quality product photography with natural lighting and beautiful composition",
+      "info": "Creative description for the placeholder media",
+      "visible_if": "{{ block.settings.media_type == 'image' }}"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_video_creative",
+      "label": "Video Placeholder Creative Description",
+      "default": "Creative video showcasing product benefits with emotional impact",
+      "info": "Creative description for the placeholder video",
+      "visible_if": "{{ block.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_web_size",
+      "label": "Web Size Recommendation",
+      "default": "1500×900px",
+      "info": "Recommended size for desktop/web viewing"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_mobile_size",
+      "label": "Mobile Size Recommendation",
+      "default": "750×900px",
+      "info": "Recommended size for mobile viewing"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_video_web_size",
+      "label": "Video Web Size Recommendation",
+      "default": "1920×1080px",
+      "info": "Recommended video size for desktop/web viewing",
+      "visible_if": "{{ block.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "text",
+      "id": "placeholder_video_mobile_size",
+      "label": "Video Mobile Size Recommendation",
+      "default": "1080×1920px",
+      "info": "Recommended video size for mobile viewing",
+      "visible_if": "{{ block.settings.media_type == 'video' }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.media"
+    }
+  ]
+}
+{% endschema %}

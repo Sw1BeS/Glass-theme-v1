@@ -1,0 +1,495 @@
+{%- doc -%}
+  Reviews Section - Modern beauty-focused testimonials
+  Features: Clean design, smooth animations, beauty industry styling, theme integration
+{%- enddoc -%}
+
+{% liquid
+  assign glass_enabled = section.settings.enable_glass
+  if glass_enabled == null
+    assign glass_enabled = settings.enable_glass_effect
+  endif
+  assign glass_tone = section.settings.glass_tone | default: 'auto'
+  assign glass_elevation = section.settings.glass_elevation | default: 'medium'
+%}
+
+<div
+  class="reviews-section{% if glass_enabled %} glass-enabled{% endif %}"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  {% if glass_enabled %}
+    data-glass-tone="{{ glass_tone }}"
+    data-glass-elevation="{{ glass_elevation }}"
+  {% endif %}
+>
+  <div class="reviews-container">
+    {%- assign header_found = false -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'section_header' -%}
+          {%- assign header_found = true -%}
+          <div class="reviews-header glass" {{ block.shopify_attributes }}>
+            <h2 class="reviews-title">{{ block.settings.heading }}</h2>
+            {%- if block.settings.subheading != blank -%}
+              <p class="reviews-subtitle">{{ block.settings.subheading }}</p>
+            {%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+
+    {%- unless header_found -%}
+      <div class="reviews-header glass">
+        <h2 class="reviews-title">What Our Customers Say</h2>
+        <p class="reviews-subtitle">Real reviews from real customers who love our products</p>
+      </div>
+    {%- endunless -%}
+
+    <div class="reviews-grid">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'review' -%}
+            <div
+              class="review-card glass"
+              {% if glass_enabled %}
+                data-disable-hover="true"
+              {% endif %}
+              {{ block.shopify_attributes }}
+            >
+              <div class="review-content">
+                <div class="review-rating">
+                  {%- assign rating = block.settings.rating | default: 5 -%}
+                  {%- for i in (1..5) -%}
+                    <span class="star {% if i <= rating %}filled{% endif %}">★</span>
+                  {%- endfor -%}
+                </div>
+
+                {% if block.settings.review_text != blank %}
+                  <blockquote class="review-text">"{{ block.settings.review_text }}"</blockquote>
+                {% endif %}
+
+                <div class="review-author">
+                  {% if block.settings.author_image != blank %}
+                    <div class="author-image">
+                      {% render 'image', image: block.settings.author_image, alt: block.settings.author_name %}
+                    </div>
+                  {% endif %}
+
+                  <div class="author-info">
+                    {% if block.settings.author_name != blank %}
+                      <h4 class="author-name">{{ block.settings.author_name }}</h4>
+                    {% endif %}
+
+                    {%- assign product_selection = block.settings.product_selection | default: 'eyebrow-gel' -%}
+                    {%- case product_selection -%}
+                      {%- when 'eyebrow-gel' -%}
+                        {%- assign product_name = 'IS BEAUTY LUX Eyebrow Gel' -%}
+                        {%- assign product_url = '/products/is-beauty-lux-eyebrow-gel' -%}
+                      {%- when 'brow-lash-shampoo' -%}
+                        {%- assign product_name = 'IS BEAUTY LUX Brow & Lash Shampoo' -%}
+                        {%- assign product_url = '/products/is-beauty-lux-brow-lash-shampoo' -%}
+                      {%- when 'brow-bundle' -%}
+                        {%- assign product_name = 'IS BEAUTY LUX Brow Bundle' -%}
+                        {%- assign product_url = '/products/is-beauty-lux-brow-bundle' -%}
+                    {%- endcase -%}
+
+                    <a href="{{ product_url }}" class="product-used-button">
+                      {{ product_name }}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {% if block.settings.verified_badge %}
+                <div class="verified-badge">
+                  <span class="badge-icon">✓</span>
+                  <span class="badge-text">Verified Purchase</span>
+                </div>
+              {% endif %}
+            </div>
+        {%- endcase -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .reviews-section {
+    padding: clamp(3rem, 6vw, 4.5rem) 0;
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--color-secondary-bg, #f8f9fa) 90%, transparent) 0%,
+      color-mix(in srgb, var(--color-tertiary-bg, #ece7d7) 82%, transparent) 100%
+    );
+  }
+
+  .reviews-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(1.5rem, 4vw, 2.5rem);
+    display: grid;
+    gap: clamp(2.5rem, 4vw, 3.5rem);
+  }
+
+  .reviews-header {
+    text-align: center;
+    display: grid;
+    gap: 1rem;
+  }
+
+  .reviews-title {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    margin: 0;
+    color: var(--color-foreground, #2c2c2c);
+  }
+
+  .reviews-subtitle {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
+    max-width: 620px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+  }
+
+  .review-card {
+    position: relative;
+    padding: clamp(1.75rem, 3.5vw, 2.2rem);
+    border-radius: 22px;
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
+    box-shadow: 0 18px 40px var(--glass-shadow-color, rgba(20, 26, 34, 0.1));
+    display: grid;
+    gap: 1.25rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+  }
+
+  .review-card.glass-surface {
+    padding: clamp(1.75rem, 3.5vw, 2.2rem);
+    border: none;
+    box-shadow: none;
+  }
+
+  .review-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 26px 64px rgba(20, 26, 34, 0.16);
+  }
+
+  .review-rating {
+    display: flex;
+    gap: 0.2rem;
+    color: var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+  }
+
+  .star {
+    font-size: 1.2rem;
+    color: color-mix(in srgb, var(--glass-foreground-muted, var(--color-foreground, #2c2c2c)) 35%, transparent);
+    opacity: 0.3;
+  }
+
+  .star.filled {
+    opacity: 1;
+  }
+
+  .review-text {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
+    margin: 0;
+    font-style: italic;
+  }
+
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .author-image {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid color-mix(in srgb, var(--color-border, #d4c8c0) 60%, transparent);
+    flex-shrink: 0;
+  }
+
+  .author-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .author-info {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .author-name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    margin: 0;
+  }
+
+  .product-used-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    background: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.78)) 80%, transparent);
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    transition: transform 0.25s ease;
+  }
+
+  .product-used-button:hover {
+    transform: translateY(-2px);
+  }
+
+  .verified-badge {
+    position: absolute;
+    top: clamp(1rem, 2vw, 1.5rem);
+    right: clamp(1rem, 2vw, 1.5rem);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.75rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--glass-highlight-color) 18%, transparent);
+    color: color-mix(in srgb, var(--glass-highlight-color) 95%, transparent);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 720px) {
+    .reviews-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Customer Reviews",
+  "tag": "section",
+  "class": "reviews-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Glass styling"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_glass",
+      "label": "Enable glass background",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "glass_tone",
+      "label": "Card tone",
+      "options": [
+        {
+          "value": "auto",
+          "label": "Auto"
+        },
+        {
+          "value": "light",
+          "label": "Light"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        }
+      ],
+      "default": "auto"
+    },
+    {
+      "type": "select",
+      "id": "glass_elevation",
+      "label": "Card elevation",
+      "options": [
+        {
+          "value": "low",
+          "label": "Low"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "high",
+          "label": "High"
+        }
+      ],
+      "default": "medium"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "section_header",
+      "name": "Section Header",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "What Our Customers Say"
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Real reviews from satisfied customers who have already tried our products"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "review_text",
+          "label": "Review Text",
+          "default": "Amazing product! The results exceeded all expectations."
+        },
+        {
+          "type": "image_picker",
+          "id": "author_image",
+          "label": "Author Photo"
+        },
+        {
+          "type": "text",
+          "id": "author_name",
+          "label": "Author Name",
+          "default": "Sarah Johnson"
+        },
+        {
+          "type": "select",
+          "id": "product_selection",
+          "label": "Product",
+          "options": [
+            {
+              "value": "eyebrow-gel",
+              "label": "IS BEAUTY LUX Eyebrow Gel"
+            },
+            {
+              "value": "brow-lash-shampoo",
+              "label": "IS BEAUTY LUX Brow & Lash Shampoo"
+            },
+            {
+              "value": "brow-bundle",
+              "label": "IS BEAUTY LUX Brow Bundle"
+            }
+          ],
+          "default": "eyebrow-gel"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified_badge",
+          "label": "Show \"Verified Purchase\" Badge",
+          "default": true
+        }
+      ]
+    }
+  ],
+  "max_blocks": 20,
+  "presets": [
+    {
+      "name": "Customer Reviews",
+      "blocks": [
+        {
+          "type": "section_header",
+          "settings": {
+            "heading": "What Our Customers Say",
+            "subheading": "Real reviews from satisfied customers who have already tried our products"
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "Absolutely love this eyebrow gel! It keeps my brows in place all day without any flaking. The natural finish is perfect for everyday wear.",
+            "author_name": "Sarah Johnson",
+            "product_selection": "eyebrow-gel",
+            "verified_badge": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "Best eyebrow gel I've ever used! The brush is perfect for precise application and the formula is gentle on my sensitive skin.",
+            "author_name": "Emily Chen",
+            "product_selection": "eyebrow-gel",
+            "verified_badge": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "Finally found something that works for my sparse brows! This gel gives me the perfect natural look I've been searching for.",
+            "author_name": "Jessica Martinez",
+            "product_selection": "eyebrow-gel",
+            "verified_badge": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 4,
+            "review_text": "Great product, easy to use and lasts all day. The packaging is beautiful too. Would definitely recommend to friends!",
+            "author_name": "Ashley Thompson",
+            "product_selection": "eyebrow-gel",
+            "verified_badge": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "I've tried so many eyebrow gels and this one is by far the best. The hold is incredible and it doesn't look cakey or heavy.",
+            "author_name": "Rachel Davis",
+            "product_selection": "eyebrow-gel",
+            "verified_badge": true
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "review_text": "Perfect for my busy lifestyle! Quick application, great results, and it stays put through workouts and long work days.",
+            "author_name": "Michelle Rodriguez",
+            "product_selection": "eyebrow-gel",
+            "verified_badge": true
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

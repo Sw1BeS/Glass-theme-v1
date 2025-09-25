@@ -1,0 +1,398 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "b2b_hero": {
+      "type": "hero",
+      "blocks": {
+        "h1": {
+          "type": "text",
+          "settings": {
+            "text": "<h1>Professional Brow Care for Salons & Artists</h1>",
+            "type_preset": "h1"
+          }
+        },
+        "sub": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Offer clients the complete brow care system they'll want to take home.</p>",
+            "max_width": "narrow",
+            "type_preset": "rte"
+          }
+        },
+        "cta1": {
+          "type": "button",
+          "settings": {
+            "label": "Contact Sales Team",
+            "link": "mailto:professionals@isbeautylux.com"
+          }
+        },
+        "cta2": {
+          "type": "button",
+          "settings": {
+            "label": "Download Info Packet",
+            "link": "/pages/b2b-packet",
+            "style_class": "link"
+          }
+        }
+      },
+      "block_order": [
+        "h1",
+        "sub",
+        "cta1",
+        "cta2"
+      ],
+      "settings": {
+        "section_height": "large",
+        "color_scheme": "scheme-1"
+      }
+    },
+    "b2b_value_1": {
+      "type": "section",
+      "blocks": {
+        "h2": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Boost Your Bottom Line</h2>",
+            "type_preset": "h2"
+          }
+        },
+        "p": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Our duo system encourages client purchases with an average retail value of $34.99 per sale. Professional-grade products clients love to use at home.</p>",
+            "max_width": "narrow"
+          }
+        }
+      },
+      "block_order": [
+        "h2",
+        "p"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "b2b_value_2": {
+      "type": "section",
+      "blocks": {
+        "h2": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Safe for All Clients</h2>",
+            "type_preset": "h2"
+          }
+        },
+        "p": {
+          "type": "text",
+          "settings": {
+            "text": "<p>pH-balanced and dermatologist-tested for sensitive eye areas. Perfect with lash extensions and sensitive skin to reduce complications.</p>",
+            "max_width": "narrow"
+          }
+        }
+      },
+      "block_order": [
+        "h2",
+        "p"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2"
+      }
+    },
+    "b2b_value_3": {
+      "type": "section",
+      "blocks": {
+        "h2": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Easy to Incorporate</h2>",
+            "type_preset": "h2"
+          }
+        },
+        "p": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Use during prep and finishing to enhance in-salon results, then retail the complete system for at-home maintenance.</p>",
+            "max_width": "narrow"
+          }
+        }
+      },
+      "block_order": [
+        "h2",
+        "p"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "how_it_works": {
+      "type": "section",
+      "blocks": {
+        "h2": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>How It Works</h2>",
+            "type_preset": "h2"
+          }
+        },
+        "s1": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Step 1: Apply to Your Services</h4><p>Contact us to set up your professional account and receive wholesale pricing.</p>"
+          }
+        },
+        "s2": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Step 2: Verify Your Credentials</h4><p>Submit your business or cosmetology license. Most applications approved within 24–48 hours.</p>"
+          }
+        },
+        "s3": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Step 3: Order & Grow</h4><p>Place your first order. Ongoing support and marketing materials provided.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "h2",
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2"
+      }
+    },
+    "pricing": {
+      "type": "section",
+      "blocks": {
+        "h3": {
+          "type": "text",
+          "settings": {
+            "text": "<h3>Professional Wholesale Pricing</h3>",
+            "type_preset": "h3"
+          }
+        },
+        "tiers": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Tiers</h4><p>Starter (6–11): 25% OFF — $26.24 | Profit: $8.75</p><p>Growth (12–23): 30% OFF — $24.49 | Profit: $10.50</p><p>Professional (24+): 35% OFF — $22.74 | Profit: $12.25</p>"
+          }
+        },
+        "individual": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Individual Products</h4><ul><li>Brow & Lash Shampoo from $15.75</li><li>Eyebrow Gel from $12.75</li></ul>"
+          }
+        },
+        "benefits": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Additional Benefits</h4><ul><li>Free shipping $200+</li><li>Marketing materials in first order</li><li>Dedicated account manager</li><li>Net 60 for established accounts</li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "h3",
+        "tiers",
+        "individual",
+        "benefits"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "b2b_faq": {
+      "type": "section",
+      "blocks": {
+        "title": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Professional FAQ</h2>",
+            "type_preset": "h2"
+          }
+        },
+        "q1": {
+          "type": "accordion",
+          "settings": {},
+          "blocks": {
+            "row": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What are the minimum order requirements?"
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Starter tier begins at 6 units of The Duo. Individual products available in 12+.</p>",
+                    "type_preset": "rte"
+                  }
+                }
+              },
+              "block_order": [
+                "text"
+              ]
+            }
+          }
+        },
+        "q2": {
+          "type": "accordion",
+          "settings": {},
+          "blocks": {
+            "row": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "Do you offer training or marketing support?"
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Yes. All accounts receive education materials and branded assets. Additional resources for Growth/Professional tiers.</p>"
+                  }
+                }
+              },
+              "block_order": [
+                "text"
+              ]
+            }
+          }
+        },
+        "q3": {
+          "type": "accordion",
+          "settings": {},
+          "blocks": {
+            "row": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "What is your return policy for professionals?"
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>30‑day returns on unopened products. Damaged shipments replaced immediately.</p>"
+                  }
+                }
+              },
+              "block_order": [
+                "text"
+              ]
+            }
+          }
+        },
+        "q4": {
+          "type": "accordion",
+          "settings": {},
+          "blocks": {
+            "row": {
+              "type": "_accordion-row",
+              "settings": {
+                "heading": "How quickly can I get approved and start ordering?"
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "settings": {
+                    "text": "<p>Most applications are approved within 24–48 hours. Orders ship in 2–3 business days.</p>"
+                  }
+                }
+              },
+              "block_order": [
+                "text"
+              ]
+            }
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2"
+      }
+    },
+    "contact": {
+      "type": "section",
+      "blocks": {
+        "h2": {
+          "type": "text",
+          "settings": {
+            "text": "<h2>Ready to Partner with IS Beauty Lux?</h2>",
+            "type_preset": "h2"
+          }
+        },
+        "p": {
+          "type": "text",
+          "settings": {
+            "text": "<p>📧 professionals@isbeautylux.com • 📞 (555) 123-4567 • Mon–Fri, 9–6 EST</p>"
+          }
+        },
+        "btn": {
+          "type": "button",
+          "settings": {
+            "label": "Download Information Packet",
+            "link": "/pages/b2b-packet"
+          }
+        }
+      },
+      "block_order": [
+        "h2",
+        "p",
+        "btn"
+      ],
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    },
+    "trust": {
+      "type": "section",
+      "blocks": {
+        "h3": {
+          "type": "text",
+          "settings": {
+            "text": "<h3>Professional Certifications & Success</h3>",
+            "type_preset": "h3"
+          }
+        },
+        "list": {
+          "type": "text",
+          "settings": {
+            "text": "<h4>Certifications</h4><ul><li>FDA Registered Facility</li><li>Leaping Bunny Certified</li><li>Dermatologist Tested</li><li>PBA Member</li></ul><h4>Partner Success</h4><ul><li>500+ Partner Salons</li><li>95% Client Satisfaction</li><li>Avg 40% Markup</li><li>2‑Year Avg Retention</li></ul>"
+          }
+        }
+      },
+      "block_order": [
+        "h3",
+        "list"
+      ],
+      "settings": {
+        "color_scheme": "scheme-2"
+      }
+    }
+  },
+  "order": [
+    "b2b_hero",
+    "b2b_value_1",
+    "b2b_value_2",
+    "b2b_value_3",
+    "how_it_works",
+    "pricing",
+    "b2b_faq",
+    "contact",
+    "trust"
+  ]
+}

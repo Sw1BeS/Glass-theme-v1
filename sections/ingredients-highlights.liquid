@@ -1,0 +1,645 @@
+{% comment %}
+  Ingredients Highlights Section - Modern ingredient showcase
+  Features: Interactive cards, hover effects, ingredient benefits
+{% endcomment %}
+
+<div class="ingredients-highlights-section">
+  <div class="ingredients-container">
+    {%- assign header_found = false -%}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'section_header' -%}
+          {%- assign header_found = true -%}
+          <div class="ingredients-header" {{ block.shopify_attributes }}>
+            <h2 class="ingredients-title">{{ block.settings.heading }}</h2>
+            {%- if block.settings.subheading != blank -%}
+              <p class="ingredients-subtitle">{{ block.settings.subheading }}</p>
+            {%- endif -%}
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+
+    {%- unless header_found -%}
+      <div class="ingredients-header">
+        <h2 class="ingredients-title">Key Ingredients</h2>
+        <p class="ingredients-subtitle">Discover the powerful ingredients that make our products exceptional</p>
+      </div>
+    {%- endunless -%}
+
+    <div class="ingredients-grid">
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'ingredient' -%}
+            {%- assign ingredient_index = forloop.index -%}
+            <div class="ingredient-card"
+                 data-ingredient="{{ block.settings.ingredient_name | downcase }}"
+                 {{ block.shopify_attributes }}>
+
+          <!-- Ingredient Image -->
+          <div class="ingredient-image-wrapper">
+            {%- if block.settings.image != blank -%}
+              <div class="ingredient-image-container">
+                {{
+                  block.settings.image
+                  | image_url: width: 300
+                  | image_tag:
+                    loading: 'lazy',
+                    sizes: '(min-width: 768px) 200px, 150px',
+                    widths: '150, 200, 300',
+                    class: 'ingredient-image'
+                }}
+                <div class="image-overlay"></div>
+              </div>
+            {%- else -%}
+              <div class="ingredient-placeholder">
+                <div class="placeholder-icon">{{ block.settings.icon | default: '🌿' }}</div>
+                <h4 class="placeholder-title">{{ block.settings.placeholder_title | default: 'Add Ingredient Image' }}</h4>
+                <div class="placeholder-specs">
+                  <div class="spec-item">
+                    <span class="spec-label">🌐 Web:</span>
+                    <span class="spec-value">{{ block.settings.placeholder_web_size | default: '300×300px' }}</span>
+                  </div>
+                  <div class="spec-item">
+                    <span class="spec-label">📱 Mobile:</span>
+                    <span class="spec-value">{{ block.settings.placeholder_mobile_size | default: '200×200px' }}</span>
+                  </div>
+                  <div class="spec-item spec-creative">
+                    <span class="spec-label">💡 Tip:</span>
+                    <span class="spec-value">{{ block.settings.placeholder_creative | default: 'High-quality ingredient photography with clean background' }}</span>
+                  </div>
+                </div>
+              </div>
+            {%- endif -%}
+          </div>
+
+          <!-- Ingredient Content -->
+          <div class="ingredient-content">
+            {%- if block.settings.ingredient_name != blank -%}
+              <h3 class="ingredient-name">{{ block.settings.ingredient_name }}</h3>
+            {%- endif -%}
+
+            {%- if block.settings.ingredient_type != blank -%}
+              <div class="ingredient-type">{{ block.settings.ingredient_type }}</div>
+            {%- endif -%}
+
+            {%- if block.settings.benefits != blank -%}
+              <div class="ingredient-benefits">
+                <div class="benefits-header">
+                  <span class="benefits-icon">✨</span>
+                  <span class="benefits-title">Key Benefits</span>
+                </div>
+                <ul class="benefits-list">
+                  {%- assign benefits = block.settings.benefits | split: ',' -%}
+                  {%- for benefit in benefits -%}
+                    <li class="benefit-item">{{ benefit | strip }}</li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+
+            {%- if block.settings.description != blank -%}
+              <div class="ingredient-description">{{ block.settings.description }}</div>
+            {%- endif -%}
+
+            <!-- Ingredient Stats -->
+            <div class="ingredient-stats">
+              {%- if block.settings.concentration != blank -%}
+                <div class="stat-item">
+                  <span class="stat-label">Concentration</span>
+                  <span class="stat-value">{{ block.settings.concentration }}</span>
+                </div>
+              {%- endif -%}
+
+              {%- if block.settings.origin != blank -%}
+                <div class="stat-item">
+                  <span class="stat-label">Origin</span>
+                  <span class="stat-value">{{ block.settings.origin }}</span>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+
+          <!-- Hover Effect -->
+          <div class="ingredient-hover-effect"></div>
+            </div>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+
+    {%- if section.settings.footer_text != blank -%}
+      <div class="ingredients-footer">
+        <p class="footer-text">{{ section.settings.footer_text }}</p>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .ingredients-highlights-section {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    background: linear-gradient(135deg, var(--color-secondary-bg, #f8f9fa), var(--color-tertiary-bg, #e9ecef));
+    padding: 4rem 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ingredients-container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .ingredients-header {
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+
+  .ingredients-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    color: var(--color-foreground, #2c2c2c);
+    margin-bottom: 1rem;
+    position: relative;
+  }
+
+  .ingredients-subtitle {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--color-foreground-muted, #6a6a6a);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .ingredients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .ingredient-card {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 1px solid rgba(191, 138, 122, 0.2);
+    backdrop-filter: blur(10px);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .ingredient-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba(191, 138, 122, 0.15);
+    border-color: rgba(191, 138, 122, 0.4);
+  }
+
+  .ingredient-image-wrapper {
+    position: relative;
+    margin-bottom: 1.5rem;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .ingredient-image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .ingredient-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  .ingredient-card:hover .ingredient-image {
+    transform: scale(1.05);
+  }
+
+  .image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(191, 138, 122, 0.1), rgba(191, 138, 122, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .ingredient-card:hover .image-overlay {
+    opacity: 1;
+  }
+
+  .ingredient-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .ingredient-name {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--color-foreground, #2c2c2c);
+    margin-bottom: 0.5rem;
+  }
+
+  .ingredient-type {
+    font-size: 0.9rem;
+    color: var(--color-primary, #bf8a7a);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+  }
+
+  .ingredient-benefits {
+    margin-bottom: 1.5rem;
+  }
+
+  .benefits-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .benefits-icon {
+    font-size: 1.1rem;
+  }
+
+  .benefits-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-foreground, #2c2c2c);
+  }
+
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .benefit-item {
+    font-size: 0.9rem;
+    color: var(--color-foreground-light, #5a5e5a);
+    margin-bottom: 0.4rem;
+    padding-left: 1.2rem;
+    position: relative;
+  }
+
+  .benefit-item::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-primary, #bf8a7a);
+    font-weight: bold;
+  }
+
+  .ingredient-description {
+    font-size: 0.95rem;
+    color: var(--color-foreground-light, #5a5e5a);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .ingredient-stats {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--color-foreground-muted, #6a6a6a);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .stat-value {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-primary, #bf8a7a);
+  }
+
+  .ingredient-hover-effect {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(191, 138, 122, 0.05), rgba(191, 138, 122, 0.02));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  .ingredient-card:hover .ingredient-hover-effect {
+    opacity: 1;
+  }
+
+  .ingredients-footer {
+    text-align: center;
+    margin-top: 3rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    border: 1px solid rgba(191, 138, 122, 0.2);
+  }
+
+  .footer-text {
+    color: var(--color-foreground-muted, #6a6a6a);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Placeholder Styles */
+  .ingredient-placeholder {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, var(--color-tertiary-bg, #f8f9fa), var(--color-quaternary-bg, #e9ecef));
+    border: 2px dashed var(--color-primary, #bf8a7a);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .placeholder-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+  }
+
+  .placeholder-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-primary, #bf8a7a);
+    margin: 0 0 1rem 0;
+  }
+
+  .placeholder-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .spec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(191, 138, 122, 0.1);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid rgba(191, 138, 122, 0.2);
+    font-size: 0.8rem;
+  }
+
+  .spec-creative {
+    background: rgba(191, 138, 122, 0.15);
+    border: 1px solid rgba(191, 138, 122, 0.3);
+  }
+
+  .spec-label {
+    font-weight: 600;
+    color: var(--color-foreground, #5a5e5a);
+  }
+
+  .spec-value {
+    font-weight: 700;
+    color: var(--color-primary, #bf8a7a);
+    font-family: monospace;
+  }
+
+  .spec-creative .spec-label {
+    color: var(--color-primary, #bf8a7a);
+    font-weight: 700;
+  }
+
+  .spec-creative .spec-value {
+    font-family: inherit;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-foreground, #5a5e5a);
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .ingredients-highlights-section {
+      padding: 2rem 0;
+    }
+
+    .ingredients-container {
+      padding: 0 1rem;
+    }
+
+    .ingredients-header {
+      margin-bottom: 2rem;
+    }
+
+    .ingredients-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    .ingredient-card {
+      padding: 1.5rem;
+    }
+
+    .ingredient-image-container {
+      height: 150px;
+    }
+
+    .ingredient-stats {
+      gap: 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Ingredients Highlights",
+  "tag": "section",
+  "class": "section-ingredients-highlights",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "All ingredients are carefully sourced and tested for quality and effectiveness"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "section_header",
+      "name": "Section Header",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Key Ingredients"
+        },
+        {
+          "type": "textarea",
+          "id": "subheading",
+          "label": "Subheading",
+          "default": "Discover the powerful ingredients that make our products exceptional"
+        }
+      ]
+    },
+    {
+      "type": "ingredient",
+      "name": "Ingredient",
+      "settings": [
+        {
+          "type": "text",
+          "id": "ingredient_name",
+          "label": "Ingredient Name",
+          "default": "Hyaluronic Acid"
+        },
+        {
+          "type": "text",
+          "id": "ingredient_type",
+          "label": "Ingredient Type",
+          "default": "Humectant",
+          "info": "e.g., Antioxidant, Humectant, Emollient"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Ingredient Image"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Ingredient Description",
+          "default": "<p>A powerful humectant that can hold up to 1000 times its weight in water, providing intense hydration to the skin.</p>"
+        },
+        {
+          "type": "text",
+          "id": "benefits",
+          "label": "Key Benefits",
+          "default": "Deep hydration, Plumping effect, Anti-aging",
+          "info": "Separate benefits with commas"
+        },
+        {
+          "type": "text",
+          "id": "concentration",
+          "label": "Concentration",
+          "default": "2%",
+          "info": "e.g., 2%, 5%, 10%"
+        },
+        {
+          "type": "text",
+          "id": "origin",
+          "label": "Origin",
+          "default": "Biofermented"
+        },
+        {
+          "type": "header",
+          "content": "Placeholder Settings"
+        },
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Placeholder Icon",
+          "default": "🌿",
+          "info": "Emoji or icon to show when no image is uploaded"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_title",
+          "label": "Placeholder Title",
+          "default": "Add Ingredient Image",
+          "info": "Title shown in placeholder when no image is uploaded"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_creative",
+          "label": "Placeholder Creative Description",
+          "default": "High-quality ingredient photography with clean background",
+          "info": "Creative description for the placeholder image"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_web_size",
+          "label": "Web Size Recommendation",
+          "default": "300×300px",
+          "info": "Recommended size for desktop/web viewing"
+        },
+        {
+          "type": "text",
+          "id": "placeholder_mobile_size",
+          "label": "Mobile Size Recommendation",
+          "default": "200×200px",
+          "info": "Recommended size for mobile viewing"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredients Highlights",
+      "blocks": [
+        {
+          "type": "section_header",
+          "settings": {
+            "heading": "Key Ingredients",
+            "subheading": "Discover the powerful ingredients that make our products exceptional"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "ingredient_name": "Hyaluronic Acid",
+            "ingredient_type": "Humectant",
+            "description": "<p>A powerful humectant that can hold up to 1000 times its weight in water, providing intense hydration to the skin.</p>",
+            "benefits": "Deep hydration, Plumping effect, Anti-aging",
+            "concentration": "2%",
+            "origin": "Biofermented"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "ingredient_name": "Vitamin C",
+            "ingredient_type": "Antioxidant",
+            "description": "<p>A potent antioxidant that brightens skin tone and protects against environmental damage.</p>",
+            "benefits": "Brightening, Antioxidant protection, Collagen boost",
+            "concentration": "10%",
+            "origin": "Organic citrus"
+          }
+        },
+        {
+          "type": "ingredient",
+          "settings": {
+            "ingredient_name": "Retinol",
+            "ingredient_type": "Anti-aging",
+            "description": "<p>A proven anti-aging ingredient that stimulates cell turnover and reduces fine lines.</p>",
+            "benefits": "Anti-aging, Cell renewal, Texture improvement",
+            "concentration": "0.5%",
+            "origin": "Pharmaceutical grade"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

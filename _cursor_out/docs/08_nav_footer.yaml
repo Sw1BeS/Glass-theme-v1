@@ -1,0 +1,62 @@
+# NAVIGATION & FOOTER STRUCTURE
+
+header:
+  - title: 'Home'
+    url: '/'
+  - title: 'Buy The Duo'
+    url: '/products/the-duo'
+
+footer:
+  support:
+    title: 'Support'
+    links:
+      - title: 'FAQ'
+        url: '/pages/faq'
+      - title: 'Order Tracking'
+        url: '/pages/tracking'
+      - title: 'Contact Us'
+        url: '/pages/contact'
+      - title: 'Our Story'
+        url: '/pages/about'
+
+  policies:
+    title: 'Policies'
+    links:
+      - title: 'Shipping Policy'
+        url: '/policies/shipping-policy'
+      - title: 'Return Policy'
+        url: '/policies/refund-policy'
+      - title: 'Privacy Policy'
+        url: '/policies/privacy-policy'
+      - title: 'Terms of Service'
+        url: '/policies/terms-of-service'
+
+  social:
+    title: 'Follow Us'
+    links:
+      - title: 'Instagram'
+        url: 'https://www.instagram.com/isbeautylux_/'
+        icon: 'instagram'
+      - title: 'TikTok'
+        url: 'https://www.tiktok.com/@isbeautylux'
+        icon: 'tiktok'
+
+  newsletter:
+    title: 'Stay Updated'
+    description: 'Get beauty tips and exclusive offers'
+    placeholder: 'Enter your email'
+    button_text: 'Subscribe'
+
+# Additional page links (not in main nav but accessible)
+additional_pages:
+  - title: 'Professional Program'
+    url: '/pages/b2b'
+    description: 'Wholesale program for salons and beauty professionals'
+
+  - title: 'Ingredient List'
+    url: '/pages/ingredients'
+    description: 'Complete ingredient information for both products'
+
+  - title: 'How to Use'
+    url: '/pages/instructions'
+    description: 'Detailed usage instructions and tips'

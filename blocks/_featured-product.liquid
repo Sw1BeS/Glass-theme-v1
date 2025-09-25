@@ -1,0 +1,44 @@
+
+
+{% capture product_card_children %}
+  <div class="featured-product-content-top">
+    <h3 class="product-title">{{ closest.product.title }}</h3>
+    <div class="product-price">
+      {% render 'price', product_resource: closest.product %}
+    </div>
+  </div>
+  <div class="product-gallery">
+    {% render 'product-media', media: closest.product.media %}
+  </div>
+  <div class="featured-product-content-bottom">
+    {% render 'variant-swatches', product_resource: closest.product %}
+  </div>
+{% endcapture %}
+
+{% render 'product-card', children: product_card_children, product: closest.product, product_card_gap: 8 %}
+
+{% stylesheet %}
+  .featured-product-content-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--gap-sm);
+  }
+
+  .featured-product-content-bottom:not(:has(product-swatches)) {
+    display: none;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.product",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.resource_reference_product_card"
+    }
+  ]
+}
+{% endschema %}

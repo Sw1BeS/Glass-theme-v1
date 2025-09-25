@@ -1,0 +1,1302 @@
+/* Custom styles for IS Beauty Lux theme */
+
+/* Global Premium Background and Typography */
+html {
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f0f2f5 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #2c2c2c;
+  background: transparent;
+}
+
+/* Premium Typography for Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin: 0;
+  position: relative;
+}
+
+/* Premium Background for All Sections */
+.section:not(.premium-product-composition),
+.section-wrapper:not(.premium-product-composition),
+.section-group:not(.premium-product-composition),
+.section-container:not(.premium-product-composition) {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 2rem 1.5rem;
+  margin: 1rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Premium Background for Section Headers */
+.section-header,
+.section-title,
+.section h2,
+.section h1,
+.section h3,
+.section .title,
+.section .heading {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  backdrop-filter: blur(25px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 24px;
+  padding: 1.5rem 1rem;
+  margin: 1rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Background effects for all sections */
+.section::before,
+.section-wrapper::before,
+.section-group::before,
+.section-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(191, 138, 122, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(218, 180, 166, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 60%,
+      rgba(191, 138, 122, 0.04) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: -1;
+}
+
+.section-header::before,
+.section-title::before,
+.section h2::before,
+.section h1::before,
+.section h3::before,
+.section .title::before,
+.section .heading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(191, 138, 122, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(218, 180, 166, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 60%,
+      rgba(191, 138, 122, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Particles for all sections */
+.section::after,
+.section-wrapper::after,
+.section-group::after,
+.section-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      1px 1px at 20px 30px,
+      rgba(191, 138, 122, 0.15),
+      transparent
+    ),
+    radial-gradient(1px 1px at 40px 70px, rgba(218, 180, 166, 0.1), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(191, 138, 122, 0.2), transparent),
+    radial-gradient(
+      1px 1px at 130px 80px,
+      rgba(218, 180, 166, 0.15),
+      transparent
+    );
+  background-repeat: repeat;
+  background-size: 250px 250px;
+  animation: floatParticles 30s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.section-header::after,
+.section-title::after,
+.section h2::after,
+.section h1::after,
+.section h3::after,
+.section .title::after,
+.section .heading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      2px 2px at 20px 30px,
+      rgba(191, 138, 122, 0.2),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 40px 70px,
+      rgba(218, 180, 166, 0.15),
+      transparent
+    ),
+    radial-gradient(1px 1px at 90px 40px, rgba(191, 138, 122, 0.3), transparent),
+    radial-gradient(
+      1px 1px at 130px 80px,
+      rgba(218, 180, 166, 0.2),
+      transparent
+    );
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: floatParticles 25s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+}
+
+h3 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+}
+
+/* Premium Background Elements */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(191, 138, 122, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(218, 180, 166, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 60%,
+      rgba(191, 138, 122, 0.05) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Floating Particles Background */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      2px 2px at 20px 30px,
+      rgba(191, 138, 122, 0.2),
+      transparent
+    ),
+    radial-gradient(
+      2px 2px at 40px 70px,
+      rgba(218, 180, 166, 0.15),
+      transparent
+    ),
+    radial-gradient(1px 1px at 90px 40px, rgba(191, 138, 122, 0.3), transparent),
+    radial-gradient(
+      1px 1px at 130px 80px,
+      rgba(218, 180, 166, 0.2),
+      transparent
+    );
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  animation: floatParticles 25s linear infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes floatParticles {
+  0% {
+    transform: translateY(0px) translateX(0px);
+  }
+  25% {
+    transform: translateY(-20px) translateX(10px);
+  }
+  50% {
+    transform: translateY(-10px) translateX(-5px);
+  }
+  75% {
+    transform: translateY(-30px) translateX(15px);
+  }
+  100% {
+    transform: translateY(0px) translateX(0px);
+  }
+}
+
+@keyframes orbFloat {
+  0%, 100% {
+    transform: translateY(0px) translateX(0px) scale(1);
+    opacity: 0.7;
+  }
+  33% {
+    transform: translateY(-30px) translateX(20px) scale(1.1);
+    opacity: 0.4;
+  }
+  66% {
+    transform: translateY(20px) translateX(-15px) scale(0.9);
+    opacity: 0.6;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Ensure all containers respect viewport width */
+.container,
+.section,
+.page-width {
+  max-width: 100%;
+  overflow: hidden;
+}
+
+/* Modern Beauty Section Dividers */
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-primary, #bf8a7a),
+    transparent
+  );
+  opacity: 0.6;
+}
+
+.section::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-primary, #bf8a7a),
+    transparent
+  );
+  opacity: 0.4;
+}
+
+/* Modern typography with liquid glass accents */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading-family, 'Playfair Display');
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--color-foreground, #5a5e5a);
+  text-rendering: optimizeLegibility;
+}
+
+h2 {
+  text-align: center;
+  margin: 3rem 0 2rem 0;
+  padding-bottom: 1rem;
+  position: relative;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+h2::before {
+  content: '';
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-primary, #bf8a7a),
+    transparent
+  );
+  border-radius: 1px;
+  opacity: 0.7;
+}
+
+/* Body text with better readability */
+p {
+  font-family: var(--font-body-family, 'Inter');
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-foreground-light, #5a5e5a);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* Improved button typography */
+button,
+.btn,
+.button {
+  font-family: var(--font-body-family, 'Inter');
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* Enhanced spacing for testimonials and FAQ */
+.testimonials-section {
+  margin-bottom: 4rem;
+}
+
+.faq-section {
+  margin-top: 4rem;
+}
+
+/* Color scheme preview enhancements */
+.color-scheme-preview {
+  background: var(--color-background);
+  border: 2px solid var(--color-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.color-scheme-preview:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.color-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.color-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced emoji styling for step paragraphs */
+h4 + p + p {
+  font-size: 2rem;
+  margin: 0.5rem 0;
+  display: block;
+  text-align: center;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Apple Liquid Glass Effect - 2025 Trend */
+.liquid-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.liquid-glass:hover::before {
+  left: 100%;
+}
+
+/* 2025 Micro-interactions */
+.magnetic-hover {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.magnetic-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* Floating Animation */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.floating-element {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Morphing Buttons */
+.morph-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.morph-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.morph-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Glitch Effect for Cyber Themes */
+.glitch-effect {
+  position: relative;
+}
+
+.glitch-effect::before,
+.glitch-effect::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  color: inherit;
+  clip: rect(0, 900px, 0, 0);
+  animation: glitch 2s infinite linear alternate-reverse;
+}
+
+.glitch-effect::before {
+  left: 2px;
+  text-shadow: -2px 0 #ff00ff;
+  animation-name: glitch-1;
+}
+
+.glitch-effect::after {
+  left: -2px;
+  text-shadow: -2px 0 #00ffff, 2px 2px #ff00ff;
+  animation-name: glitch-2;
+}
+
+@keyframes glitch-1 {
+  0%,
+  14%,
+  15%,
+  49%,
+  50%,
+  99%,
+  100% {
+    clip: rect(20px, 9999px, 10px, 0);
+  }
+  15%,
+  49% {
+    clip: rect(10px, 9999px, 20px, 0);
+  }
+}
+
+@keyframes glitch-2 {
+  0%,
+  20%,
+  21%,
+  62%,
+  63%,
+  99%,
+  100% {
+    clip: rect(10px, 9999px, 20px, 0);
+  }
+  21%,
+  62% {
+    clip: rect(20px, 9999px, 10px, 0);
+  }
+}
+
+/* Holographic Effect */
+.holographic {
+  background: linear-gradient(45deg, #ff0080, #00ff80, #8000ff, #ff8000);
+  background-size: 400% 400%;
+  animation: holographic 3s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@keyframes holographic {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Liquid Morphing Shapes */
+.liquid-shape {
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  animation: liquid-morph 8s ease-in-out infinite;
+}
+
+@keyframes liquid-morph {
+  0%,
+  100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  25% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+  50% {
+    border-radius: 70% 30% 60% 40% / 40% 70% 60% 30%;
+  }
+  75% {
+    border-radius: 40% 70% 30% 60% / 70% 40% 50% 60%;
+  }
+}
+
+/* Parallax Scrolling Effect */
+.parallax-element {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* 3D Tilt Effect */
+.tilt-3d {
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.tilt-3d:hover {
+  transform: rotateX(10deg) rotateY(10deg);
+}
+
+/* Glassmorphism Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+/* iOS Style Elements */
+.ios-button {
+  -webkit-appearance: none;
+  appearance: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.ios-button:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.ios-toggle {
+  position: relative;
+  overflow: hidden;
+}
+
+.ios-toggle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.ios-toggle:hover::before {
+  left: 100%;
+}
+
+.ios-scheme-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.ios-scheme-btn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.ios-scheme-btn:active::after {
+  width: 200px;
+  height: 200px;
+}
+
+.ios-modal {
+  animation: modalSlideIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Enhanced Theme Effects */
+.cyber-theme {
+  background: linear-gradient(45deg, #0a0a0a, #1a1a1a);
+  color: #00ff88;
+}
+
+.cyber-theme h1,
+.cyber-theme h2,
+.cyber-theme h3 {
+  text-shadow: 0 0 10px #00ff88;
+}
+
+.neon-theme {
+  background: linear-gradient(45deg, #1a0a2e, #16213e);
+  color: #e94560;
+}
+
+.neon-theme button {
+  box-shadow: 0 0 20px #e94560;
+}
+
+.ocean-theme {
+  background: linear-gradient(45deg, #001f3f, #003366);
+  color: #39cccc;
+}
+
+.ocean-theme .card {
+  border: 1px solid #39cccc;
+}
+
+.sunset-theme {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+  color: #ffffff;
+}
+
+.sunset-theme .section {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Particle System */
+#particles-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Advanced Glass Effects */
+.glass-enabled .section {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-enabled .card {
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Animation Controls */
+.animations-disabled * {
+  animation-duration: 0s !important;
+  animation-delay: 0s !important;
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}
+
+/* Enhanced Hover Effects */
+.ios-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.2);
+}
+
+.scheme-btn:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Apple Toggle Switch Styles */
+.ios-toggle-switch input:checked + .ios-slider {
+  background-color: #007aff !important;
+}
+
+.ios-toggle-switch input:checked + .ios-slider + .ios-slider-thumb {
+  transform: translateX(20px) !important;
+}
+
+.ios-toggle-switch .ios-slider:hover {
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.1);
+}
+
+.ios-toggle-switch input:focus + .ios-slider {
+  box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.2);
+}
+
+/* Specific sections that need premium background */
+#shopify-section-template--25250244657469__hero,
+#shopify-section-template--25250244657469__featured,
+#shopify-section-template--25250244657469__why,
+#shopify-section-template--25250244657469__how_to,
+#shopify-section-template--25250244657469__ingredients,
+#shopify-section-template--25250244657469__founder,
+#shopify-section-template--25250244657469__testimonials,
+#shopify-section-template--25250244657469__reviews,
+#shopify-section-template--25250244657469__faq,
+#shopify-section-template--25250244657469__trust,
+#shopify-section-template--25250244657469__grid {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  ) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 24px !important;
+  padding: 4rem 2rem !important;
+  margin: 2rem 0 !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Background effects for specific sections */
+#shopify-section-template--25250244657469__hero::before,
+#shopify-section-template--25250244657469__featured::before,
+#shopify-section-template--25250244657469__why::before,
+#shopify-section-template--25250244657469__how_to::before,
+#shopify-section-template--25250244657469__ingredients::before,
+#shopify-section-template--25250244657469__founder::before,
+#shopify-section-template--25250244657469__testimonials::before,
+#shopify-section-template--25250244657469__reviews::before,
+#shopify-section-template--25250244657469__faq::before,
+#shopify-section-template--25250244657469__trust::before,
+#shopify-section-template--25250244657469__grid::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+      circle at 20% 20%,
+      rgba(191, 138, 122, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(218, 180, 166, 0.08) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 60%,
+      rgba(191, 138, 122, 0.04) 0%,
+      transparent 50%
+    );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Enhanced Text Visibility */
+.ensure-text-visibility {
+  color: var(--color-foreground) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Universal Premium Section Styling - Based on Product Composition */
+.section:not(.premium-product-composition),
+[id^="shopify-section-"]:not(.premium-product-composition) {
+  padding: 6rem 0;
+  background: linear-gradient(
+    135deg,
+    var(--color-background, #ffffff) 0%,
+    var(--color-secondary-bg, #f8f9fa) 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+/* Ensure content is above animated background */
+.section:not(.premium-product-composition) > *,
+[id^="shopify-section-"]:not(.premium-product-composition) > * {
+  position: relative;
+  z-index: 10;
+}
+
+/* Specific content elements that need to be above background */
+.section:not(.premium-product-composition) h1,
+.section:not(.premium-product-composition) h2,
+.section:not(.premium-product-composition) h3,
+.section:not(.premium-product-composition) h4,
+.section:not(.premium-product-composition) h5,
+.section:not(.premium-product-composition) h6,
+.section:not(.premium-product-composition) p,
+.section:not(.premium-product-composition) div,
+.section:not(.premium-product-composition) span,
+[id^="shopify-section-"]:not(.premium-product-composition) h1,
+[id^="shopify-section-"]:not(.premium-product-composition) h2,
+[id^="shopify-section-"]:not(.premium-product-composition) h3,
+[id^="shopify-section-"]:not(.premium-product-composition) h4,
+[id^="shopify-section-"]:not(.premium-product-composition) h5,
+[id^="shopify-section-"]:not(.premium-product-composition) h6,
+[id^="shopify-section-"]:not(.premium-product-composition) p,
+[id^="shopify-section-"]:not(.premium-product-composition) div,
+[id^="shopify-section-"]:not(.premium-product-composition) span {
+  position: relative;
+  z-index: 10;
+}
+
+/* Enhanced text readability over animated background */
+.section:not(.premium-product-composition) h1,
+.section:not(.premium-product-composition) h2,
+.section:not(.premium-product-composition) h3,
+[id^="shopify-section-"]:not(.premium-product-composition) h1,
+[id^="shopify-section-"]:not(.premium-product-composition) h2,
+[id^="shopify-section-"]:not(.premium-product-composition) h3 {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.section:not(.premium-product-composition) p,
+[id^="shopify-section-"]:not(.premium-product-composition) p {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Animated Background Effects for All Sections */
+.section:not(.premium-product-composition)::before,
+[id^="shopify-section-"]:not(.premium-product-composition)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(2px 2px at 20px 30px, rgba(191, 138, 122, 0.3), transparent),
+    radial-gradient(2px 2px at 40px 70px, rgba(191, 138, 122, 0.2), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(191, 138, 122, 0.4), transparent),
+    radial-gradient(1px 1px at 130px 80px, rgba(191, 138, 122, 0.3), transparent),
+    radial-gradient(1px 1px at 160px 20px, rgba(218, 180, 166, 0.3), transparent),
+    radial-gradient(1px 1px at 200px 60px, rgba(191, 138, 122, 0.2), transparent);
+  background-size: 150px 100px, 200px 120px, 180px 90px, 160px 110px, 140px 80px, 120px 100px;
+  animation: floatParticles 25s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.section:not(.premium-product-composition)::after,
+[id^="shopify-section-"]:not(.premium-product-composition)::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(191, 138, 122, 0.15) 0%, transparent 70%);
+  border-radius: 50%;
+  animation: orbFloat 8s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Additional Floating Orbs for Enhanced Effect */
+.section:not(.premium-product-composition) {
+  position: relative;
+}
+
+.section:not(.premium-product-composition) .floating-orb-1,
+.section:not(.premium-product-composition) .floating-orb-2,
+.section:not(.premium-product-composition) .floating-orb-3 {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.section:not(.premium-product-composition) .floating-orb-1 {
+  top: 30%;
+  right: 15%;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(218, 180, 166, 0.2) 0%, transparent 70%);
+  animation: orbFloat 12s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.section:not(.premium-product-composition) .floating-orb-2 {
+  bottom: 25%;
+  left: 20%;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, rgba(191, 138, 122, 0.25) 0%, transparent 70%);
+  animation: orbFloat 10s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+.section:not(.premium-product-composition) .floating-orb-3 {
+  top: 60%;
+  right: 30%;
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle, rgba(218, 180, 166, 0.18) 0%, transparent 70%);
+  animation: orbFloat 14s ease-in-out infinite;
+  animation-delay: -6s;
+}
+
+.section:not(.premium-product-composition) .section-header,
+.section:not(.premium-product-composition) .section-title,
+[id^="shopify-section-"]:not(.premium-product-composition) h1,
+[id^="shopify-section-"]:not(.premium-product-composition) h2,
+[id^="shopify-section-"]:not(.premium-product-composition) h3 {
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  overflow: hidden;
+}
+
+.section:not(.premium-product-composition) .section-header::before,
+.section:not(.premium-product-composition) .section-title::before,
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      2px 2px at 20px 30px,
+      rgba(191, 138, 122, 0.3),
+      transparent
+    ),
+    radial-gradient(2px 2px at 40px 70px, rgba(191, 138, 122, 0.2), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(191, 138, 122, 0.4), transparent),
+    radial-gradient(
+      1px 1px at 130px 80px,
+      rgba(191, 138, 122, 0.3),
+      transparent
+    );
+  background-size: 150px 100px, 200px 120px, 180px 90px, 160px 110px;
+  animation: floatParticles 20s linear infinite;
+  z-index: -1;
+}
+
+.section:not(.premium-product-composition) .section-header::after,
+.section:not(.premium-product-composition) .section-title::after,
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(
+    circle,
+    rgba(191, 138, 122, 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: orbFloat 6s ease-in-out infinite;
+  z-index: -1;
+}
+
+.section:not(.premium-product-composition) .section-header::after {
+  animation-delay: -2s;
+}
+
+.section:not(.premium-product-composition) .section-title::after {
+  animation-delay: -4s;
+}
+
+
+.section:not(.premium-product-composition) .section-header,
+.section:not(.premium-product-composition) .section-title,
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  overflow: hidden;
+}
+
+.section:not(.premium-product-composition) .section-header::before,
+.section:not(.premium-product-composition) .section-title::before,
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(
+      2px 2px at 20px 30px,
+      rgba(191, 138, 122, 0.3),
+      transparent
+    ),
+    radial-gradient(2px 2px at 40px 70px, rgba(191, 138, 122, 0.2), transparent),
+    radial-gradient(1px 1px at 90px 40px, rgba(191, 138, 122, 0.4), transparent),
+    radial-gradient(
+      1px 1px at 130px 80px,
+      rgba(191, 138, 122, 0.3),
+      transparent
+    );
+  background-size: 150px 100px, 200px 120px, 180px 90px, 160px 110px;
+  animation: floatParticles 20s linear infinite;
+  z-index: -1;
+}
+
+.section:not(.premium-product-composition) .section-header::after,
+.section:not(.premium-product-composition) .section-title::after,
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(
+    circle,
+    rgba(191, 138, 122, 0.15) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: orbFloat 6s ease-in-out infinite;
+  z-index: -1;
+}
+
+.section:not(.premium-product-composition) .section-header::after {
+  animation-delay: -2s;
+}
+
+.section:not(.premium-product-composition) .section-title::after {
+  animation-delay: -4s;
+}
+
+
+/* Better contrast for dark themes */
+.cyber-theme .text-content,
+.neon-theme .text-content,
+.ocean-theme .text-content {
+  color: #ffffff !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.cyber-theme .text-content p,
+.neon-theme .text-content p,
+.ocean-theme .text-content p {
+  color: #cccccc !important;
+}
+
+/* Improved section contrast */
+.section {
+  position: relative;
+}
+
+.section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  opacity: 0.95;
+  z-index: -1;
+}
+
+/* Enhanced readability */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+p,
+span,
+div {
+  line-height: 1.6;
+}
+
+/* Better button contrast */
+button,
+.btn,
+.button {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .section:not(.premium-product-composition) .section-header,
+  .section:not(.premium-product-composition) .section-title {
+    padding: 1rem 0.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .section:not(.premium-product-composition),
+  .section-wrapper:not(.premium-product-composition),
+  .section-group:not(.premium-product-composition),
+  .section-container:not(.premium-product-composition) {
+    padding: 1rem 0.5rem;
+    margin: 0.5rem 0;
+  }
+
+
+  .section:not(.premium-product-composition) .floating-orb-1,
+  .section:not(.premium-product-composition) .floating-orb-2,
+  .section:not(.premium-product-composition) .floating-orb-3 {
+    display: none;
+  }
+}

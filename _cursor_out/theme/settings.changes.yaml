@@ -1,0 +1,92 @@
+# THEME SETTINGS CHANGES FOR PITCH
+
+colors:
+  # Primary color scheme updates
+  color_schemes:
+    scheme-1: # Main scheme
+      background: '#F8F6F3' # Warm beige background
+      foreground: '#2C2C2C' # Dark gray text (replaces black)
+      foreground_heading: '#2C2C2C' # Dark gray headings
+      primary: '#D4AF37' # Brand gold accent
+      primary_hover: '#C9A86A' # Slightly muted gold hover
+      border: '#D1C7BC' # Neutral beige borders
+      shadow: '#2C2C2C26' # Dark gray with transparency
+
+      # Primary button styling
+      primary_button_background: '#D4AF37' # Gold CTA buttons
+      primary_button_text: '#FFFFFF' # White text on gold
+      primary_button_border: '#D4AF37' # Gold border
+      primary_button_hover_background: '#C9A86A' # Hover state
+      primary_button_hover_text: '#FFFFFF' # White text on hover
+      primary_button_hover_border: '#C9A86A' # Hover border
+
+      # Secondary button styling
+      secondary_button_background: '#FFFFFF' # White background
+      secondary_button_text: '#2C2C2C' # Dark gray text
+      secondary_button_border: '#D1C7BC' # Beige border
+      secondary_button_hover_background: '#E8E2DB' # Light beige hover
+      secondary_button_hover_text: '#2C2C2C' # Dark gray text
+      secondary_button_hover_border: '#D4AF37' # Gold border on hover
+
+      # Input field styling
+      input_background: '#FFFFFF' # White input backgrounds
+      input_text_color: '#2C2C2C' # Dark gray text
+      input_border: '#D1C7BC' # Beige borders
+      input_focus_border: '#D4AF37' # Gold focus state
+
+logos:
+  logo: 'shopify://files/logo_main.svg' # Main logo (dark on light)
+  logo_inverse: 'shopify://files/logo_inverse.svg' # Light logo for dark backgrounds
+  favicon: 'shopify://files/favicon.png' # Brand favicon
+
+typography:
+  base_font: 'system_sans_serif' # System fonts for performance
+  heading_font: 'system_sans_serif' # Consistent typography
+  base_font_size: '16px' # Readable base size
+  heading_scale: '1.2' # Moderate heading scale
+
+header:
+  show_search: false # Hide search to focus on primary offer
+  show_account: false # Hide account icon for simplicity
+  sticky_header: true # Keep header visible
+  logo_position: 'left' # Standard logo placement
+  menu_type: 'drawer' # Mobile-friendly navigation
+
+cart:
+  drawer_enabled: true # Quick cart access
+  show_cart_count: true # Show item count
+  cart_count_position: 'bubble' # Visible count indicator
+
+mobile:
+  sticky_add_to_cart: true # Mobile conversion optimization
+  mobile_menu_style: 'drawer' # Standard mobile menu
+  show_mobile_search: false # Keep mobile simple
+
+checkout:
+  checkout_accent_color: '#D4AF37' # Brand gold for checkout
+  checkout_button_color: '#D4AF37' # Gold checkout buttons
+  checkout_error_color: '#DC3545' # Standard error red
+
+social_media:
+  instagram_url: 'https://www.instagram.com/isbeautylux_/'
+  tiktok_url: 'https://www.tiktok.com/@isbeautylux'
+  show_social_icons: true
+  social_icons_style: 'solid'
+
+# Additional brand-specific settings
+brand_settings:
+  primary_offer_text: 'The Duo - $34.99 (Save $3.01)'
+  trust_message: '30-Day Money-Back Guarantee • Free Shipping on $50+'
+  announcement_bar_text: '🚚 Free shipping on orders over $50 • 🛡️ 30-day money-back guarantee'
+  announcement_bar_enabled: true
+
+# SEO and meta settings
+seo:
+  meta_title: 'IS Beauty Lux - The Perfect Brow Duo | Gentle Brow Care System'
+  meta_description: 'Transform your brows with our gentle 2-step system. Brow & Lash Shampoo + Clear Eyebrow Gel. Save $3.01 when you buy The Duo. Free shipping on $50+.'
+
+# Performance settings
+performance:
+  lazy_load_images: true
+  optimize_loading: true
+  preload_key_images: true

@@ -1,0 +1,139 @@
+/* IS Beauty Lux glass utilities */
+
+:root {
+  --glass-global-blur: 24px;
+  --glass-global-border-opacity: 0.22;
+  --glass-global-opacity: 0.26;
+  --glass-global-tint: rgba(255, 255, 255, 0.82);
+  --glass-shadow-color: rgba(17, 23, 34, 0.14);
+  --glass-highlight-color: var(--color-primary, #bf8a7a);
+  --glass-surface-border-color: rgba(255, 255, 255, 0.4);
+  --glass-surface-color: rgba(255, 255, 255, 0.78);
+  --glass-foreground-strong: var(--color-foreground, #2c2c2c);
+  --glass-foreground-muted: var(--color-foreground, #2c2c2c);
+}
+
+.glass-surface {
+  position: relative;
+  background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
+  border: 1px solid color-mix(in srgb, var(--glass-surface-border-color, rgba(255, 255, 255, 0.4)) calc(var(--glass-global-border-opacity, 0.22) * 100%), transparent);
+  border-radius: inherit;
+  backdrop-filter: blur(var(--glass-local-blur, var(--glass-global-blur, 24px)));
+  -webkit-backdrop-filter: blur(var(--glass-local-blur, var(--glass-global-blur, 24px)));
+  box-shadow: 0 24px 48px var(--glass-shadow-color, rgba(17, 23, 34, 0.14));
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  isolation: isolate;
+  color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+}
+
+.glass-surface::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--glass-highlight-color, #bf8a7a) 14%, transparent) 0%, transparent 65%);
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.glass-surface[data-glass-tone='dark'] {
+  background: color-mix(in srgb, rgba(18, 20, 26, 0.75) calc(var(--glass-global-opacity, 0.26) * 100%), transparent);
+  border-color: color-mix(in srgb, rgba(255, 255, 255, 0.35) 50%, transparent);
+  color: color-mix(in srgb, white 92%, transparent);
+}
+
+.glass-surface[data-glass-tone='dark']::after {
+  opacity: 0.6;
+}
+
+.glass-surface[data-glass-elevation='low'] {
+  box-shadow: 0 16px 36px rgba(17, 23, 34, 0.12);
+}
+
+.glass-surface[data-glass-elevation='high'] {
+  box-shadow: 0 32px 72px rgba(17, 23, 34, 0.18);
+}
+
+.glass-surface:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 28px 64px rgba(17, 23, 34, 0.16);
+}
+
+.glass-surface[data-disable-hover='true']:hover {
+  transform: none;
+  box-shadow: 0 24px 48px var(--glass-shadow-color, rgba(17, 23, 34, 0.14));
+}
+
+.glass-surface h1,
+.glass-surface h2,
+.glass-surface h3,
+.glass-surface h4,
+.glass-surface h5,
+.glass-surface h6 {
+  color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+}
+
+.glass-surface p,
+.glass-surface li,
+.glass-surface span,
+.glass-surface small {
+  color: var(--glass-foreground-muted, var(--glass-foreground-strong, var(--color-foreground, #2c2c2c)));
+}
+
+.glass-surface a:not(.glass-button) {
+  color: inherit;
+  text-decoration-color: currentColor;
+}
+
+.glass-surface a:not(.glass-button):hover {
+  opacity: 0.85;
+}
+
+.glass-button,
+.glass-button:visited {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.95rem 1.9rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.01em;
+  color: var(--text-on-primary, #ffffff);
+  background: linear-gradient(135deg, color-mix(in srgb, var(--glass-highlight-color, #bf8a7a) 95%, transparent) 0%, color-mix(in srgb, var(--color-accent, #dab4a6) 85%, transparent) 100%);
+  box-shadow: 0 20px 40px color-mix(in srgb, var(--glass-highlight-color, #bf8a7a) 25%, transparent);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.glass-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 26px 52px color-mix(in srgb, var(--glass-highlight-color, #bf8a7a) 32%, transparent);
+}
+
+.glass-button--soft {
+  background: color-mix(in srgb, var(--glass-global-tint, rgba(255, 255, 255, 0.82)) 70%, transparent);
+  color: color-mix(in srgb, var(--color-foreground, #2c2c2c) 90%, transparent);
+  border-color: color-mix(in srgb, var(--glass-surface-border-color, rgba(255, 255, 255, 0.4)) 55%, transparent);
+  box-shadow: none;
+}
+
+body.theme-glass .glass-disabled,
+body:not(.theme-glass) .requires-glass {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .glass-surface,
+  .glass-button {
+    transition: none;
+  }
+
+  .glass-surface:hover,
+  .glass-button:hover {
+    transform: none;
+  }
+}

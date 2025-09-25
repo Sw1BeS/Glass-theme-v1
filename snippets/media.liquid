@@ -1,0 +1,258 @@
+{%- doc -%}
+  Renders media block contents (used in _media and _media-without-appearance blocks)
+
+  @param {string} section_id - The section ID
+  @param {object} [block] - The block object
+  @param {boolean} [unset_image_tag] - if true, ignores the image focal point in the image
+{%- enddoc -%}
+
+{% liquid
+  assign block_settings = block.settings
+  assign show_image = false
+  assign show_video = false
+
+  if block_settings.media_type == 'image'
+    assign show_image = true
+  endif
+
+  if block_settings.media_type == 'video'
+    assign show_video = true
+  endif
+%}
+
+<div
+  class="
+    media-block
+    spacing-style
+    {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
+    {% if show_image and block_settings.image_position == 'contain' or show_video and block_settings.video_position == 'contain' %}
+      media-block--contain
+    {% endif %}
+  "
+  style="
+    {% render 'border-override', settings: block_settings %}
+    {% render 'spacing-style', settings: block_settings %}
+    --image-position: {{ block_settings.image_position }};
+    --video-position: {{ block_settings.video_position }};
+  "
+  {{ block.shopify_attributes }}
+>
+  {%- if show_image -%}
+    {% capture image_tag %}
+      {% if block_settings.image != blank %}
+        <!-- Desktop Image -->
+        <div class="media-block__image-desktop">
+          {% render 'image',
+            image: block_settings.image,
+            class: 'media-block__media border-style',
+            unset_image_tag: unset_image_tag
+          %}
+        </div>
+
+        <!-- Mobile Image -->
+        <div class="media-block__image-mobile">
+          {% if block_settings.image_mobile != blank %}
+            {% render 'image',
+              image: block_settings.image_mobile,
+              class: 'media-block__media border-style',
+              unset_image_tag: unset_image_tag
+            %}
+          {% else %}
+            <!-- Fallback to desktop image for mobile -->
+            {% render 'image',
+              image: block_settings.image,
+              class: 'media-block__media border-style',
+              unset_image_tag: unset_image_tag
+            %}
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="placeholder-image media-block__media border-style">
+          <div class="placeholder-content">
+            <div class="placeholder-icon">{{ block_settings.placeholder_icon | default: '🖼️' }}</div>
+            <h4 class="placeholder-title">{{ block_settings.placeholder_title | default: 'Add Media Content' }}</h4>
+            <div class="placeholder-specs">
+              <div class="spec-item">
+                <span class="spec-label">🌐 Web:</span>
+                <span class="spec-value">{{ block_settings.placeholder_web_size | default: '1500×900px' }}</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-label">📱 Mobile:</span>
+                <span class="spec-value">{{ block_settings.placeholder_mobile_size | default: '750×900px' }}</span>
+              </div>
+              <div class="spec-item spec-creative">
+                <span class="spec-label">💡 Tip:</span>
+                <span class="spec-value">{{ block_settings.placeholder_creative | default: 'High-quality product photography with natural lighting and beautiful composition' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+    {% endcapture %}
+
+    {% if block_settings.link != blank %}
+      <a
+        href="{{ block_settings.link }}"
+        class="media-block__media-link"
+      >
+        {{ image_tag }}
+      </a>
+    {% else %}
+      {{ image_tag }}
+    {% endif %}
+  {%- elsif show_video -%}
+    {% render 'video',
+      video: block_settings.video,
+      video_autoplay: block_settings.video_autoplay,
+      video_loop: block_settings.video_loop,
+      video_class: 'media-block__media media-block__media--video border-style',
+      section_id: section_id
+    %}
+  {%- else -%}
+    <div class="placeholder-image media-block__media border-style">
+      <div class="placeholder-content">
+        <div class="placeholder-icon">{{ block_settings.placeholder_icon | default: '🎥' }}</div>
+        <h4 class="placeholder-title">{{ block_settings.placeholder_title | default: 'Add Video Content' }}</h4>
+        <div class="placeholder-specs">
+          <div class="spec-item">
+            <span class="spec-label">🌐 Web:</span>
+            <span class="spec-value">{{ block_settings.placeholder_video_web_size | default: '1920×1080px' }}</span>
+          </div>
+          <div class="spec-item">
+            <span class="spec-label">📱 Mobile:</span>
+            <span class="spec-value">{{ block_settings.placeholder_video_mobile_size | default: '1080×1920px' }}</span>
+          </div>
+          <div class="spec-item spec-creative">
+            <span class="spec-label">💡 Tip:</span>
+            <span class="spec-value">{{ block_settings.placeholder_video_creative | default: 'Creative video showcasing product benefits with emotional impact' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+{% stylesheet %}
+  .media-block {
+    overflow: hidden;
+    position: relative;
+
+    @media screen and (min-width: 750px) {
+      min-height: var(--media-height);
+    }
+  }
+
+  .media-block__media {
+    height: var(--media-height-mobile, auto);
+    object-fit: var(--image-position, 'cover');
+    object-position: center center;
+    width: 100%;
+
+    @media screen and (min-width: 750px) {
+      height: 100%;
+      position: absolute;
+    }
+  }
+
+  deferred-media[class].media-block__media
+    :is(.deferred-media__poster-button img, .deferred-media__poster-button ~ video) {
+    object-fit: var(--video-position, 'cover');
+  }
+
+  /* This is to support corner radius on video and align the video to the center of the block */
+  .media-block__media--video {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media screen and (max-width: 749px) {
+      --media-height-mobile: auto;
+    }
+  }
+
+  /* Placeholder Styles */
+  .placeholder-image {
+    background: linear-gradient(135deg, var(--color-tertiary-bg, #f8f9fa), var(--color-quaternary-bg, #e9ecef));
+    border: 2px dashed var(--color-primary, #bf8a7a);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .placeholder-content {
+    z-index: 2;
+    position: relative;
+  }
+
+  .placeholder-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .placeholder-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--color-primary, #bf8a7a);
+    margin: 0 0 1.5rem 0;
+  }
+
+  .placeholder-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .spec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(191, 138, 122, 0.1);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(191, 138, 122, 0.2);
+  }
+
+  .spec-label {
+    font-weight: 600;
+    color: var(--color-foreground, #5a5e5a);
+    font-size: 0.9rem;
+  }
+
+  .spec-value {
+    font-weight: 700;
+    color: var(--color-primary, #bf8a7a);
+    font-size: 0.9rem;
+    font-family: monospace;
+  }
+
+  .spec-creative {
+    background: rgba(191, 138, 122, 0.15);
+    border: 1px solid rgba(191, 138, 122, 0.3);
+  }
+
+  .spec-creative .spec-label {
+    color: var(--color-primary, #bf8a7a);
+    font-weight: 700;
+  }
+
+  .spec-creative .spec-value {
+    font-family: inherit;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--color-foreground, #5a5e5a);
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.05); opacity: 1; }
+  }
+{% endstylesheet %}

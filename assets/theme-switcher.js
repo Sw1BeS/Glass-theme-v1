@@ -1,0 +1,992 @@
+// Advanced Theme Switcher with Effects for IS Beauty Lux
+class ThemeSwitcher {
+  constructor() {
+    this.colorSchemes = {
+      'deep-burgundy': {
+        name: 'Deep Burgundy',
+        colors: {
+          '--color-background': '#0f0707',
+          '--color-secondary-bg': '#1a0f0f',
+          '--color-tertiary-bg': '#2d1b1b',
+          '--color-quaternary-bg': '#3d2525',
+          '--color-primary': '#bf8a7a',
+          '--color-primary-hover': '#d4a088',
+          '--color-accent': '#dab4a6',
+          '--color-foreground': '#f5f2eb',
+          '--color-foreground-light': '#ece7d7',
+          '--color-foreground-muted': '#dab4a6',
+          '--color-border': '#4d3030',
+          '--color-border-light': '#5a3030'
+        }
+      },
+      'sage-green': {
+        name: 'Sage Green',
+        colors: {
+          '--color-background': '#2d4a2d',
+          '--color-secondary-bg': '#3a5a3a',
+          '--color-tertiary-bg': '#4a6a4a',
+          '--color-quaternary-bg': '#5a7a5a',
+          '--color-primary': '#bf8a7a',
+          '--color-primary-hover': '#a67666',
+          '--color-accent': '#8fbc8f',
+          '--color-foreground': '#f0f8f0',
+          '--color-foreground-light': '#e8f4e8',
+          '--color-foreground-muted': '#d8e8d8',
+          '--color-border': '#6a8a6a',
+          '--color-border-light': '#7a9a7a'
+        }
+      },
+      'lavender-dream': {
+        name: 'Lavender Dream',
+        colors: {
+          '--color-background': '#4a2d6b',
+          '--color-secondary-bg': '#5a3d7b',
+          '--color-tertiary-bg': '#6b4d8b',
+          '--color-quaternary-bg': '#7b5d9b',
+          '--color-primary': '#b19cd9',
+          '--color-primary-hover': '#9d82c7',
+          '--color-accent': '#c5a8e8',
+          '--color-foreground': '#f8f4ff',
+          '--color-foreground-light': '#f0e8ff',
+          '--color-foreground-muted': '#e8dcff',
+          '--color-border': '#8b6bab',
+          '--color-border-light': '#9b7bbb'
+        }
+      },
+      'warm-earth': {
+        name: 'Warm Earth',
+        colors: {
+          '--color-background': '#8b4513',
+          '--color-secondary-bg': '#a0522d',
+          '--color-tertiary-bg': '#cd853f',
+          '--color-quaternary-bg': '#deb887',
+          '--color-primary': '#cd853f',
+          '--color-primary-hover': '#b87333',
+          '--color-accent': '#daa520',
+          '--color-foreground': '#fff8f0',
+          '--color-foreground-light': '#fef0e0',
+          '--color-foreground-muted': '#fce8d0',
+          '--color-border': '#f4a460',
+          '--color-border-light': '#faf0e6'
+        }
+      },
+      'cyber-punk': {
+        name: 'Cyber Punk',
+        colors: {
+          '--color-background': '#0a0a0a',
+          '--color-secondary-bg': '#1a1a1a',
+          '--color-tertiary-bg': '#2a2a2a',
+          '--color-quaternary-bg': '#3a3a3a',
+          '--color-primary': '#00ff88',
+          '--color-primary-hover': '#00cc6a',
+          '--color-accent': '#00ffcc',
+          '--color-foreground': '#ffffff',
+          '--color-foreground-light': '#cccccc',
+          '--color-foreground-muted': '#999999',
+          '--color-border': '#00ff88',
+          '--color-border-light': '#2a2a2a'
+        }
+      },
+      'brand-porcelain': {
+        name: 'Brand Porcelain',
+        colors: {
+          '--color-background': '#ece7d7',
+          '--color-secondary-bg': '#f5f2eb',
+          '--color-tertiary-bg': '#dab4a6',
+          '--color-quaternary-bg': '#bf8a7a',
+          '--color-primary': '#5a5e5a',
+          '--color-primary-hover': '#4a4e4a',
+          '--color-accent': '#bf8a7a',
+          '--color-foreground': '#2c2c2c',
+          '--color-foreground-light': '#3c3c3c',
+          '--color-foreground-muted': '#5a5e5a',
+          '--color-border': '#d4c0b0',
+          '--color-border-light': '#e8e2db'
+        }
+      },
+      'brand-peach': {
+        name: 'Brand Peach',
+        colors: {
+          '--color-background': '#f5f2eb',
+          '--color-secondary-bg': '#dab4a6',
+          '--color-tertiary-bg': '#ece7d7',
+          '--color-quaternary-bg': '#bf8a7a',
+          '--color-primary': '#5a5e5a',
+          '--color-primary-hover': '#4a4e4a',
+          '--color-accent': '#bf8a7a',
+          '--color-foreground': '#2c2c2c',
+          '--color-foreground-light': '#3c3c3c',
+          '--color-foreground-muted': '#5a5e5a',
+          '--color-border': '#c4a896',
+          '--color-border-light': '#d4c0b0'
+        }
+      },
+      'brand-charcoal': {
+        name: 'Brand Charcoal',
+        colors: {
+          '--color-background': '#2c2c2c',
+          '--color-secondary-bg': '#3a3a3a',
+          '--color-tertiary-bg': '#4a4a4a',
+          '--color-quaternary-bg': '#5a5e5a',
+          '--color-primary': '#bf8a7a',
+          '--color-primary-hover': '#dab4a6',
+          '--color-accent': '#ece7d7',
+          '--color-foreground': '#ffffff',
+          '--color-foreground-light': '#f5f5f5',
+          '--color-foreground-muted': '#e0e0e0',
+          '--color-border': '#6a6e6a',
+          '--color-border-light': '#7a7e7a'
+        }
+      },
+      'luxury-black-gold': {
+        name: 'Luxury Black & Gold',
+        colors: {
+          '--color-background': '#0a0a0a',
+          '--color-secondary-bg': '#1a1a1a',
+          '--color-tertiary-bg': '#2a2a2a',
+          '--color-quaternary-bg': '#3a3a3a',
+          '--color-primary': '#d4af37',
+          '--color-primary-hover': '#b8941f',
+          '--color-accent': '#ffd700',
+          '--color-foreground': '#ffffff',
+          '--color-foreground-light': '#f0f0f0',
+          '--color-foreground-muted': '#cccccc',
+          '--color-border': '#4a4a4a',
+          '--color-border-light': '#5a5a5a'
+        }
+      }
+    };
+
+    this.currentScheme = 'brand-porcelain';
+    this.effects = {
+      particles: false,
+      spotlight: false
+    };
+
+    this.init();
+  }
+
+  getStaticPreview(schemeKey) {
+    // Static preview colors that don't change with current theme
+    const staticPreviews = {
+      'deep-burgundy': ['#0f0707', '#1a0f0f', '#bf8a7a', '#dab4a6'],
+      'sage-green': ['#2d4a2d', '#3a5a3a', '#bf8a7a', '#8fbc8f'],
+      'lavender-dream': ['#4a2d6b', '#5a3d7b', '#b19cd9', '#c5a8e8'],
+      'midnight-blue': ['#0f1419', '#1a2028', '#bf8a7a', '#64b5f6'],
+      'warm-terracotta': ['#8b4513', '#a0522d', '#cd853f', '#daa520'],
+      'cyber-punk': ['#0a0a0a', '#1a1a1a', '#00ff88', '#00ffcc'],
+      'brand-porcelain': ['#ece7d7', '#f5f2eb', '#5a5e5a', '#bf8a7a'],
+      'brand-peach': ['#f5f2eb', '#dab4a6', '#5a5e5a', '#bf8a7a'],
+      'brand-charcoal': ['#2c2c2c', '#3a3a3a', '#bf8a7a', '#ece7d7'],
+      'luxury-black-gold': ['#0a0a0a', '#1a1a1a', '#d4af37', '#ffd700']
+    };
+    return staticPreviews[schemeKey] || ['#ffffff', '#f0f0f0', '#e0e0e0', '#d0d0d0'];
+  }
+
+  init() {
+    this.createSwitcher();
+    this.bindEvents();
+    this.loadSavedSettings();
+
+    // Apply default theme if no theme is saved
+    const savedScheme = localStorage.getItem('is-beauty-theme');
+    if (!savedScheme) {
+      this.switchScheme('brand-porcelain');
+    }
+  }
+
+  createSwitcher() {
+    // Create floating button
+    const buttonHTML = `
+      <button id="theme-toggle-btn" style="
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        z-index: 1000;
+        background: var(--color-primary, rgba(255, 255, 255, 0.9));
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 2px solid var(--color-accent, rgba(255, 255, 255, 0.3));
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+        color: var(--color-background, #000);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+      ">
+        <span style="
+          position: relative;
+          z-index: 2;
+          font-size: 20px;
+        ">🎨</span>
+      </button>
+    `;
+
+    // Create modal
+    const modalHTML = `
+      <div id="theme-modal" style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        z-index: 1001;
+        display: none;
+        justify-content: center;
+        align-items: center;
+      ">
+        <div style="
+          background: linear-gradient(135deg, var(--color-background, rgba(255, 255, 255, 0.95)), var(--color-secondary-bg, rgba(250, 249, 247, 0.95)));
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid var(--color-border, rgba(255, 255, 255, 0.3));
+          border-radius: 24px;
+          padding: 2rem;
+          max-width: 420px;
+          width: 90%;
+          box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+          position: relative;
+        ">
+          <div style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+          ">
+            <h3 style="margin: 0; color: #000; font-size: 18px; font-weight: 600;">
+              Themes & Effects
+            </h3>
+            <button id="close-modal" style="
+              background: none;
+              border: none;
+              font-size: 20px;
+              cursor: pointer;
+              color: #666;
+              padding: 4px;
+              border-radius: 50%;
+              width: 32px;
+              height: 32px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            ">×</button>
+          </div>
+
+          <!-- Color Schemes -->
+          <div style="margin-bottom: 2rem;">
+            <h4 style="margin: 0 0 1rem 0; color: #000; font-size: 16px; font-weight: 600;">
+              Color Themes
+            </h4>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;">
+              ${Object.entries(this.colorSchemes).map(([key, scheme]) => `
+                <div style="text-align: center;">
+                  <div style="
+                    font-weight: 600;
+                    color: var(--color-foreground, #000000) !important;
+                    margin-bottom: 8px;
+                    font-size: 13px;
+                  ">${scheme.name}</div>
+                  <button class="scheme-btn" data-scheme="${key}" style="
+                    border: 2px solid rgba(0,0,0,0.1);
+                    border-radius: 16px;
+                    background: ${this.getStaticPreview(key)[0]};
+                    cursor: pointer;
+                    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                    padding: 12px;
+                    text-align: center;
+                    position: relative;
+                    min-height: 50px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+                    overflow: hidden;
+                    width: 100%;
+                  ">
+                    <div style="display: flex; gap: 3px;">
+                      ${this.getStaticPreview(key).map(color => `
+                        <div style="
+                          width: 12px;
+                          height: 12px;
+                          background: ${color};
+                          border-radius: 50%;
+                        "></div>
+                      `).join('')}
+                    </div>
+                  </button>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <!-- Beauty Effects -->
+          <div style="
+            border-top: 1px solid var(--color-border, rgba(0,0,0,0.1));
+            padding-top: 1.5rem;
+          ">
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+              <!-- Beauty Particles -->
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-weight: 500; color: var(--color-foreground, #000000) !important; font-size: 14px;">
+                  💫 Beauty Particles
+                </div>
+                <label class="ios-toggle-switch" style="
+                  position: relative;
+                  display: inline-block;
+                  width: 50px;
+                  height: 30px;
+                ">
+                  <input type="checkbox" class="effect-toggle" data-effect="particles" style="opacity: 0; width: 0; height: 0;">
+                  <span class="ios-slider" style="
+                    position: absolute;
+                    cursor: pointer;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: #ccc;
+                    transition: 0.3s;
+                    border-radius: 30px;
+                  "></span>
+                  <span class="ios-slider-thumb" style="
+                    position: absolute;
+                    content: '';
+                    height: 24px;
+                    width: 24px;
+                    left: 3px;
+                    bottom: 3px;
+                    background-color: white;
+                    transition: 0.3s;
+                    border-radius: 50%;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                  "></span>
+                </label>
+              </div>
+
+              <!-- Beauty Spotlight -->
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="font-weight: 500; color: var(--color-foreground, #000000) !important; font-size: 14px;">
+                  💡 Beauty Spotlight
+                </div>
+                <label class="ios-toggle-switch" style="
+                  position: relative;
+                  display: inline-block;
+                  width: 50px;
+                  height: 30px;
+                ">
+                  <input type="checkbox" class="effect-toggle" data-effect="spotlight" style="opacity: 0; width: 0; height: 0;">
+                  <span class="ios-slider" style="
+                    position: absolute;
+                    cursor: pointer;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    background-color: #ccc;
+                    transition: 0.3s;
+                    border-radius: 30px;
+                  "></span>
+                  <span class="ios-slider-thumb" style="
+                    position: absolute;
+                    content: '';
+                    height: 24px;
+                    width: 24px;
+                    left: 3px;
+                    bottom: 3px;
+                    background-color: white;
+                    transition: 0.3s;
+                    border-radius: 50%;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+                  "></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', buttonHTML + modalHTML);
+
+    // Add CSS for rotating text animation
+    const rotateCSS = document.createElement('style');
+    rotateCSS.textContent = `
+      @keyframes rotateText {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(rotateCSS);
+  }
+
+  bindEvents() {
+    const toggleBtn = document.getElementById('theme-toggle-btn');
+    const modal = document.getElementById('theme-modal');
+    const closeBtn = document.getElementById('close-modal');
+
+    // Toggle modal
+    toggleBtn.addEventListener('click', () => {
+      modal.style.display = 'flex';
+    });
+
+    // Close modal
+    closeBtn.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+
+    // Close modal on background click
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    // Scheme selection
+    document.querySelectorAll('.scheme-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const scheme = e.currentTarget.dataset.scheme;
+        this.switchScheme(scheme);
+        // Modal stays open for user to select effects
+      });
+
+      btn.addEventListener('mouseenter', (e) => {
+        e.currentTarget.style.transform = 'scale(1.02)';
+        e.currentTarget.style.boxShadow = '0 4px 16px rgba(0,0,0,0.15)';
+      });
+
+      btn.addEventListener('mouseleave', (e) => {
+        e.currentTarget.style.transform = 'scale(1)';
+        e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+      });
+    });
+
+    // Effect toggles - particles and spotlight
+    document.querySelectorAll('.effect-toggle').forEach(toggle => {
+      toggle.addEventListener('change', (e) => {
+        const effect = e.currentTarget.dataset.effect;
+        this.toggleEffect(effect);
+
+        // Update toggle visual state
+        const slider = e.currentTarget.nextElementSibling;
+        const thumb = slider.nextElementSibling;
+
+        if (e.currentTarget.checked) {
+          slider.style.backgroundColor = '#007AFF';
+          thumb.style.transform = 'translateX(20px)';
+        } else {
+          slider.style.backgroundColor = '#ccc';
+          thumb.style.transform = 'translateX(0)';
+        }
+      });
+    });
+  }
+
+  switchScheme(schemeKey) {
+    if (!this.colorSchemes[schemeKey]) return;
+
+    this.currentScheme = schemeKey;
+    const scheme = this.colorSchemes[schemeKey];
+
+    // Apply colors to CSS variables
+    Object.entries(scheme.colors).forEach(([property, value]) => {
+      document.documentElement.style.setProperty(property, value);
+    });
+
+    // Update Shopify theme colors
+    this.updateShopifyThemeColors(scheme);
+
+    // Save to localStorage
+    localStorage.setItem('is-beauty-theme', schemeKey);
+
+    // Update active button
+    document.querySelectorAll('.scheme-btn').forEach(btn => {
+      btn.style.borderWidth = '2px';
+      btn.style.opacity = '0.7';
+    });
+
+    const activeBtn = document.querySelector(`[data-scheme="${schemeKey}"]`);
+    if (activeBtn) {
+      activeBtn.style.borderWidth = '4px';
+      activeBtn.style.opacity = '1';
+    }
+  }
+
+  updateShopifyThemeColors(scheme) {
+    const normalizeHex = (value) => value.replace('#', '').trim();
+
+    const hexToRgb = (hex) => {
+      const value = normalizeHex(hex);
+      const chunk = value.length === 3
+        ? value.split('').map((char) => char + char)
+        : value.match(/.{2}/g) || ['00', '00', '00'];
+      return chunk.map((part) => parseInt(part, 16));
+    };
+
+    const componentToHex = (value) => {
+      const channel = Math.max(0, Math.min(255, Math.round(value)));
+      return channel.toString(16).padStart(2, '0');
+    };
+
+    const rgbToHex = (r, g, b) => `#${componentToHex(r)}${componentToHex(g)}${componentToHex(b)}`;
+
+    const mixColors = (source, target, amount) => {
+      const a = hexToRgb(source);
+      const b = hexToRgb(target);
+      const ratio = Math.max(0, Math.min(1, amount));
+      const mixed = a.map((channel, index) => channel + (b[index] - channel) * ratio);
+      return rgbToHex(mixed[0], mixed[1], mixed[2]);
+    };
+
+    const toRgba = (hex, alpha) => {
+      const [r, g, b] = hexToRgb(hex);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+    };
+
+    const resolveColor = (value, fallback) => {
+      if (typeof value === 'string' && value.trim().startsWith('#')) {
+        return value.trim();
+      }
+      return fallback;
+    };
+
+    const getLuminance = (hex) => {
+      const channels = hexToRgb(hex).map((channel) => {
+        const c = channel / 255;
+        return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+      });
+      return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
+    };
+
+    const getContrastColor = (hex) => (getLuminance(hex) < 0.55 ? '#ffffff' : '#2c2c2c');
+
+    const primaryColor = resolveColor(scheme.colors['--color-primary'], '#bf8a7a');
+    const foregroundColor = resolveColor(scheme.colors['--color-foreground'], '#2c2c2c');
+    const secondaryBg = resolveColor(scheme.colors['--color-secondary-bg'], '#f5f2eb');
+    const backgroundColor = resolveColor(scheme.colors['--color-background'], '#ffffff');
+    const borderColor = resolveColor(scheme.colors['--color-border'], foregroundColor);
+    const contrastColor = getContrastColor(primaryColor);
+    const backgroundLuminance = getLuminance(backgroundColor);
+    const brightness = backgroundLuminance < 0.5 ? 'dark' : 'light';
+
+    document.body.dataset.themeBrightness = brightness;
+    document.body.classList.toggle('theme-brightness-dark', brightness === 'dark');
+    document.body.classList.toggle('theme-brightness-light', brightness === 'light');
+
+    document.documentElement.style.setProperty('--text-on-primary', contrastColor);
+    const glassSurface = brightness === 'dark'
+      ? mixColors(secondaryBg, '#ffffff', 0.18)
+      : mixColors(secondaryBg, '#ffffff', 0.08);
+
+    const glassTint = brightness === 'dark'
+      ? mixColors(glassSurface, '#ffffff', 0.12)
+      : mixColors(glassSurface, '#ffffff', 0.04);
+
+    const glassBorder = brightness === 'dark'
+      ? mixColors(borderColor, '#ffffff', 0.45)
+      : mixColors(borderColor, '#000000', 0.08);
+
+    const glassShadow = toRgba(foregroundColor, brightness === 'dark' ? 0.32 : 0.18);
+    const glassForegroundStrong = mixColors(foregroundColor, brightness === 'dark' ? '#ffffff' : '#000000', brightness === 'dark' ? 0.1 : 0.05);
+    const glassForegroundMuted = mixColors(glassForegroundStrong, brightness === 'dark' ? '#ffffff' : '#000000', 0.18);
+
+    document.documentElement.style.setProperty('--glass-surface-color', glassSurface);
+    document.documentElement.style.setProperty('--glass-surface-border-color', glassBorder);
+    document.documentElement.style.setProperty('--glass-shadow-color', glassShadow);
+    document.documentElement.style.setProperty('--glass-highlight-color', primaryColor);
+    document.documentElement.style.setProperty('--glass-global-tint', glassTint);
+    document.documentElement.style.setProperty('--glass-global-opacity', brightness === 'dark' ? 0.34 : 0.24);
+    document.documentElement.style.setProperty('--glass-global-border-opacity', brightness === 'dark' ? 0.28 : 0.18);
+    document.documentElement.style.setProperty('--glass-foreground-strong', glassForegroundStrong);
+    document.documentElement.style.setProperty('--glass-foreground-muted', glassForegroundMuted);
+
+    const styleId = 'dynamic-theme-colors';
+    let styleTag = document.getElementById(styleId);
+    if (!styleTag) {
+      styleTag = document.createElement('style');
+      styleTag.id = styleId;
+      document.head.appendChild(styleTag);
+    }
+
+    styleTag.textContent = `
+      body.theme-background-effects::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -2;
+        background:
+          radial-gradient(circle at 18% 20%, ${scheme.colors['--color-primary']}24 0%, transparent 55%),
+          radial-gradient(circle at 78% 15%, ${scheme.colors['--color-accent']}18 0%, transparent 60%),
+          radial-gradient(circle at 40% 75%, ${scheme.colors['--color-quaternary-bg']}14 0%, transparent 60%);
+      }
+
+      body.theme-background-effects::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+        mix-blend-mode: lighten;
+        background-image:
+          radial-gradient(2px 2px at 24px 36px, ${scheme.colors['--color-primary']}30, transparent),
+          radial-gradient(2px 2px at 72px 92px, ${scheme.colors['--color-accent']}28, transparent),
+          radial-gradient(1px 1px at 128px 42px, ${scheme.colors['--color-border']}24, transparent);
+        background-size: 280px 280px;
+        animation: optimizedFloatParticles 22s linear infinite;
+      }
+
+      @keyframes optimizedFloatParticles {
+        0% { transform: translate3d(0, 0, 0); }
+        25% { transform: translate3d(-18px, -18px, 0); }
+        50% { transform: translate3d(12px, -8px, 0); }
+        75% { transform: translate3d(-14px, -28px, 0); }
+        100% { transform: translate3d(0, 0, 0); }
+      }
+    `;
+  }
+
+  toggleEffect(effect) {
+    this.effects[effect] = !this.effects[effect];
+
+    switch(effect) {
+      case 'particles':
+        this.toggleParticles();
+        break;
+      case 'spotlight':
+        this.toggleSpotlight();
+        break;
+    }
+
+    // Save effect state
+    localStorage.setItem('is-beauty-effects', JSON.stringify(this.effects));
+  }
+
+  toggleAnimations() {
+    const body = document.body;
+    if (body.classList.contains('animations-enabled')) {
+      body.classList.remove('animations-enabled');
+      const style = document.getElementById('disable-animations');
+      if (style) style.remove();
+    } else {
+      body.classList.add('animations-enabled');
+      const style = document.createElement('style');
+      style.id = 'disable-animations';
+      style.textContent = `
+        .animations-enabled * {
+          animation-duration: 0.3s !important;
+          transition-duration: 0.3s !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  toggleLiquidGlass() {
+    const body = document.body;
+    if (body.classList.contains('liquid-glass-enabled')) {
+      body.classList.remove('liquid-glass-enabled');
+      const style = document.getElementById('liquid-glass-effects');
+      if (style) style.remove();
+    } else {
+      body.classList.add('liquid-glass-enabled');
+      const style = document.createElement('style');
+      style.id = 'liquid-glass-effects';
+      style.textContent = `
+        /* Liquid Glass Effect - Applied ONLY to placeholders */
+        .liquid-glass-enabled .placeholder-image {
+          background: ${scheme.colors['--color-secondary-bg']} !important;
+          backdrop-filter: blur(20px) !important;
+          -webkit-backdrop-filter: blur(20px) !important;
+          border: 1px solid rgba(255, 255, 255, 0.2) !important;
+          box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+        }
+
+        /* Ensure text inside placeholders remains visible */
+        .liquid-glass-enabled .placeholder-image h4,
+        .liquid-glass-enabled .placeholder-image p {
+          position: relative;
+          z-index: 2;
+          background: rgba(255, 255, 255, 0.8);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border-radius: 8px;
+          padding: 0.5rem 1rem;
+          margin: 0.25rem 0;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Add toggle control for individual elements */
+        .liquid-glass-enabled .media-block,
+        .liquid-glass-enabled .image-block {
+          position: relative;
+        }
+
+        .liquid-glass-enabled .media-block::after,
+        .liquid-glass-enabled .image-block::after {
+          content: '💎 Glass Effect';
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          background: rgba(0, 0, 0, 0.7);
+          color: white;
+          padding: 4px 8px;
+          border-radius: 4px;
+          font-size: 10px;
+          z-index: 10;
+          opacity: 0.7;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+  }
+
+  toggleParticles() {
+    if (this.effects.particles) {
+      this.createBeautyParticles();
+    } else {
+      this.removeParticles();
+    }
+  }
+
+  createBeautyParticles() {
+    const particlesContainer = document.createElement('div');
+    particlesContainer.id = 'beauty-particles-container';
+    particlesContainer.style.cssText = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    `;
+
+    // Create professional beauty particles
+    const particleTypes = ['✨', '💫', '⭐', '🌟', '💎', '🔮'];
+    const colors = ['#bf8a7a', '#dab4a6', '#ece7d7', '#ffd700', '#ff69b4', '#87ceeb'];
+
+    for (let i = 0; i < 25; i++) {
+      const particle = document.createElement('div');
+      const type = particleTypes[Math.floor(Math.random() * particleTypes.length)];
+      const color = colors[Math.floor(Math.random() * colors.length)];
+
+      particle.innerHTML = type;
+      particle.style.cssText = `
+        position: absolute;
+        font-size: ${12 + Math.random() * 16}px;
+        color: ${color};
+        animation: beautyFloat ${4 + Math.random() * 6}s ease-in-out infinite;
+        animation-delay: ${Math.random() * 3}s;
+        opacity: 0.7;
+        filter: drop-shadow(0 0 8px ${color}40);
+        z-index: 0;
+      `;
+
+      particle.style.left = Math.random() * 100 + '%';
+      particle.style.top = Math.random() * 100 + '%';
+      particlesContainer.appendChild(particle);
+    }
+
+    // Add professional CSS animations
+    const style = document.createElement('style');
+    style.id = 'beauty-particles-animations';
+    style.textContent = `
+      @keyframes beautyFloat {
+        0% {
+          transform: translateY(0px) translateX(0px) rotate(0deg) scale(1);
+          opacity: 0.7;
+        }
+        25% {
+          transform: translateY(-30px) translateX(15px) rotate(90deg) scale(1.1);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-20px) translateX(-10px) rotate(180deg) scale(0.9);
+          opacity: 0.8;
+        }
+        75% {
+          transform: translateY(-40px) translateX(-20px) rotate(270deg) scale(1.05);
+          opacity: 0.9;
+        }
+        100% {
+          transform: translateY(0px) translateX(0px) rotate(360deg) scale(1);
+          opacity: 0.7;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    document.body.appendChild(particlesContainer);
+  }
+
+  removeParticles() {
+    const container = document.getElementById('beauty-particles-container');
+    const style = document.getElementById('beauty-particles-animations');
+    if (container) container.remove();
+    if (style) style.remove();
+  }
+
+  toggleSpotlight() {
+    if (this.effects.spotlight) {
+      this.createSpotlightEffect();
+    } else {
+      this.removeSpotlightEffect();
+    }
+  }
+
+  createSpotlightEffect() {
+    const style = document.createElement('style');
+    style.id = 'spotlight-effects';
+    style.textContent = `
+      .spotlight-enabled .product-card,
+      .spotlight-enabled .card,
+      .spotlight-enabled .testimonial,
+      .spotlight-enabled .media-block,
+      .spotlight-enabled .image-block {
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .spotlight-enabled .product-card::before,
+      .spotlight-enabled .card::before,
+      .spotlight-enabled .testimonial::before,
+      .spotlight-enabled .media-block::before,
+      .spotlight-enabled .image-block::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 30%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .spotlight-enabled .product-card:hover::before,
+      .spotlight-enabled .card:hover::before,
+      .spotlight-enabled .testimonial:hover::before,
+      .spotlight-enabled .media-block:hover::before,
+      .spotlight-enabled .image-block:hover::before {
+        opacity: 1;
+      }
+
+      .spotlight-enabled .product-card:hover,
+      .spotlight-enabled .card:hover,
+      .spotlight-enabled .testimonial:hover,
+      .spotlight-enabled .media-block:hover,
+      .spotlight-enabled .image-block:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+      }
+    `;
+    document.head.appendChild(style);
+    document.body.classList.add('spotlight-enabled');
+  }
+
+  removeSpotlightEffect() {
+    const style = document.getElementById('spotlight-effects');
+    if (style) style.remove();
+    document.body.classList.remove('spotlight-enabled');
+  }
+
+  toggleShimmer() {
+    if (this.effects.shimmer) {
+      this.createShimmerEffect();
+    } else {
+      this.removeShimmerEffect();
+    }
+  }
+
+  createShimmerEffect() {
+    const style = document.createElement('style');
+    style.id = 'shimmer-effects';
+    style.textContent = `
+      .shimmer-enabled button,
+      .shimmer-enabled .btn,
+      .shimmer-enabled .button {
+        background: linear-gradient(45deg, var(--color-primary), #ffd700, var(--color-primary)) !important;
+        background-size: 200% 200% !important;
+        animation: shimmer 2s ease-in-out infinite !important;
+      }
+
+      .shimmer-enabled h1,
+      .shimmer-enabled h2,
+      .shimmer-enabled h3 {
+        background: linear-gradient(45deg, var(--color-foreground), #ffd700, var(--color-foreground));
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: shimmer 3s ease-in-out infinite;
+      }
+
+      @keyframes shimmer {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+    `;
+    document.head.appendChild(style);
+    document.body.classList.add('shimmer-enabled');
+  }
+
+  removeShimmerEffect() {
+    const style = document.getElementById('shimmer-effects');
+    if (style) style.remove();
+    document.body.classList.remove('shimmer-enabled');
+  }
+
+  loadSavedSettings() {
+    // Load saved theme
+    const savedScheme = localStorage.getItem('is-beauty-theme');
+    if (savedScheme && this.colorSchemes[savedScheme]) {
+      this.switchScheme(savedScheme);
+    }
+
+    // Load saved effects
+    const savedEffects = localStorage.getItem('is-beauty-effects');
+    if (savedEffects) {
+      this.effects = JSON.parse(savedEffects);
+
+      // Apply saved effects
+      Object.entries(this.effects).forEach(([effect, enabled]) => {
+        if (enabled) {
+          const toggle = document.querySelector(`[data-effect="${effect}"]`);
+          if (toggle) {
+            toggle.checked = true;
+            this.toggleEffect(effect);
+          }
+        }
+      });
+    }
+  }
+}
+
+// Initialize when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  new ThemeSwitcher();
+});

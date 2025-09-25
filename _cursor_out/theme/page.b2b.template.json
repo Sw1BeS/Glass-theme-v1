@@ -1,0 +1,144 @@
+{
+  "name": "B2B Professional Program",
+  "sections": {
+    "b2b_hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Professional Brow Care for Salons & Artists",
+        "subheading": "Offer your clients the complete brow care system they'll want to take home",
+        "description": "IS Beauty Lux provides gentle, professional-grade products that deliver consistent results for both you and your clients. Join hundreds of beauty professionals who trust IS Beauty Lux to elevate their brow services and increase retail revenue.",
+        "primary_button_text": "Contact Sales Team",
+        "primary_button_url": "mailto:professionals@isbeautylux.com",
+        "image": "shopify://files/b2b_hero_1600x900.png"
+      }
+    },
+    "b2b_value_prop_1": {
+      "type": "media-with-content",
+      "settings": {
+        "heading": "Boost Your Bottom Line",
+        "text": "Our high-quality duo system encourages client purchases with an average retail value of $34.99 per sale. Professional-grade products your clients actually want to buy and use at home.",
+        "image": "shopify://files/banner_1500x900.png",
+        "layout": "image_first"
+      }
+    },
+    "b2b_value_prop_2": {
+      "type": "media-with-content",
+      "settings": {
+        "heading": "Safe for All Clients",
+        "text": "pH-balanced and dermatologist-tested for sensitive eye areas. Perfect for clients with lash extensions, sensitive skin, or those seeking clean beauty options. Reduces service complications and client complaints.",
+        "image": "shopify://files/banner_1500x900.png",
+        "layout": "text_first"
+      }
+    },
+    "b2b_value_prop_3": {
+      "type": "media-with-content",
+      "settings": {
+        "heading": "Easy to Incorporate",
+        "text": "Our 3-step system fits seamlessly into existing brow services. Use during prep and finishing to enhance results, then retail the complete system for at-home maintenance.",
+        "image": "shopify://files/banner_1500x900.png",
+        "layout": "image_first"
+      }
+    },
+    "how_it_works": {
+      "type": "section",
+      "blocks": {
+        "step_1": {
+          "type": "text",
+          "settings": {
+            "heading": "Step 1: Apply to Your Services",
+            "text": "Contact us to set up your professional account and receive wholesale pricing. Minimum opening order applies."
+          }
+        },
+        "step_2": {
+          "type": "text",
+          "settings": {
+            "heading": "Step 2: Verify Your Credentials",
+            "text": "Submit your business license, cosmetology license, or salon credentials for verification. Most applications approved within 24-48 hours."
+          }
+        },
+        "step_3": {
+          "type": "text",
+          "settings": {
+            "heading": "Step 3: Order & Grow",
+            "text": "Place your first order and begin offering IS Beauty Lux to clients. Ongoing support and marketing materials provided."
+          }
+        }
+      },
+      "block_order": ["step_1", "step_2", "step_3"],
+      "settings": {
+        "heading": "How It Works"
+      }
+    },
+    "pricing_tiers": {
+      "type": "section",
+      "settings": {
+        "heading": "Professional Wholesale Pricing",
+        "text": "<table><thead><tr><th>Order Volume</th><th>Discount</th><th>Cost Per Duo</th><th>Retail Suggested</th><th>Your Profit</th></tr></thead><tbody><tr><td><strong>Starter Tier</strong><br/>6-11 units</td><td>25% OFF</td><td>$26.24</td><td>$34.99</td><td>$8.75</td></tr><tr><td><strong>Growth Tier</strong><br/>12-23 units</td><td>30% OFF</td><td>$24.49</td><td>$34.99</td><td>$10.50</td></tr><tr><td><strong>Professional Tier</strong><br/>24+ units</td><td>35% OFF</td><td>$22.74</td><td>$34.99</td><td>$12.25</td></tr></tbody></table><h4>Individual Product Wholesale</h4><ul><li><strong>Brow & Lash Shampoo</strong>: Starting at $15.75 (25% off $21 retail)</li><li><strong>Eyebrow Gel</strong>: Starting at $12.75 (25% off $17 retail)</li></ul><h4>Additional Benefits</h4><ul><li><strong>Free shipping</strong> on orders over $200</li><li><strong>Marketing materials</strong> included with first order</li><li><strong>Dedicated account manager</strong> for Growth and Professional tiers</li><li><strong>60-day payment terms</strong> for established accounts</li></ul>"
+      }
+    },
+    "b2b_faq": {
+      "type": "section",
+      "blocks": {
+        "b2b_faq_1": {
+          "type": "text",
+          "settings": {
+            "heading": "What are the minimum order requirements?",
+            "text": "Our starter tier begins at 6 units of The Duo, with individual products available in quantities of 12+. This ensures you have adequate inventory to begin retailing while maintaining wholesale pricing."
+          }
+        },
+        "b2b_faq_2": {
+          "type": "text",
+          "settings": {
+            "heading": "Do you offer training or marketing support?",
+            "text": "Yes! All professional accounts receive product education materials, suggested retail techniques, and branded marketing assets. Growth and Professional tier accounts receive additional support including staff training resources."
+          }
+        },
+        "b2b_faq_3": {
+          "type": "text",
+          "settings": {
+            "heading": "What is your return policy for professionals?",
+            "text": "We offer a 30-day return policy on unopened products in original condition. Damaged shipments are replaced immediately. We stand behind our products and your success."
+          }
+        },
+        "b2b_faq_4": {
+          "type": "text",
+          "settings": {
+            "heading": "How quickly can I get approved and start ordering?",
+            "text": "Most professional applications are approved within 24-48 hours of receiving complete documentation. Once approved, orders typically ship within 2-3 business days via ground shipping."
+          }
+        }
+      },
+      "block_order": ["b2b_faq_1", "b2b_faq_2", "b2b_faq_3", "b2b_faq_4"],
+      "settings": {
+        "heading": "Professional FAQ"
+      }
+    },
+    "contact_cta": {
+      "type": "section",
+      "settings": {
+        "heading": "Ready to Partner with IS Beauty Lux?",
+        "text": "<h4>Professional Sales Team</h4><p>📧 Email: <a href='mailto:professionals@isbeautylux.com'>professionals@isbeautylux.com</a><br/>📞 Phone: <a href='tel:5551234567'>(555) 123-4567</a><br/>🕒 Hours: Monday-Friday, 9AM-6PM EST</p><p><strong>Estimated Monthly Volume:</strong> 6-11 | 12-23 | 24+ | Not Sure</p>",
+        "button_text": "Download Information Packet",
+        "button_url": "/pages/b2b-packet"
+      }
+    },
+    "trust_credentials": {
+      "type": "section",
+      "settings": {
+        "heading": "Professional Certifications & Success",
+        "text": "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;'><div><h4>Certifications</h4><ul><li>✓ FDA Registered Facility</li><li>✓ Leaping Bunny Certified (Cruelty-Free)</li><li>✓ Dermatologist Tested</li><li>✓ Professional Beauty Association Member</li></ul></div><div><h4>Partner Success</h4><ul><li><strong>500+ Partner Salons</strong> across North America</li><li><strong>95% Client Satisfaction</strong> rating on professional surveys</li><li><strong>Average 40% Markup</strong> achieved by retail partners</li><li><strong>2-Year Partnership</strong> average retention rate</li></ul></div></div>"
+      }
+    }
+  },
+  "order": [
+    "b2b_hero",
+    "b2b_value_prop_1",
+    "b2b_value_prop_2",
+    "b2b_value_prop_3",
+    "how_it_works",
+    "pricing_tiers",
+    "b2b_faq",
+    "contact_cta",
+    "trust_credentials"
+  ]
+}

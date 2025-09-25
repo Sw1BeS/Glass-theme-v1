@@ -1,0 +1,341 @@
+{%- doc -%}
+  FAQ Section - Unified structure with section-wrapper
+  Features: Clean design, smooth animations, beauty industry styling
+{%- enddoc -%}
+
+{%- liquid
+  assign section_name = 'FAQ'
+  assign default_title = 'Frequently Asked Questions'
+  assign default_subtitle = 'Everything you need to know about our products and services'
+-%}
+
+{% capture content %}
+  <div class="faq-accordion">
+    {%- for block in section.blocks -%}
+      <div class="faq-item" {{ block.shopify_attributes }}>
+        <button class="faq-question" aria-expanded="false" aria-controls="faq-answer-{{ forloop.index }}">
+          <span class="question-text">{{ block.settings.question }}</span>
+          <span class="question-icon">+</span>
+        </button>
+
+        <div class="faq-answer" id="faq-answer-{{ forloop.index }}" aria-hidden="true">
+          <div class="answer-content">
+            {{ block.settings.answer }}
+          </div>
+
+          {%- if block.settings.additional_info != blank -%}
+            <div class="additional-info">
+              <div class="info-icon">💡</div>
+              <div class="info-content">{{ block.settings.additional_info }}</div>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {% if section.settings.footer_text != blank %}
+    <div class="faq-footer">
+      <p class="footer-text">{{ section.settings.footer_text }}</p>
+    </div>
+  {% endif %}
+{% endcapture %}
+
+{% render 'section-wrapper',
+   section: section,
+   section_name: section_name,
+   default_title: default_title,
+   default_subtitle: default_subtitle,
+   content: content %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const question = item.querySelector('.faq-question');
+      const answer = item.querySelector('.faq-answer');
+      const icon = item.querySelector('.question-icon');
+
+      question.addEventListener('click', () => {
+        const isOpen = question.getAttribute('aria-expanded') === 'true';
+
+        // Close all other items
+        faqItems.forEach(otherItem => {
+          if (otherItem !== item) {
+            const otherQuestion = otherItem.querySelector('.faq-question');
+            const otherAnswer = otherItem.querySelector('.faq-answer');
+            const otherIcon = otherItem.querySelector('.question-icon');
+
+            otherQuestion.setAttribute('aria-expanded', 'false');
+            otherAnswer.setAttribute('aria-hidden', 'true');
+            otherItem.classList.remove('active');
+            otherIcon.textContent = '+';
+          }
+        });
+
+        // Toggle current item
+        if (isOpen) {
+          question.setAttribute('aria-expanded', 'false');
+          answer.setAttribute('aria-hidden', 'true');
+          item.classList.remove('active');
+          icon.textContent = '+';
+        } else {
+          question.setAttribute('aria-expanded', 'true');
+          answer.setAttribute('aria-hidden', 'false');
+          item.classList.add('active');
+          icon.textContent = '−';
+        }
+      });
+    });
+  });
+</script>
+
+<style>
+  .faq-accordion {
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .faq-item {
+    margin-bottom: 1rem;
+    border: 1px solid var(--color-border, #e0e0e0);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .faq-item:hover {
+    border-color: var(--color-primary, #bf8a7a);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .faq-question {
+    width: 100%;
+    padding: 1.5rem;
+    background: transparent;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+  }
+
+  .faq-question:hover {
+    background: var(--color-secondary-bg, #f8f9fa);
+  }
+
+  .question-text {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--color-foreground, #2c2c2c);
+  }
+
+  .question-icon {
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--color-primary, #bf8a7a);
+    transition: transform 0.3s ease;
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+
+  .faq-item.active .faq-answer {
+    max-height: 500px;
+  }
+
+  .answer-content {
+    padding: 0 1.5rem 1.5rem;
+    color: var(--color-foreground, #2c2c2c);
+    line-height: 1.6;
+  }
+
+  .additional-info {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--color-primary, #bf8a7a);
+    border-radius: 8px;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .info-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .info-content {
+    color: white;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .faq-footer {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border, #e0e0e0);
+  }
+
+  .footer-text {
+    color: var(--color-foreground-muted, #666);
+    font-size: 0.9rem;
+  }
+
+  @media (max-width: 768px) {
+    .faq-question {
+      padding: 1rem;
+    }
+
+    .answer-content {
+      padding: 0 1rem 1rem;
+    }
+
+    .question-text {
+      font-size: 1rem;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "FAQ Section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Everything you need to know about our products and services"
+    },
+    {
+      "type": "textarea",
+      "id": "footer_text",
+      "label": "Footer Text",
+      "default": "Still have questions? Contact us at support@isbeautylux.com"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin top",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin bottom",
+      "default": 0
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "options": [
+        { "value": "page-width", "label": "Page width" },
+        { "value": "full-width", "label": "Full width" }
+      ],
+      "default": "page-width",
+      "label": "Section width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq_item",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your return policy?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>We offer a 30-day money-back guarantee on all products.</p>"
+        },
+        {
+          "type": "richtext",
+          "id": "additional_info",
+          "label": "Additional Information",
+          "info": "Optional additional tips or information"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ",
+      "blocks": [
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We offer a 30-day money-back guarantee on all products.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>Standard shipping takes 3-5 business days.</p>"
+          }
+        },
+        {
+          "type": "faq_item",
+          "settings": {
+            "question": "Are your products cruelty-free?",
+            "answer": "<p>Yes, all our products are cruelty-free and vegan.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
