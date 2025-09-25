@@ -282,46 +282,23 @@
 
     <!-- Premium Ingredients Summary -->
     <div class="premium-summary">
-      <div class="summary-background">
-        <div class="summary-particles"></div>
-      </div>
-
       <div class="summary-content">
-        <h3 class="summary-title">{{ section.settings.summary_title | default: 'Why These Ingredients Matter' }}</h3>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'summary_header' -%}
+            <h3 class="summary-title" {{ block.shopify_attributes }}>{{ block.settings.title }}</h3>
+          {%- endif -%}
+        {%- endfor -%}
+        
         <div class="premium-summary-grid">
-          <div class="summary-card glass-surface">
-            <div class="card-icon">🌿</div>
-            <h4 class="card-title">{{ section.settings.card1_title | default: 'Clean & Safe' }}</h4>
-            <p class="card-text">
-              {{
-                section.settings.card1_text
-                | default: 'All ingredients are dermatologist-tested and free from harmful chemicals, parabens, and sulfates.'
-              }}
-            </p>
-            <div class="card-glow"></div>
-          </div>
-          <div class="summary-card glass-surface">
-            <div class="card-icon">💧</div>
-            <h4 class="card-title">{{ section.settings.card2_title | default: 'Water-Based' }}</h4>
-            <p class="card-text">
-              {{
-                section.settings.card2_text
-                | default: 'Our formulas are water-based for gentle, effective care that won&apos;t irritate sensitive skin.'
-              }}
-            </p>
-            <div class="card-glow"></div>
-          </div>
-          <div class="summary-card glass-surface">
-            <div class="card-icon">⚡</div>
-            <h4 class="card-title">{{ section.settings.card3_title | default: 'Proven Results' }}</h4>
-            <p class="card-text">
-              {{
-                section.settings.card3_text
-                | default: 'Each ingredient is carefully selected for its proven benefits and effectiveness in beauty care.'
-              }}
-            </p>
-            <div class="card-glow"></div>
-          </div>
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'summary_card' -%}
+              <div class="summary-card" {{ block.shopify_attributes }}>
+                <div class="card-icon">{{ block.settings.icon }}</div>
+                <h4 class="card-title">{{ block.settings.title }}</h4>
+                <p class="card-text">{{ block.settings.text }}</p>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
       </div>
     </div>
@@ -1015,18 +992,6 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
   }
 
-  .card-glow {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, {{ section.settings.primary_color | default: 'var(--color-primary, #bf8a7a)' }}, color-mix(in srgb, {{ section.settings.accent_color | default: 'var(--color-accent, #dab4a6)' }} 60%, transparent));
-    opacity: 0;
-    transition: opacity 0.4s ease;
-    z-index: -1;
-  }
-
-  .summary-card:hover .card-glow {
-    opacity: 0.1;
-  }
 
   .card-icon {
     font-size: 3rem;
@@ -1036,13 +1001,11 @@
   .card-title {
     font-size: 1.4rem;
     font-weight: 700;
-    color: var(--color-foreground, #2c2c2c);
     margin: 0 0 1rem 0;
   }
 
   .card-text {
     font-size: 1rem;
-    color: var(--color-foreground-muted, #666666);
     line-height: 1.6;
     margin: 0;
   }
@@ -1521,9 +1484,45 @@
           "default": 70
         }
       ]
+    },
+    {
+      "type": "summary_header",
+      "name": "Summary Header",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Summary Title",
+          "default": "Why These Ingredients Matter"
+        }
+      ]
+    },
+    {
+      "type": "summary_card",
+      "name": "Summary Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Card Icon (emoji)",
+          "default": "🌿"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Card Title",
+          "default": "Clean & Safe"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Card Description",
+          "default": "All ingredients are dermatologist-tested and free from harmful chemicals, parabens, and sulfates."
+        }
+      ]
     }
   ],
-  "max_blocks": 8,
+  "max_blocks": 12,
   "presets": [
     {
       "name": "Product Composition",
@@ -1595,6 +1594,36 @@
             "ingredient_3_benefit": "Gentle care for sensitive eyes",
             "ingredient_3_x": 50,
             "ingredient_3_y": 65
+          }
+        },
+        {
+          "type": "summary_header",
+          "settings": {
+            "title": "Why These Ingredients Matter"
+          }
+        },
+        {
+          "type": "summary_card",
+          "settings": {
+            "icon": "🌿",
+            "title": "Clean & Safe",
+            "text": "All ingredients are dermatologist-tested and free from harmful chemicals, parabens, and sulfates."
+          }
+        },
+        {
+          "type": "summary_card",
+          "settings": {
+            "icon": "💧",
+            "title": "Water-Based",
+            "text": "Our formulas are water-based for gentle, effective care that won't irritate sensitive skin."
+          }
+        },
+        {
+          "type": "summary_card",
+          "settings": {
+            "icon": "⚡",
+            "title": "Proven Results",
+            "text": "Each ingredient is carefully selected for its proven benefits and effectiveness in beauty care."
           }
         }
       ]
