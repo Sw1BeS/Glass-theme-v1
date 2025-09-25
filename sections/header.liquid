@@ -85,9 +85,9 @@
   if header_width_lower contains 'px' or header_width_lower contains 'rem' or header_width_lower contains 'em' or header_width_lower contains 'vh' or header_width_lower contains 'vw' or header_width_lower contains '%' or header_width_lower contains 'ch' or header_width_lower contains 'calc' or header_width_lower contains 'auto'
     assign header_width_css = header_width_value
   else
-   assign header_width_css = header_width_value | append: 'px'
-   endif
- %}
+    assign header_width_css = header_width_value | append: 'px'
+  endif
+%}
 
 {% capture header_style %}
   {% if glass_blur != blank %}
@@ -165,7 +165,15 @@
     </div>
 
     <!-- Mobile Menu Toggle -->
-    <button class="mobile-toggle mobile-only" type="button" aria-expanded="false" aria-controls="HeaderMobileMenu-{{ section.id }}" data-mobile-toggle>☰</button>
+    <button
+      class="mobile-toggle mobile-only"
+      type="button"
+      aria-expanded="false"
+      aria-controls="HeaderMobileMenu-{{ section.id }}"
+      data-mobile-toggle
+    >
+      ☰
+    </button>
   </div>
 
   <!-- Mobile Menu -->
@@ -340,11 +348,11 @@
     display: none;
     flex-direction: column;
     gap: 0.35rem;
-    background: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.85)) 82%, transparent);
-    border: 1px solid color-mix(in srgb, var(--glass-surface-border-color, rgba(255, 255, 255, 0.35)) 85%, transparent);
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.85));
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.35));
     border-radius: 18px;
     padding: 1rem;
-    box-shadow: 0 24px 40px rgba(20, 26, 34, 0.16);
+    box-shadow: 0 24px 40px var(--glass-shadow-color, rgba(20, 26, 34, 0.16));
     opacity: 0;
     transform: translateY(-12px);
     pointer-events: none;
@@ -366,14 +374,14 @@
     padding: 0.75rem 1rem;
     border-radius: 12px;
     text-decoration: none;
-    color: var(--color-foreground, #2c2c2c);
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     font-weight: 500;
     transition: background 0.2s ease, transform 0.2s ease;
   }
 
   #shopify-section-{{ section.id }} .mobile-menu-link:hover,
   #shopify-section-{{ section.id }} .mobile-menu-link:focus-visible {
-    background: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.8)) 90%, transparent);
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.8));
     transform: translateX(4px);
   }
 

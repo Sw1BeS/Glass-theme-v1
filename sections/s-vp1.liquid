@@ -1,4 +1,3 @@
-
 {% liquid
   assign glass_enabled = section.settings.enable_glass
   if glass_enabled == null
@@ -9,62 +8,62 @@
 %}
 
 <div
-  class="s-vp1-section color-{{ section.settings.color_scheme }}"
+  class="section color-{{ section.settings.color_scheme }}"
   {% if glass_enabled %}
     data-glass-tone="{{ glass_tone }}"
     data-glass-elevation="{{ glass_elevation }}"
   {% endif %}
 >
-  <div class="s-vp1-container section-{{ section.settings.section_width }}">
+  <div class="container section-{{ section.settings.section_width }}">
     <div
-      class="s-vp1-content glass"
+      class="content glass"
     >
-        {%- assign header_found = false -%}
-        {%- for block in section.blocks -%}
-          {%- case block.type -%}
-            {%- when 'section_header' -%}
-              {%- assign header_found = true -%}
-              <h2 class="s-vp1-title" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
-            {%- when 'text' -%}
-              <div class="s-vp1-description" {{ block.shopify_attributes }}>
-                {{ block.settings.text }}
-              </div>
-            {%- when 'button' -%}
-              {%- if block.settings.button_text != blank -%}
-                <a
-                  href="{{ block.settings.button_link | default: '#' }}"
-                  class="s-vp1-button"
-                  {{ block.shopify_attributes }}
-                >
-                  {{ block.settings.button_text }}
-                </a>
-              {%- endif -%}
-          {%- endcase -%}
-        {%- endfor -%}
+      {%- assign header_found = false -%}
+      {%- for block in section.blocks -%}
+        {%- case block.type -%}
+          {%- when 'section_header' -%}
+            {%- assign header_found = true -%}
+            <h2 class="title" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+          {%- when 'text' -%}
+            <div class="description" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </div>
+          {%- when 'button' -%}
+            {%- if block.settings.button_text != blank -%}
+              <a
+                href="{{ block.settings.button_link | default: '#' }}"
+                class="button"
+                {{ block.shopify_attributes }}
+              >
+                {{ block.settings.button_text }}
+              </a>
+            {%- endif -%}
+        {%- endcase -%}
+      {%- endfor -%}
 
-        {%- unless header_found -%}
-          <h2 class="s-vp1-title">{{ section.settings.heading | default: 'Safe for Your Most Delicate Skin' }}</h2>
-        {%- endunless -%}
+      {%- unless header_found -%}
+        <h2 class="title">{{ section.settings.heading | default: 'Safe for Your Most Delicate Skin' }}</h2>
+      {%- endunless -%}
 
-        {%- unless section.blocks.size > 0 -%}
-          <div class="s-vp1-description">
-            {{
-              section.settings.text
-              | default: '<p>Formulated specifically for the sensitive eye area. Our pH-balanced formula removes impurities without irritation, perfect for daily use on natural brows and extensions.</p>'
-            }}
-          </div>
-          {%- if section.settings.button_text != blank -%}
-            <a href="{{ section.settings.button_link | default: '#' }}" class="s-vp1-button">
-              {{ section.settings.button_text }}
-            </a>
-          {%- endif -%}
-        {%- endunless -%}
+      {%- unless section.blocks.size > 0 -%}
+        <div class="description">
+          {{
+            section.settings.text
+            | default: '<p>Formulated specifically for the sensitive eye area. Our pH-balanced formula removes impurities without irritation, perfect for daily use on natural brows and extensions.</p>'
+          }}
+        </div>
+        {%- if section.settings.button_text != blank -%}
+          <a href="{{ section.settings.button_link | default: '#' }}" class="button">
+            {{ section.settings.button_text }}
+          </a>
+        {%- endif -%}
+      {%- endunless -%}
     </div>
 
-    <div class="s-vp1-media">
-      <div class="s-vp1-image-wrapper">
+    <div class="media">
+      <div class="image-wrapper">
         {%- if section.settings.image != blank -%}
-          <div class="s-vp1-image-desktop">
+          <div class="image-desktop">
             {{
               section.settings.image
               | image_url: width: 800
@@ -72,13 +71,13 @@
                 loading: 'lazy',
                 sizes: '(min-width: 768px) 600px, 0px',
                 widths: '400, 600, 800',
-                class: 's-vp1-image'
+                class: 'image'
             }}
           </div>
         {%- endif -%}
 
         {%- if section.settings.image_mobile != blank -%}
-          <div class="s-vp1-image-mobile">
+          <div class="image-mobile">
             {{
               section.settings.image_mobile
               | image_url: width: 400
@@ -86,11 +85,11 @@
                 loading: 'lazy',
                 sizes: '(max-width: 767px) 300px, 0px',
                 widths: '300, 400',
-                class: 's-vp1-image'
+                class: 'image'
             }}
           </div>
         {%- elsif section.settings.image != blank -%}
-          <div class="s-vp1-image-mobile">
+          <div class="image-mobile">
             {{
               section.settings.image
               | image_url: width: 400
@@ -98,7 +97,7 @@
                 loading: 'lazy',
                 sizes: '(max-width: 767px) 300px, 0px',
                 widths: '300, 400',
-                class: 's-vp1-image'
+                class: 'image'
             }}
           </div>
         {%- endif -%}
@@ -108,11 +107,11 @@
 </div>
 
 {% stylesheet %}
-  .s-vp1-section {
+  .section {
     padding: clamp(3rem, 6vw, 4.5rem) 0;
   }
 
-  .s-vp1-container {
+  .container {
     max-width: 1180px;
     margin: 0 auto;
     padding: 0 clamp(1.5rem, 4vw, 2.5rem);
@@ -123,22 +122,22 @@
   }
 
   @media (max-width: 767px) {
-    .s-vp1-container {
+    .container {
       grid-template-columns: 1fr;
       gap: 2rem;
       padding: 0 1rem;
     }
 
-    .s-vp1-content {
+    .content {
       order: 2;
     }
 
-    .s-vp1-image {
+    .image {
       order: 1;
     }
   }
 
-  .s-vp1-content {
+  .content {
     display: grid;
     gap: clamp(1.25rem, 3vw, 1.8rem);
     padding: clamp(1.8rem, 3.5vw, 2.4rem);
@@ -146,7 +145,7 @@
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
-  .s-vp1-content:not(.glass-surface) {
+  .content:not(.glass-surface) {
     background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
     border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
     box-shadow: 0 16px 40px var(--glass-shadow-color, rgba(20, 26, 34, 0.12));
@@ -154,26 +153,26 @@
     -webkit-backdrop-filter: blur(20px);
   }
 
-  .s-vp1-content.glass-surface {
+  .content.glass-surface {
     padding: clamp(1.8rem, 3.5vw, 2.4rem);
     border: none;
     box-shadow: none;
   }
 
-  .s-vp1-title {
+  .title {
     font-size: clamp(2rem, 4vw, 2.8rem);
     font-weight: 700;
     margin: 0;
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
-  .s-vp1-description {
+  .description {
     font-size: 1.05rem;
     line-height: 1.65;
     color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
   }
 
-  .s-vp1-button {
+  .button {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -193,19 +192,19 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .s-vp1-button:hover {
+  .button:hover {
     transform: translateY(-2px);
     box-shadow: 0 24px 48px
       color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
   }
 
-  .s-vp1-media {
+  .media {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .s-vp1-image-wrapper {
+  .image-wrapper {
     position: relative;
     border-radius: 20px;
     overflow: hidden;
@@ -213,34 +212,34 @@
     box-shadow: 0 20px 46px rgba(20, 26, 34, 0.14);
   }
 
-  .s-vp1-image {
+  .image {
     width: 100%;
     display: block;
   }
 
-  .s-vp1-image-desktop {
+  .image-desktop {
     display: block;
   }
 
-  .s-vp1-image-mobile {
+  .image-mobile {
     display: none;
   }
 
   @media (max-width: 767px) {
-    .s-vp1-container {
+    .container {
       grid-template-columns: 1fr;
     }
 
-    .s-vp1-content,
-    .s-vp1-content.glass-surface {
+    .content,
+    .content.glass-surface {
       padding: clamp(1.5rem, 5vw, 1.9rem);
     }
 
-    .s-vp1-image-desktop {
+    .image-desktop {
       display: none;
     }
 
-    .s-vp1-image-mobile {
+    .image-mobile {
       display: block;
     }
   }
@@ -329,7 +328,7 @@
         {
           "value": "scheme-3",
           "label": "Scheme 3"
-        },
+        }
       ],
       "default": "scheme-1"
     },

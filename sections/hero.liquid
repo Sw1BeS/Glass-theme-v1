@@ -58,12 +58,12 @@
     assign panel_max_width_setting = panel_block.settings.panel_max_width
     if panel_max_width_setting != blank and panel_max_width_setting > 0
       assign panel_max_width = panel_max_width_setting
-  endif
+    endif
 
     assign panel_min_height_setting = panel_block.settings.panel_min_height
     if panel_min_height_setting != blank
       assign panel_min_height = panel_min_height_setting
-  endif
+    endif
 
     assign panel_padding = panel_block.settings.panel_padding | default: panel_padding
     assign panel_corner_radius = panel_block.settings.panel_corner_radius | default: panel_corner_radius
@@ -78,12 +78,12 @@
       assign panel_max_width_mobile = panel_max_width_mobile_setting
     else
       assign panel_max_width_mobile = panel_max_width
-  endif
+    endif
 
     assign panel_min_height_mobile_setting = panel_block.settings.panel_min_height_mobile
     if panel_min_height_mobile_setting != blank
       assign panel_min_height_mobile = panel_min_height_mobile_setting
-  endif
+    endif
 
     assign panel_padding_mobile = panel_block.settings.panel_padding_mobile | default: panel_padding_mobile
     assign panel_corner_radius_mobile = panel_block.settings.panel_corner_radius_mobile | default: panel_corner_radius_mobile
@@ -93,7 +93,7 @@
     assign panel_glass_opacity_mobile = panel_block.settings.panel_glass_opacity_mobile | default: panel_glass_opacity_mobile
   endif
 
-  if glass_enabled == nil
+  if glass_enabled == null
     assign glass_enabled = true
   endif
 
@@ -178,10 +178,10 @@
   {% if section.settings.image_1 != blank or section.settings.image_1_mobile != blank %}
     <div class="hero-background">
       {% if section.settings.image_1 != blank %}
-    {{
-      section.settings.image_1
+        {{
+          section.settings.image_1
           | image_url: width: 2400
-      | image_tag:
+          | image_tag:
             loading: 'eager',
             sizes: '(min-width: 768px) 100vw, 0px',
             widths: '768, 1024, 1366, 1600, 1920, 2400',
@@ -207,8 +207,8 @@
             sizes: '(max-width: 767px) 100vw, 0px',
             widths: '600, 800, 1200, 1600',
             class: 'hero-background-image hero-background-image--mobile'
-    }}
-  {% endif %}
+        }}
+      {% endif %}
     </div>
   {% endif %}
 
@@ -233,8 +233,8 @@
                 {%- if text_block.type == 'text' -%}
                   <div class="hero-text-block" {{ text_block.shopify_attributes }}>
                     {{ text_block.settings.text }}
-    </div>
-  {%- endif -%}
+                  </div>
+                {%- endif -%}
               {%- endfor -%}
 
               {%- for button_block in section.blocks -%}
@@ -243,26 +243,28 @@
                     <a
                       href="{{ button_block.settings.link | default: '#' }}"
                       class="hero-button"
-                      {% if button_block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
+                      {% if button_block.settings.open_in_new_tab %}
+                        target="_blank" rel="noopener"
+                      {% endif %}
                     >
                       {{ button_block.settings.label }}
                     </a>
-    </div>
-      {%- endif -%}
+                  </div>
+                {%- endif -%}
               {%- endfor -%}
 
               {% if has_text_blocks == 0 %}
                 <div class="hero-text-block hero-text-block--fallback">
                   <h1>The Perfect Brow Duo</h1>
                   <p>Everything you need for flawless brows, every day.</p>
-    </div>
+                </div>
               {% endif %}
 
               {% if has_button_blocks == 0 %}
                 <div class="hero-button-block hero-button-block--fallback">
                   <a href="{{ routes.all_products_collection_url }}" class="hero-button">Shop Now</a>
-            </div>
-  {% endif %}
+                </div>
+              {% endif %}
             </div>
         {%- endcase -%}
       {%- endfor -%}
@@ -274,7 +276,7 @@
           {% if glass_enabled %}
             data-glass-tone="{{ glass_tone }}"
             data-glass-elevation="{{ glass_elevation }}"
-    {% endif %}
+          {% endif %}
           style="{{ panel_style }}"
         >
           {%- for block in section.blocks -%}
@@ -282,18 +284,20 @@
               {%- when 'text' -%}
                 <div class="hero-text-block" {{ block.shopify_attributes }}>
                   {{ block.settings.text }}
-      </div>
+                </div>
               {%- when 'button' -%}
                 {%- if block.settings.label != blank -%}
                   <div class="hero-button-block" {{ block.shopify_attributes }}>
                     <a
                       href="{{ block.settings.link | default: '#' }}"
                       class="hero-button"
-                      {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
+                      {% if block.settings.open_in_new_tab %}
+                        target="_blank" rel="noopener"
+                      {% endif %}
                     >
                       {{ block.settings.label }}
                     </a>
-    </div>
+                  </div>
                 {%- endif -%}
             {%- endcase -%}
           {%- endfor -%}
@@ -302,15 +306,15 @@
             <div class="hero-text-block hero-text-block--fallback">
               <h1>The Perfect Brow Duo</h1>
               <p>Everything you need for flawless brows, every day.</p>
-    </div>
+            </div>
           {% endif %}
 
           {% if has_button_blocks == 0 %}
             <div class="hero-button-block hero-button-block--fallback">
               <a href="{{ routes.all_products_collection_url }}" class="hero-button">Shop Now</a>
-  </div>
+            </div>
           {% endif %}
-</div>
+        </div>
       {%- endunless -%}
     </div>
   </div>
@@ -348,7 +352,6 @@
   .hero-background-image--mobile {
     display: none;
   }
-
 
   .hero-content {
     position: relative;
@@ -486,17 +489,19 @@
       color-mix(in srgb, var(--color-primary, #bf8a7a) 90%, transparent) 100%
     );
     border: 1px solid color-mix(in srgb, var(--glass-surface-border-color, rgba(255, 255, 255, 0.4)) 85%, transparent);
-    box-shadow: 0 24px 48px color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
+    box-shadow: 0 24px 48px
+      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     will-change: transform;
-    width: 200px;
-    min-width: 200px;
+    width: min(200px, 100%);
+    min-width: 160px;
     max-width: 100%;
   }
 
   .hero-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 28px 58px color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 38%, transparent);
+    box-shadow: 0 28px 58px
+      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 38%, transparent);
   }
 
   .hero-button:focus-visible {
@@ -532,7 +537,8 @@
 
   .hero-panel[data-hover-effects='true']:hover .hero-button {
     transform: translateY(-1px);
-    box-shadow: 0 28px 56px color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 40%, transparent);
+    box-shadow: 0 28px 56px
+      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 40%, transparent);
   }
 
   /* Parallax effect */
@@ -592,10 +598,7 @@
     .hero-panel,
     .hero-panel.glass-surface {
       width: min(100%, var(--hero-panel-max-width-mobile, var(--hero-panel-max-width, 600px)));
-      min-height: max(
-        var(--hero-panel-min-height-mobile, var(--hero-panel-min-height, 0px)),
-        0px
-      );
+      min-height: max(var(--hero-panel-min-height-mobile, var(--hero-panel-min-height, 0px)), 0px);
       padding: var(--hero-panel-padding-mobile, clamp(1.5rem, 6vw, 1.9rem));
       border-radius: var(--hero-panel-radius-mobile, var(--hero-panel-radius, 28px));
       gap: var(--hero-panel-gap-mobile, var(--hero-panel-gap, clamp(1.25rem, 3vw, 1.8rem)));
@@ -758,23 +761,23 @@
       "name": "Content panel",
       "limit": 1,
       "settings": [
-    {
-      "type": "header",
+        {
+          "type": "header",
           "content": "Surface & Glass Effect"
-    },
-    {
-      "type": "checkbox",
+        },
+        {
+          "type": "checkbox",
           "id": "enable_glass",
           "label": "Enable glass effect",
-      "default": true,
+          "default": true,
           "info": "Adds backdrop blur and glass-like appearance"
-    },
-    {
-      "type": "select",
+        },
+        {
+          "type": "select",
           "id": "glass_tone",
           "label": "Glass tone",
-      "options": [
-        {
+          "options": [
+            {
               "value": "auto",
               "label": "Auto (follows theme)"
             },
@@ -789,13 +792,13 @@
           ],
           "default": "auto",
           "info": "Auto will adapt to the selected color scheme"
-    },
-    {
-      "type": "select",
+        },
+        {
+          "type": "select",
           "id": "glass_elevation",
           "label": "Glass elevation",
-      "options": [
-        {
+          "options": [
+            {
               "value": "low",
               "label": "Low (subtle)"
             },
@@ -809,13 +812,13 @@
             }
           ],
           "default": "medium"
-    },
-    {
-      "type": "select",
+        },
+        {
+          "type": "select",
           "id": "content_tone",
           "label": "Text tone",
-      "options": [
-        {
+          "options": [
+            {
               "value": "auto",
               "label": "Auto (follows theme)"
             },
@@ -852,9 +855,9 @@
           "unit": "%",
           "default": 90,
           "info": "Set to 0 for fully transparent glass"
-    },
-    {
-      "type": "header",
+        },
+        {
+          "type": "header",
           "content": "Desktop Layout"
         },
         {
@@ -870,15 +873,15 @@
           "label": "Panel min height (px)",
           "default": 0,
           "info": "Leave at 0 to auto-fit content. Useful for consistent panel sizes"
-    },
-    {
-      "type": "range",
+        },
+        {
+          "type": "range",
           "id": "panel_padding",
           "label": "Panel padding",
           "min": 20,
           "max": 80,
           "step": 4,
-      "unit": "px",
+          "unit": "px",
           "default": 40,
           "info": "Internal spacing around content"
         },
@@ -903,47 +906,47 @@
           "unit": "px",
           "default": 24,
           "info": "Space between text and buttons"
-    },
-    {
-      "type": "select",
+        },
+        {
+          "type": "select",
           "id": "panel_alignment",
           "label": "Panel alignment",
-      "options": [
-        {
+          "options": [
+            {
               "value": "left",
               "label": "Left"
-        },
-        {
-          "value": "center",
+            },
+            {
+              "value": "center",
               "label": "Center"
-        },
-        {
+            },
+            {
               "value": "right",
               "label": "Right"
-        }
-      ],
+            }
+          ],
           "default": "center",
           "info": "Horizontal position of the panel"
-    },
-    {
-      "type": "select",
-          "id": "panel_vertical_alignment",
-          "label": "Vertical alignment",
-      "options": [
-        {
-              "value": "top",
-              "label": "Top"
         },
         {
-          "value": "center",
+          "type": "select",
+          "id": "panel_vertical_alignment",
+          "label": "Vertical alignment",
+          "options": [
+            {
+              "value": "top",
+              "label": "Top"
+            },
+            {
+              "value": "center",
               "label": "Center"
             },
             {
               "value": "bottom",
               "label": "Bottom"
-        }
-      ],
-      "default": "center",
+            }
+          ],
+          "default": "center",
           "info": "Vertical position of the panel"
         },
         {
@@ -996,34 +999,34 @@
           "unit": "px",
           "default": 20,
           "info": "Space between text and buttons on mobile"
-    },
-    {
-      "type": "select",
-          "id": "panel_alignment_mobile",
-          "label": "Mobile panel alignment",
-      "options": [
-        {
-              "value": "left",
-              "label": "Left"
         },
         {
-          "value": "center",
+          "type": "select",
+          "id": "panel_alignment_mobile",
+          "label": "Mobile panel alignment",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
               "label": "Center"
             },
             {
               "value": "right",
               "label": "Right"
-        }
-      ],
-      "default": "center",
+            }
+          ],
+          "default": "center",
           "info": "Horizontal position of the panel on mobile"
-    },
-    {
-      "type": "select",
+        },
+        {
+          "type": "select",
           "id": "panel_vertical_alignment_mobile",
           "label": "Mobile vertical alignment",
-      "options": [
-        {
+          "options": [
+            {
               "value": "top",
               "label": "Top"
             },
@@ -1042,13 +1045,13 @@
         {
           "type": "header",
           "content": "Animation & Effects"
-    },
-    {
-      "type": "select",
+        },
+        {
+          "type": "select",
           "id": "animation_style",
           "label": "Animation style",
-      "options": [
-        {
+          "options": [
+            {
               "value": "none",
               "label": "None"
             },
@@ -1067,12 +1070,12 @@
           ],
           "default": "fade",
           "info": "Choose how the panel appears on page load"
-    },
-    {
-      "type": "range",
+        },
+        {
+          "type": "range",
           "id": "animation_delay",
           "label": "Animation delay (ms)",
-      "min": 0,
+          "min": 0,
           "max": 2000,
           "step": 100,
           "unit": "ms",
@@ -1089,9 +1092,9 @@
           "unit": "ms",
           "default": 600,
           "info": "How long the animation takes to complete"
-    },
-    {
-      "type": "checkbox",
+        },
+        {
+          "type": "checkbox",
           "id": "enable_hover_effects",
           "label": "Enable hover effects",
           "default": true,
@@ -1107,7 +1110,7 @@
       ]
     },
     {
-          "type": "text",
+      "type": "text",
       "name": "Text",
       "settings": [
         {
@@ -1119,11 +1122,11 @@
       ]
     },
     {
-          "type": "button",
+      "type": "button",
       "name": "Button",
       "settings": [
         {
-              "type": "text",
+          "type": "text",
           "id": "label",
           "label": "Button label",
           "default": "Learn more"
@@ -1183,11 +1186,11 @@
           }
         },
         {
-              "type": "text",
-              "settings": {
+          "type": "text",
+          "settings": {
             "text": "<p>Everything you need for flawless brows, every day.</p>"
-            }
-          },
+          }
+        },
         {
           "type": "button",
           "settings": {
