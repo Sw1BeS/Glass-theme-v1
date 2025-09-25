@@ -1,6 +1,7 @@
 {% comment %}
-  Hero Section - Main banner with image background and content overlay
+  Hero Section - Main banner with glassmorphism design and dynamic theme switching
   Features: Full-screen background, glass effect content blocks, responsive design
+  Follows Shopify OS 2.0 standards with block-based architecture
 {% endcomment %}
 
 {% liquid
@@ -92,12 +93,25 @@
               {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
+
+        <!-- Fallback content for empty states -->
+        {%- unless section.blocks.size > 0 -%}
+          <div class="hero-text-block">
+            <h1>The Perfect Brow Duo</h1>
+            <p>Everything you need for flawless brows, every day.</p>
+          </div>
+          <div class="hero-button-block">
+            <a href="/products/the-duo" class="hero-button">Shop The Duo - $34.99</a>
+            <a href="#shopify-section-how_to" class="hero-button">Learn How to Use</a>
+          </div>
+        {%- endunless -%}
       </div>
     </div>
   </div>
 </div>
 
 {% stylesheet %}
+  /* ===== CORE HERO SECTION STYLES ===== */
   .hero-section {
     position: relative;
     min-height: 100vh;
@@ -107,6 +121,7 @@
     overflow: hidden;
   }
 
+  /* ===== BACKGROUND IMAGE STYLES ===== */
   .hero-background {
     position: absolute;
     top: 0;
@@ -141,6 +156,7 @@
     }
   }
 
+  /* ===== CONTENT LAYOUT ===== */
   .hero-content {
     position: relative;
     z-index: 2;
@@ -157,6 +173,7 @@
     padding: 2rem;
   }
 
+  /* ===== GLASS EFFECT CONTAINER ===== */
   .hero-text {
     display: grid;
     gap: clamp(1.25rem, 3vw, 1.8rem);
@@ -166,6 +183,7 @@
     text-align: center;
     max-width: 600px;
     width: 100%;
+    position: relative;
   }
 
   .hero-text:not(.glass-surface) {
@@ -182,6 +200,7 @@
     box-shadow: none;
   }
 
+  /* ===== TYPOGRAPHY STYLES ===== */
   .hero-text-block h1,
   .hero-text-block h2,
   .hero-text-block h3,
@@ -192,6 +211,7 @@
     font-weight: 700;
     margin: 0;
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    line-height: 1.2;
   }
 
   .hero-text-block p {
@@ -201,13 +221,16 @@
     margin: 0;
   }
 
+  /* ===== BUTTON LAYOUT ===== */
   .hero-button-block {
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
   }
 
+  /* ===== PRIMARY BUTTON STYLES ===== */
   .hero-button {
     display: inline-flex;
     align-items: center;
@@ -224,6 +247,7 @@
     );
     border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
     transition: all 0.3s ease;
+    will-change: transform;
   }
 
   .hero-button:hover {
@@ -232,7 +256,17 @@
       color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
   }
 
-  /* Secondary button styling */
+  .hero-button:focus {
+    outline: 2px solid var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+    outline-offset: 2px;
+  }
+
+  .hero-button:focus-visible {
+    outline: 2px solid var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+    outline-offset: 2px;
+  }
+
+  /* ===== SECONDARY BUTTON STYLES ===== */
   .hero-button[href*='#shopify-section'] {
     background: transparent;
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
@@ -244,7 +278,8 @@
     color: white;
   }
 
-  /* Responsive adjustments */
+  /* ===== RESPONSIVE DESIGN ===== */
+  /* Mobile First Approach */
   @media (max-width: 768px) {
     .hero-container {
       padding: 1rem;
@@ -253,6 +288,15 @@
     .hero-text,
     .hero-text.glass-surface {
       padding: clamp(1.5rem, 5vw, 1.9rem);
+    }
+
+    .hero-text-block h1,
+    .hero-text-block h2,
+    .hero-text-block h3,
+    .hero-text-block h4,
+    .hero-text-block h5,
+    .hero-text-block h6 {
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
     }
 
     .hero-button-block {
@@ -267,69 +311,109 @@
       justify-content: center;
     }
   }
+
+  /* Tablet Optimization */
+  @media (min-width: 768px) {
+    .hero-container {
+      padding: 1.5rem;
+    }
+
+    .hero-text {
+      max-width: 500px;
+    }
+  }
+
+  /* Desktop Enhancements */
+  @media (min-width: 1024px) {
+    .hero-container {
+      padding: 2rem;
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero-button-block {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  /* Large Screen Optimization */
+  @media (min-width: 1440px) {
+    .hero-text {
+      max-width: 700px;
+    }
+  }
+
+  /* ===== ACCESSIBILITY ENHANCEMENTS ===== */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-button {
+      transition: none;
+    }
+
+    .hero-button:hover {
+      transform: none;
+    }
+  }
+
+  /* ===== HIGH CONTRAST MODE SUPPORT ===== */
+  @media (prefers-contrast: high) {
+    .hero-text:not(.glass-surface) {
+      background: var(--color-background, #ffffff);
+      border: 2px solid var(--color-foreground, #000000);
+    }
+
+    .hero-button {
+      border: 2px solid var(--color-foreground, #000000);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
 {
-  "name": "t:names.hero",
+  "name": "Hero",
   "tag": "section",
-  "class": "hero-wrapper section-wrapper",
-  "blocks": [
-    {
-      "type": "text"
-    },
-    {
-      "type": "button"
-    }
-  ],
-  "disabled_on": {
-    "groups": ["header"]
-  },
+  "class": "hero-section",
   "settings": [
     {
       "type": "header",
-      "content": "t:content.media"
+      "content": "Background Images"
     },
     {
       "type": "image_picker",
       "id": "image_1",
-      "label": "t:settings.image (Desktop)",
-      "info": "Recommended: 1920x1080px"
+      "label": "Desktop Background Image",
+      "info": "Recommended size: 1920x1080px"
     },
     {
       "type": "image_picker",
       "id": "image_1_mobile",
-      "label": "t:settings.image (Mobile)",
-      "info": "Recommended: 768x1024px (vertical)"
+      "label": "Mobile Background Image",
+      "info": "Recommended size: 768x1024px"
     },
     {
       "type": "header",
-      "content": "t:content.layout"
+      "content": "Layout Settings"
     },
     {
       "type": "select",
       "id": "section_width",
-      "label": "t:settings.width",
+      "label": "Section Width",
       "options": [
-        {
-          "value": "page-width",
-          "label": "t:options.page"
-        },
-        {
-          "value": "full-width",
-          "label": "t:options.full"
-        }
+        { "value": "full-width", "label": "Full Width" },
+        { "value": "narrow", "label": "Narrow" }
       ],
       "default": "full-width"
     },
     {
       "type": "header",
-      "content": "t:content.appearance"
+      "content": "Theme Integration"
     },
     {
       "type": "color_scheme",
       "id": "color_scheme",
-      "label": "t:settings.color_scheme",
+      "label": "Color Scheme",
       "default": "scheme-1"
     },
     {
@@ -343,18 +427,9 @@
       "id": "glass_tone",
       "label": "Glass Tone",
       "options": [
-        {
-          "value": "auto",
-          "label": "Auto"
-        },
-        {
-          "value": "light",
-          "label": "Light"
-        },
-        {
-          "value": "dark",
-          "label": "Dark"
-        }
+        { "value": "auto", "label": "Auto" },
+        { "value": "light", "label": "Light" },
+        { "value": "dark", "label": "Dark" }
       ],
       "default": "auto"
     },
@@ -363,51 +438,79 @@
       "id": "glass_elevation",
       "label": "Glass Elevation",
       "options": [
-        {
-          "value": "low",
-          "label": "Low"
-        },
-        {
-          "value": "medium",
-          "label": "Medium"
-        },
-        {
-          "value": "high",
-          "label": "High"
-        }
+        { "value": "low", "label": "Low" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "high", "label": "High" }
       ],
       "default": "medium"
     },
     {
       "type": "header",
-      "content": "t:content.padding"
+      "content": "Spacing"
     },
     {
       "type": "range",
       "id": "padding-block-start",
-      "label": "t:settings.top",
+      "label": "Top Padding",
       "min": 0,
       "max": 100,
-      "step": 1,
+      "step": 4,
       "unit": "px",
       "default": 0
     },
     {
       "type": "range",
       "id": "padding-block-end",
-      "label": "t:settings.bottom",
+      "label": "Bottom Padding",
       "min": 0,
       "max": 100,
-      "step": 1,
+      "step": 4,
       "unit": "px",
       "default": 0
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text Content",
+          "default": "<h1>Your Heading</h1><p>Your description text goes here.</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Button Text",
+          "default": "Learn More"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button Link"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_in_new_tab",
+          "label": "Open in New Tab",
+          "default": false
+        }
+      ]
     }
   ],
   "max_blocks": 10,
   "presets": [
     {
-      "name": "t:names.hero",
-      "category": "t:categories.banners",
+      "name": "Hero",
+      "category": "Banners",
       "settings": {
         "section_width": "full-width",
         "color_scheme": "scheme-1",
@@ -434,14 +537,16 @@
           "type": "button",
           "settings": {
             "label": "Shop The Duo - $34.99",
-            "link": "/products/the-duo"
+            "link": "/products/the-duo",
+            "open_in_new_tab": false
           }
         },
         "button_2": {
           "type": "button",
           "settings": {
             "label": "Learn How to Use",
-            "link": "#shopify-section-how_to"
+            "link": "#shopify-section-how_to",
+            "open_in_new_tab": false
           }
         }
       },
