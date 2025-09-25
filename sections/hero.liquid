@@ -1,85 +1,206 @@
 {% comment %}
-  Hero Section - Main banner with glassmorphism design and dynamic theme switching
-  Features: Full-screen background, glass effect content blocks, responsive design
-  Follows Shopify OS 2.0 standards with block-based architecture
+  Hero Section - Glassmorphism powered hero with dynamic theme integration
+  Features: Background imagery, glass content panel, block-based content management
 {% endcomment %}
 
 {% liquid
-  assign glass_enabled = section.settings.enable_glass
-  if glass_enabled == null
-    assign glass_enabled = settings.enable_glass_effect
+  assign panel_block = section.blocks | where: 'type', 'panel' | first
+  assign glass_enabled = true
+  assign glass_tone = 'auto'
+  assign glass_elevation = 'medium'
+  assign animation_style = 'fade'
+  assign panel_max_width = 600
+  assign panel_padding = 40
+  assign panel_corner_radius = 28
+  assign panel_gap = 24
+  assign panel_alignment = 'center'
+  assign panel_alignment_mobile = panel_alignment
+  assign panel_glass_opacity = 90
+  assign panel_max_width_mobile = 520
+  assign panel_padding_mobile = 32
+  assign panel_corner_radius_mobile = 24
+  assign panel_gap_mobile = 20
+  assign panel_glass_opacity_mobile = 88
+  assign panel_content_tone = 'auto'
+  assign panel_min_height = 0
+  assign panel_min_height_mobile = 0
+
+  if panel_block
+    assign glass_enabled = panel_block.settings.enable_glass
+    assign glass_tone = panel_block.settings.glass_tone | default: glass_tone
+    assign glass_elevation = panel_block.settings.glass_elevation | default: glass_elevation
+    assign animation_style = panel_block.settings.animation_style | default: animation_style
+
+    assign panel_max_width_setting = panel_block.settings.panel_max_width
+    if panel_max_width_setting != blank
+      assign panel_max_width = panel_max_width_setting
+    endif
+
+    assign panel_padding = panel_block.settings.panel_padding | default: panel_padding
+    assign panel_corner_radius = panel_block.settings.panel_corner_radius | default: panel_corner_radius
+    assign panel_gap = panel_block.settings.panel_gap | default: panel_gap
+    assign panel_alignment = panel_block.settings.panel_alignment | default: panel_alignment
+    assign panel_glass_opacity = panel_block.settings.panel_glass_opacity | default: panel_glass_opacity
+
+    assign panel_max_width_mobile_setting = panel_block.settings.panel_max_width_mobile
+    if panel_max_width_mobile_setting == blank
+      assign panel_max_width_mobile = panel_max_width
+    else
+      assign panel_max_width_mobile = panel_max_width_mobile_setting
   endif
-  assign glass_tone = section.settings.glass_tone | default: 'auto'
-  assign glass_elevation = section.settings.glass_elevation | default: 'medium'
+
+    assign panel_padding_mobile = panel_block.settings.panel_padding_mobile | default: panel_padding_mobile
+    assign panel_corner_radius_mobile = panel_block.settings.panel_corner_radius_mobile | default: panel_corner_radius_mobile
+    assign panel_gap_mobile = panel_block.settings.panel_gap_mobile | default: panel_gap_mobile
+    assign panel_alignment_mobile = panel_block.settings.panel_alignment_mobile | default: panel_alignment_mobile
+
+    assign panel_glass_opacity_mobile_setting = panel_block.settings.panel_glass_opacity_mobile
+    if panel_glass_opacity_mobile_setting == blank
+      assign panel_glass_opacity_mobile = panel_glass_opacity
+    else
+      assign panel_glass_opacity_mobile = panel_glass_opacity_mobile_setting
+  endif
+
+    assign panel_content_tone = panel_block.settings.content_tone | default: panel_content_tone
+    assign panel_min_height_setting = panel_block.settings.panel_min_height
+    if panel_min_height_setting != blank
+      assign panel_min_height = panel_min_height_setting
+  endif
+
+    assign panel_min_height_mobile_setting = panel_block.settings.panel_min_height_mobile
+    if panel_min_height_mobile_setting == blank
+      assign panel_min_height_mobile = panel_min_height
+    else
+      assign panel_min_height_mobile = panel_min_height_mobile_setting
+  endif
+  endif
+
+  if glass_enabled == nil
+    assign glass_enabled = true
+  endif
+
+  assign panel_max_width_numeric = panel_max_width | plus: 0
+  assign panel_max_width_mobile_numeric = panel_max_width_mobile | plus: 0
+  assign panel_typography_width = panel_max_width_numeric
+  if panel_typography_width <= 0
+    assign panel_typography_width = 600
+  endif
+  assign panel_typography_width_mobile = panel_max_width_mobile_numeric
+  if panel_typography_width_mobile <= 0
+    assign panel_typography_width_mobile = panel_typography_width
+  endif
+
+  assign panel_text_align = 'center'
+  if panel_alignment == 'left'
+    assign panel_text_align = 'left'
+  elsif panel_alignment == 'right'
+    assign panel_text_align = 'right'
+  endif
+
+  assign panel_text_align_mobile = 'center'
+  if panel_alignment_mobile == 'left'
+    assign panel_text_align_mobile = 'left'
+  elsif panel_alignment_mobile == 'right'
+    assign panel_text_align_mobile = 'right'
+  endif
+
+  assign panel_glass_opacity_decimal = panel_glass_opacity | times: 0.01
+  assign panel_glass_opacity_mobile_decimal = panel_glass_opacity_mobile | times: 0.01
+  assign text_blocks = section.blocks | where: 'type', 'text'
+  assign button_blocks = section.blocks | where: 'type', 'button'
+  assign has_text_blocks = text_blocks | size
+  assign has_button_blocks = button_blocks | size
 %}
+{% capture panel_style %}
+  {% if panel_max_width_numeric > 0 %}
+    --hero-panel-max-width: {{ panel_max_width_numeric }}px;
+  {% else %}
+    --hero-panel-max-width: 100%;
+  {% endif %}
+  {% if panel_max_width_mobile_numeric > 0 %}
+    --hero-panel-max-width-mobile: {{ panel_max_width_mobile_numeric }}px;
+  {% else %}
+    --hero-panel-max-width-mobile: 100%;
+  {% endif %}
+  --hero-panel-padding: {{ panel_padding }}px;
+  --hero-panel-padding-mobile: {{ panel_padding_mobile }}px;
+  --hero-panel-radius: {{ panel_corner_radius }}px;
+  --hero-panel-radius-mobile: {{ panel_corner_radius_mobile }}px;
+  --hero-panel-gap: {{ panel_gap }}px;
+  --hero-panel-gap-mobile: {{ panel_gap_mobile }}px;
+  --hero-panel-text-align: {{ panel_text_align }};
+  --hero-panel-text-align-mobile: {{ panel_text_align_mobile }};
+  --hero-panel-glass-opacity-desktop: {{ panel_glass_opacity_decimal }};
+  --hero-panel-glass-opacity-mobile: {{ panel_glass_opacity_mobile_decimal }};
+  --hero-panel-min-height: {{ panel_min_height | default: 0 }}px;
+  --hero-panel-min-height-mobile: {{ panel_min_height_mobile | default: panel_min_height }}px;
+  --hero-panel-typography-width: {{ panel_typography_width }}px;
+  --hero-panel-typography-width-mobile: {{ panel_typography_width_mobile }}px;
+{% endcapture %}
+{% assign panel_style = panel_style | strip | replace: '\n', ' ' %}
 
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
-<div
-  class="section section--{{ section.settings.section_width }} hero-section color-{{ section.settings.color_scheme }} spacing-style"
+<section
+  class="hero-section section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style"
+  style="{% render 'spacing-style', settings: section.settings %}"
+  role="banner"
+  aria-label="{{ section.settings.a11y_label | default: 'Hero section' }}"
   {% if glass_enabled %}
     data-glass-tone="{{ glass_tone }}"
     data-glass-elevation="{{ glass_elevation }}"
   {% endif %}
 >
-  <!-- Background Image -->
-  <div class="hero-background">
-    {%- if section.settings.image_1 != blank -%}
-    <!-- Desktop Image -->
-      <div class="hero-image-desktop">
+  {% if section.settings.image_1 != blank or section.settings.image_1_mobile != blank %}
+    <div class="hero-background">
+      {% if section.settings.image_1 != blank %}
     {{
       section.settings.image_1
-          | image_url: width: 1920
+          | image_url: width: 2400
       | image_tag:
             loading: 'eager',
             sizes: '(min-width: 768px) 100vw, 0px',
-            widths: '768, 1024, 1280, 1920',
-            class: 'hero-bg-image'
-      }}
-    </div>
-    {%- endif -%}
-
-      {%- if section.settings.image_1_mobile != blank -%}
-      <!-- Mobile Image -->
-      <div class="hero-image-mobile">
+            widths: '768, 1024, 1366, 1600, 1920, 2400',
+            class: 'hero-background-image hero-background-image--desktop'
+        }}
+      {% endif %}
+      {% if section.settings.image_1_mobile != blank %}
         {{
           section.settings.image_1_mobile
-          | image_url: width: 768
+          | image_url: width: 1600
           | image_tag:
-            loading: 'eager',
+            loading: 'lazy',
             sizes: '(max-width: 767px) 100vw, 0px',
-            widths: '375, 414, 768',
-            class: 'hero-bg-image'
+            widths: '600, 800, 1200, 1600',
+            class: 'hero-background-image hero-background-image--mobile'
         }}
-      </div>
-    {%- elsif section.settings.image_1 != blank -%}
-        <!-- Fallback to desktop image for mobile -->
-      <div class="hero-image-mobile">
+      {% elsif section.settings.image_1 != blank %}
         {{
           section.settings.image_1
-          | image_url: width: 768
+          | image_url: width: 1600
           | image_tag:
-            loading: 'eager',
+            loading: 'lazy',
             sizes: '(max-width: 767px) 100vw, 0px',
-            widths: '375, 414, 768',
-            class: 'hero-bg-image'
+            widths: '600, 800, 1200, 1600',
+            class: 'hero-background-image hero-background-image--mobile'
     }}
+  {% endif %}
+      <div class="hero-background-overlay"></div>
     </div>
-  {%- endif -%}
-    </div>
+  {% endif %}
 
-  <!-- Content Overlay -->
   <div class="hero-content">
-    <div class="hero-container" style="justify-content: {{ section.settings.panel_position | default: 'center' }};">
+    <div class="hero-container hero-container--align-{{ panel_alignment }} hero-container--mobile-align-{{ panel_alignment_mobile }}">
       <div
-        class="hero-panel glass"
-  style="
-          max-width: {{ section.settings.panel_max_width | default: 600 }}px;
-          padding: {{ section.settings.panel_padding | default: 40 }}px;
-          border-radius: {{ section.settings.panel_border_radius | default: 24 }}px;
-          background: var(--glass-surface-color, rgba(255, 255, 255, {{ section.settings.panel_opacity | default: 85 | divided_by: 100.0 }}));
-        "
+        class="hero-text glass{% if glass_enabled %} glass-surface{% endif %} hero-text--tone-{{ panel_content_tone }}"
+        {% if panel_block %}{{ panel_block.shopify_attributes }}{% endif %}
+        data-animation="{{ animation_style }}"
+        {% if glass_enabled %}
+          data-glass-tone="{{ glass_tone }}"
+          data-glass-elevation="{{ glass_elevation }}"
+    {% endif %}
+        style="{{ panel_style }}"
       >
-        <div class="hero-panel-content">
+        {% if section.blocks.size > 0 %}
           {%- for block in section.blocks -%}
             {%- case block.type -%}
               {%- when 'text' -%}
@@ -88,56 +209,50 @@
       </div>
               {%- when 'button' -%}
                 {%- if block.settings.label != blank -%}
-                  <a
-                    href="{{ block.settings.link | default: '#' }}"
-                    class="hero-button"
-                    {% if block.settings.open_in_new_tab %}
-          target="_blank" rel="noopener"
-        {% endif %}
-                    {{ block.shopify_attributes }}
-                  >
-                    {{ block.settings.label }}
-                  </a>
-      {%- endif -%}
+                  <div class="hero-button-block" {{ block.shopify_attributes }}>
+                    <a
+                      href="{{ block.settings.link | default: '#' }}"
+                      class="hero-button"
+                      {% if block.settings.open_in_new_tab %}target="_blank" rel="noopener"{% endif %}
+                    >
+                      {{ block.settings.label }}
+                    </a>
+                  </div>
+                {%- endif -%}
             {%- endcase -%}
           {%- endfor -%}
+  {% endif %}
 
-          <!-- Fallback content for empty states -->
-          {%- unless section.blocks.size > 0 -%}
-            <div class="hero-text-block">
-              <h1>The Perfect Brow Duo</h1>
-              <p>Everything you need for flawless brows, every day.</p>
+        {% if has_text_blocks == 0 %}
+          <div class="hero-text-block hero-text-block--fallback">
+            <h1>The Perfect Brow Duo</h1>
+            <p>Everything you need for flawless brows, every day.</p>
+          </div>
+        {% endif %}
+
+        {% if has_button_blocks == 0 %}
+          <div class="hero-button-block hero-button-block--fallback">
+            <a href="/collections/all" class="hero-button">Shop Now</a>
+          </div>
+        {% endif %}
     </div>
-            <a href="/products/the-duo" class="hero-button">
-              Shop The Duo - $34.99
-            </a>
-            <a href="#shopify-section-how_to" class="hero-button">
-              Learn How to Use
-            </a>
-          {%- endunless -%}
-        </div>
-      </div>
     </div>
   </div>
-</div>
+</section>
 
 {% stylesheet %}
-  /* ===== CSS VARIABLES FOR ADMIN SETTINGS ===== */
-  :root {
-    --glass-opacity: 0.8;
-    --button-gap: 16px;
-    --button-min-width: 200px;
-    --button-height: 48px;
-  }
-
-  /* ===== CORE HERO SECTION STYLES ===== */
   .hero-section {
     position: relative;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero-container--align-left .hero-text {
+    margin-right: auto;
+  }
+
+  .hero-container--align-right .hero-text {
+    margin-left: auto;
   }
 
   /* ===== BACKGROUND IMAGE STYLES ===== */
