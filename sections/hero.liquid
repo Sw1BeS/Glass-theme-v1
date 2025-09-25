@@ -5,74 +5,92 @@
 
 {% liquid
   assign panel_block = section.blocks | where: 'type', 'panel' | first
+
+  # Default values
   assign glass_enabled = true
   assign glass_tone = 'auto'
   assign glass_elevation = 'medium'
   assign animation_style = 'fade'
+  assign animation_delay = 0
+  assign animation_duration = 600
+  assign enable_hover_effects = true
+  assign enable_parallax = false
+
+  # Panel dimensions
   assign panel_max_width = 600
+  assign panel_min_height = 0
   assign panel_padding = 40
   assign panel_corner_radius = 28
   assign panel_gap = 24
   assign panel_alignment = 'center'
-  assign panel_alignment_mobile = panel_alignment
+  assign panel_vertical_alignment = 'center'
   assign panel_glass_opacity = 90
+
+  # Mobile panel dimensions
   assign panel_max_width_mobile = 520
+  assign panel_min_height_mobile = 0
   assign panel_padding_mobile = 32
   assign panel_corner_radius_mobile = 24
   assign panel_gap_mobile = 20
+  assign panel_alignment_mobile = 'center'
+  assign panel_vertical_alignment_mobile = 'center'
   assign panel_glass_opacity_mobile = 88
-  assign panel_content_tone = 'auto'
-  assign panel_min_height = 0
-  assign panel_min_height_mobile = 0
 
+  # Content tone
+  assign panel_content_tone = 'auto'
+
+  # Override with block settings if panel block exists
   if panel_block
-    assign glass_enabled = panel_block.settings.enable_glass
+    # Glass effect settings
+    assign glass_enabled = panel_block.settings.enable_glass | default: glass_enabled
     assign glass_tone = panel_block.settings.glass_tone | default: glass_tone
     assign glass_elevation = panel_block.settings.glass_elevation | default: glass_elevation
-    assign animation_style = panel_block.settings.animation_style | default: animation_style
+    assign panel_content_tone = panel_block.settings.content_tone | default: panel_content_tone
 
+    # Animation settings
+    assign animation_style = panel_block.settings.animation_style | default: animation_style
+    assign animation_delay = panel_block.settings.animation_delay | default: animation_delay
+    assign animation_duration = panel_block.settings.animation_duration | default: animation_duration
+    assign enable_hover_effects = panel_block.settings.enable_hover_effects | default: enable_hover_effects
+    assign enable_parallax = panel_block.settings.enable_parallax | default: enable_parallax
+
+    # Desktop panel settings
     assign panel_max_width_setting = panel_block.settings.panel_max_width
-    if panel_max_width_setting != blank
+    if panel_max_width_setting != blank and panel_max_width_setting > 0
       assign panel_max_width = panel_max_width_setting
-    endif
+  endif
+
+    assign panel_min_height_setting = panel_block.settings.panel_min_height
+    if panel_min_height_setting != blank
+      assign panel_min_height = panel_min_height_setting
+  endif
 
     assign panel_padding = panel_block.settings.panel_padding | default: panel_padding
     assign panel_corner_radius = panel_block.settings.panel_corner_radius | default: panel_corner_radius
     assign panel_gap = panel_block.settings.panel_gap | default: panel_gap
     assign panel_alignment = panel_block.settings.panel_alignment | default: panel_alignment
+    assign panel_vertical_alignment = panel_block.settings.panel_vertical_alignment | default: panel_vertical_alignment
     assign panel_glass_opacity = panel_block.settings.panel_glass_opacity | default: panel_glass_opacity
 
+    # Mobile panel settings
     assign panel_max_width_mobile_setting = panel_block.settings.panel_max_width_mobile
-    if panel_max_width_mobile_setting == blank
-      assign panel_max_width_mobile = panel_max_width
-    else
+    if panel_max_width_mobile_setting != blank and panel_max_width_mobile_setting > 0
       assign panel_max_width_mobile = panel_max_width_mobile_setting
+    else
+      assign panel_max_width_mobile = panel_max_width
+  endif
+
+    assign panel_min_height_mobile_setting = panel_block.settings.panel_min_height_mobile
+    if panel_min_height_mobile_setting != blank
+      assign panel_min_height_mobile = panel_min_height_mobile_setting
   endif
 
     assign panel_padding_mobile = panel_block.settings.panel_padding_mobile | default: panel_padding_mobile
     assign panel_corner_radius_mobile = panel_block.settings.panel_corner_radius_mobile | default: panel_corner_radius_mobile
     assign panel_gap_mobile = panel_block.settings.panel_gap_mobile | default: panel_gap_mobile
     assign panel_alignment_mobile = panel_block.settings.panel_alignment_mobile | default: panel_alignment_mobile
-
-    assign panel_glass_opacity_mobile_setting = panel_block.settings.panel_glass_opacity_mobile
-    if panel_glass_opacity_mobile_setting == blank
-      assign panel_glass_opacity_mobile = panel_glass_opacity
-    else
-      assign panel_glass_opacity_mobile = panel_glass_opacity_mobile_setting
-  endif
-
-    assign panel_content_tone = panel_block.settings.content_tone | default: panel_content_tone
-    assign panel_min_height_setting = panel_block.settings.panel_min_height
-    if panel_min_height_setting != blank
-      assign panel_min_height = panel_min_height_setting
-  endif
-
-    assign panel_min_height_mobile_setting = panel_block.settings.panel_min_height_mobile
-    if panel_min_height_mobile_setting == blank
-      assign panel_min_height_mobile = panel_min_height
-    else
-      assign panel_min_height_mobile = panel_min_height_mobile_setting
-  endif
+    assign panel_vertical_alignment_mobile = panel_block.settings.panel_vertical_alignment_mobile | default: panel_vertical_alignment_mobile
+    assign panel_glass_opacity_mobile = panel_block.settings.panel_glass_opacity_mobile | default: panel_glass_opacity_mobile
   endif
 
   if glass_enabled == nil
@@ -142,7 +160,15 @@
 <div class="section-background color-{{ section.settings.color_scheme }}"></div>
 <section
   class="hero-section section section--{{ section.settings.section_width }} color-{{ section.settings.color_scheme }} spacing-style"
-  style="{% render 'spacing-style', settings: section.settings %}"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --hero-panel-alignment: {{ panel_alignment }};
+    --hero-panel-vertical-alignment: {{ panel_vertical_alignment }};
+    --hero-panel-alignment-mobile: {{ panel_alignment_mobile }};
+    --hero-panel-vertical-alignment-mobile: {{ panel_vertical_alignment_mobile }};
+    --hero-panel-animation-delay: {{ animation_delay }}ms;
+    --hero-panel-animation-duration: {{ animation_duration }}ms;
+  "
   role="banner"
   aria-label="{{ section.settings.a11y_label | default: 'Hero section' }}"
   {% if glass_enabled %}
@@ -197,6 +223,8 @@
               class="hero-panel glass{% if glass_enabled %} glass-surface{% endif %} hero-panel--tone-{{ panel_content_tone }}"
               {{ block.shopify_attributes }}
               data-animation="{{ animation_style }}"
+              data-hover-effects="{{ enable_hover_effects }}"
+              data-parallax="{{ enable_parallax }}"
               {% if glass_enabled %}
                 data-glass-tone="{{ glass_tone }}"
                 data-glass-elevation="{{ glass_elevation }}"
@@ -345,8 +373,8 @@
   .hero-container {
     min-height: min(100vh, 960px);
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: var(--hero-panel-vertical-alignment, center);
+    justify-content: var(--hero-panel-alignment, center);
     padding: clamp(1.5rem, 5vw, 3rem);
   }
 
@@ -401,7 +429,8 @@
   }
 
   .hero-text-block {
-    animation: heroFadeIn 0.6s ease-out both;
+    animation: heroFadeIn var(--hero-panel-animation-duration, 600ms) ease-out both;
+    animation-delay: var(--hero-panel-animation-delay, 0ms);
   }
 
   .hero-button-block {
@@ -409,7 +438,8 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: clamp(0.75rem, 2vw, 1rem);
-    animation: heroFadeIn 0.8s ease-out both;
+    animation: heroFadeIn var(--hero-panel-animation-duration, 600ms) ease-out both;
+    animation-delay: calc(var(--hero-panel-animation-delay, 0ms) + 200ms);
   }
 
   .hero-container--align-left .hero-button-block {
@@ -495,6 +525,11 @@
     animation: none;
   }
 
+  .hero-panel[data-animation='fade'] .hero-text-block,
+  .hero-panel[data-animation='fade'] .hero-button-block {
+    animation-name: heroFadeIn;
+  }
+
   .hero-panel[data-animation='slide'] .hero-text-block,
   .hero-panel[data-animation='slide'] .hero-button-block {
     animation-name: heroSlideIn;
@@ -503,6 +538,23 @@
   .hero-panel[data-animation='scale'] .hero-text-block,
   .hero-panel[data-animation='scale'] .hero-button-block {
     animation-name: heroScaleIn;
+  }
+
+  /* Hover effects */
+  .hero-panel[data-hover-effects='true']:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 48px var(--glass-shadow-color, rgba(20, 26, 34, 0.15));
+  }
+
+  .hero-panel[data-hover-effects='true']:hover .hero-button {
+    transform: translateY(-1px);
+    box-shadow: 0 28px 56px color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 40%, transparent);
+  }
+
+  /* Parallax effect */
+  .hero-panel[data-parallax='true'] {
+    transform: translateZ(0);
+    will-change: transform;
   }
 
   @keyframes heroFadeIn {
@@ -542,6 +594,7 @@
     .hero-container {
       min-height: 75vh;
       padding: clamp(1rem, 8vw, 1.5rem);
+      align-items: var(--hero-panel-vertical-alignment-mobile, center);
     }
 
     .hero-container--mobile-align-left {
@@ -723,13 +776,14 @@
       "settings": [
     {
       "type": "header",
-          "content": "Surface"
+          "content": "Surface & Glass Effect"
     },
     {
       "type": "checkbox",
           "id": "enable_glass",
           "label": "Enable glass effect",
-          "default": true
+      "default": true,
+          "info": "Adds backdrop blur and glass-like appearance"
     },
     {
       "type": "select",
@@ -738,7 +792,7 @@
       "options": [
         {
               "value": "auto",
-              "label": "Auto"
+              "label": "Auto (follows theme)"
             },
             {
               "value": "light",
@@ -749,7 +803,8 @@
               "label": "Dark"
             }
           ],
-          "default": "auto"
+          "default": "auto",
+          "info": "Auto will adapt to the selected color scheme"
     },
     {
       "type": "select",
@@ -758,15 +813,15 @@
       "options": [
         {
               "value": "low",
-              "label": "Low"
+              "label": "Low (subtle)"
             },
             {
               "value": "medium",
-              "label": "Medium"
+              "label": "Medium (balanced)"
             },
             {
               "value": "high",
-              "label": "High"
+              "label": "High (prominent)"
             }
           ],
           "default": "medium"
@@ -778,7 +833,7 @@
       "options": [
         {
               "value": "auto",
-              "label": "Auto"
+              "label": "Auto (follows theme)"
             },
             {
               "value": "dark",
@@ -789,7 +844,8 @@
               "label": "Light text"
             }
           ],
-          "default": "dark"
+          "default": "auto",
+          "info": "Auto will choose the best contrast for readability"
         },
         {
           "type": "range",
@@ -797,47 +853,61 @@
           "label": "Glass opacity (desktop)",
           "min": 0,
           "max": 100,
-          "step": 1,
+          "step": 5,
           "unit": "%",
-          "default": 90
+          "default": 90,
+          "info": "Higher values make the panel more opaque"
         },
         {
-          "type": "header",
-          "content": "Desktop layout"
+          "type": "range",
+          "id": "panel_glass_opacity_mobile",
+          "label": "Glass opacity (mobile)",
+          "min": 0,
+          "max": 100,
+          "step": 5,
+          "unit": "%",
+          "default": 88,
+          "info": "Set to 0 for fully transparent glass"
+    },
+    {
+      "type": "header",
+          "content": "Desktop Layout"
         },
         {
           "type": "number",
           "id": "panel_max_width",
           "label": "Panel max width (px)",
           "default": 600,
-          "info": "Set to 0 to let the panel span the available width."
+          "info": "Set to 0 to let the panel span the available width. Recommended: 400-800px"
         },
         {
           "type": "number",
           "id": "panel_min_height",
           "label": "Panel min height (px)",
           "default": 0,
-          "info": "Leave at 0 to auto-fit content."
-        },
-        {
-          "type": "range",
+          "info": "Leave at 0 to auto-fit content. Useful for consistent panel sizes"
+    },
+    {
+      "type": "range",
           "id": "panel_padding",
           "label": "Panel padding",
           "min": 20,
           "max": 80,
           "step": 4,
-          "unit": "px",
-          "default": 40
-    },
-    {
-      "type": "range",
+      "unit": "px",
+          "default": 40,
+          "info": "Internal spacing around content"
+        },
+        {
+          "type": "range",
           "id": "panel_corner_radius",
           "label": "Corner radius",
           "min": 12,
           "max": 48,
           "step": 4,
-      "unit": "px",
-          "default": 28
+          "unit": "px",
+          "default": 28,
+          "info": "Higher values create more rounded corners"
         },
         {
           "type": "range",
@@ -847,7 +917,8 @@
           "max": 60,
           "step": 4,
           "unit": "px",
-          "default": 24
+          "default": 24,
+          "info": "Space between text and buttons"
     },
     {
       "type": "select",
@@ -857,35 +928,57 @@
         {
               "value": "left",
               "label": "Left"
-            },
-            {
-              "value": "center",
+        },
+        {
+          "value": "center",
+              "label": "Center"
+        },
+        {
+              "value": "right",
+              "label": "Right"
+        }
+      ],
+          "default": "center",
+          "info": "Horizontal position of the panel"
+    },
+    {
+      "type": "select",
+          "id": "panel_vertical_alignment",
+          "label": "Vertical alignment",
+      "options": [
+        {
+              "value": "top",
+              "label": "Top"
+        },
+        {
+          "value": "center",
               "label": "Center"
             },
             {
-              "value": "right",
-              "label": "Right"
-            }
-          ],
-          "default": "center"
+              "value": "bottom",
+              "label": "Bottom"
+        }
+      ],
+      "default": "center",
+          "info": "Vertical position of the panel"
         },
         {
           "type": "header",
-          "content": "Mobile layout"
+          "content": "Mobile Layout"
         },
         {
           "type": "number",
           "id": "panel_max_width_mobile",
           "label": "Mobile panel max width (px)",
           "default": 520,
-          "info": "Set to 0 to let the panel span the available width on mobile."
+          "info": "Set to 0 to let the panel span the available width on mobile. Recommended: 300-600px"
         },
         {
           "type": "number",
           "id": "panel_min_height_mobile",
           "label": "Mobile panel min height (px)",
           "default": 0,
-          "info": "Set to 0 to auto-fit the content height on mobile."
+          "info": "Set to 0 to auto-fit the content height on mobile"
         },
         {
           "type": "range",
@@ -895,7 +988,8 @@
           "max": 64,
           "step": 4,
           "unit": "px",
-          "default": 32
+          "default": 32,
+          "info": "Internal spacing around content on mobile"
         },
         {
           "type": "range",
@@ -905,7 +999,8 @@
           "max": 48,
           "step": 4,
           "unit": "px",
-          "default": 24
+          "default": 24,
+          "info": "Higher values create more rounded corners on mobile"
         },
         {
           "type": "range",
@@ -915,49 +1010,61 @@
           "max": 60,
           "step": 4,
           "unit": "px",
-          "default": 20
-        },
-        {
-          "type": "select",
+          "default": 20,
+          "info": "Space between text and buttons on mobile"
+    },
+    {
+      "type": "select",
           "id": "panel_alignment_mobile",
           "label": "Mobile panel alignment",
-          "options": [
-            {
+      "options": [
+        {
               "value": "left",
               "label": "Left"
+        },
+        {
+          "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+        }
+      ],
+      "default": "center",
+          "info": "Horizontal position of the panel on mobile"
+    },
+    {
+      "type": "select",
+          "id": "panel_vertical_alignment_mobile",
+          "label": "Mobile vertical alignment",
+      "options": [
+        {
+              "value": "top",
+              "label": "Top"
             },
             {
               "value": "center",
               "label": "Center"
             },
             {
-              "value": "right",
-              "label": "Right"
+              "value": "bottom",
+              "label": "Bottom"
             }
           ],
-          "default": "center"
-    },
-    {
-      "type": "range",
-          "id": "panel_glass_opacity_mobile",
-          "label": "Glass opacity (mobile)",
-      "min": 0,
-      "max": 100,
-      "step": 1,
-      "unit": "%",
-          "default": 88,
-          "info": "Set to 0 for fully transparent glass."
-    },
-    {
-      "type": "header",
-          "content": "Animation"
+          "default": "center",
+          "info": "Vertical position of the panel on mobile"
         },
         {
-          "type": "select",
+          "type": "header",
+          "content": "Animation & Effects"
+    },
+    {
+      "type": "select",
           "id": "animation_style",
           "label": "Animation style",
-          "options": [
-            {
+      "options": [
+        {
               "value": "none",
               "label": "None"
             },
@@ -974,12 +1081,49 @@
               "label": "Scale in"
             }
           ],
-          "default": "fade"
+          "default": "fade",
+          "info": "Choose how the panel appears on page load"
+    },
+    {
+      "type": "range",
+          "id": "animation_delay",
+          "label": "Animation delay (ms)",
+      "min": 0,
+          "max": 2000,
+          "step": 100,
+          "unit": "ms",
+          "default": 0,
+          "info": "Delay before animation starts"
+        },
+        {
+          "type": "range",
+          "id": "animation_duration",
+          "label": "Animation duration (ms)",
+          "min": 200,
+          "max": 2000,
+          "step": 100,
+          "unit": "ms",
+          "default": 600,
+          "info": "How long the animation takes to complete"
+    },
+    {
+      "type": "checkbox",
+          "id": "enable_hover_effects",
+          "label": "Enable hover effects",
+          "default": true,
+          "info": "Add subtle hover animations to the panel"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_parallax",
+          "label": "Enable parallax effect",
+          "default": false,
+          "info": "Panel moves slightly with scroll (subtle effect)"
         }
       ]
     },
     {
-      "type": "text",
+          "type": "text",
       "name": "Text",
       "settings": [
         {
@@ -991,11 +1135,11 @@
       ]
     },
     {
-      "type": "button",
+          "type": "button",
       "name": "Button",
       "settings": [
         {
-          "type": "text",
+              "type": "text",
           "id": "label",
           "label": "Button label",
           "default": "Learn more"
