@@ -9,32 +9,31 @@
 %}
 
 <div
-  class="section section--{{ section.settings.section_width }} s-vp1-section color-{{ section.settings.color_scheme }} spacing-style"
+  class="s-vp1-section color-{{ section.settings.color_scheme }}"
   {% if glass_enabled %}
     data-glass-tone="{{ glass_tone }}"
     data-glass-elevation="{{ glass_elevation }}"
   {% endif %}
 >
-  <div class="vp1-container">
-    <div class="vp1-content">
-      <div
-        class="vp1-text glass"
-      >
+  <div class="s-vp1-container section-{{ section.settings.section_width }}">
+    <div
+      class="s-vp1-content glass"
+    >
         {%- assign header_found = false -%}
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'section_header' -%}
               {%- assign header_found = true -%}
-              <h2 class="vp1-title" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
+              <h2 class="s-vp1-title" {{ block.shopify_attributes }}>{{ block.settings.heading }}</h2>
             {%- when 'text' -%}
-              <div class="vp1-description" {{ block.shopify_attributes }}>
+              <div class="s-vp1-description" {{ block.shopify_attributes }}>
                 {{ block.settings.text }}
               </div>
             {%- when 'button' -%}
               {%- if block.settings.button_text != blank -%}
                 <a
                   href="{{ block.settings.button_link | default: '#' }}"
-                  class="vp1-button"
+                  class="s-vp1-button"
                   {{ block.shopify_attributes }}
                 >
                   {{ block.settings.button_text }}
@@ -44,29 +43,28 @@
         {%- endfor -%}
 
         {%- unless header_found -%}
-          <h2 class="vp1-title">{{ section.settings.heading | default: 'Safe for Your Most Delicate Skin' }}</h2>
+          <h2 class="s-vp1-title">{{ section.settings.heading | default: 'Safe for Your Most Delicate Skin' }}</h2>
         {%- endunless -%}
 
         {%- unless section.blocks.size > 0 -%}
-          <div class="vp1-description">
+          <div class="s-vp1-description">
             {{
               section.settings.text
               | default: '<p>Formulated specifically for the sensitive eye area. Our pH-balanced formula removes impurities without irritation, perfect for daily use on natural brows and extensions.</p>'
             }}
           </div>
           {%- if section.settings.button_text != blank -%}
-            <a href="{{ section.settings.button_link | default: '#' }}" class="vp1-button">
+            <a href="{{ section.settings.button_link | default: '#' }}" class="s-vp1-button">
               {{ section.settings.button_text }}
             </a>
           {%- endif -%}
         {%- endunless -%}
-      </div>
     </div>
 
-    <div class="vp1-media">
-      <div class="vp1-image-wrapper">
+    <div class="s-vp1-media">
+      <div class="s-vp1-image-wrapper">
         {%- if section.settings.image != blank -%}
-          <div class="vp1-image-desktop">
+          <div class="s-vp1-image-desktop">
             {{
               section.settings.image
               | image_url: width: 800
@@ -74,13 +72,13 @@
                 loading: 'lazy',
                 sizes: '(min-width: 768px) 600px, 0px',
                 widths: '400, 600, 800',
-                class: 'vp1-image'
+                class: 's-vp1-image'
             }}
           </div>
         {%- endif -%}
 
         {%- if section.settings.image_mobile != blank -%}
-          <div class="vp1-image-mobile">
+          <div class="s-vp1-image-mobile">
             {{
               section.settings.image_mobile
               | image_url: width: 400
@@ -88,11 +86,11 @@
                 loading: 'lazy',
                 sizes: '(max-width: 767px) 300px, 0px',
                 widths: '300, 400',
-                class: 'vp1-image'
+                class: 's-vp1-image'
             }}
           </div>
         {%- elsif section.settings.image != blank -%}
-          <div class="vp1-image-mobile">
+          <div class="s-vp1-image-mobile">
             {{
               section.settings.image
               | image_url: width: 400
@@ -100,7 +98,7 @@
                 loading: 'lazy',
                 sizes: '(max-width: 767px) 300px, 0px',
                 widths: '300, 400',
-                class: 'vp1-image'
+                class: 's-vp1-image'
             }}
           </div>
         {%- endif -%}
@@ -114,7 +112,7 @@
     padding: clamp(3rem, 6vw, 4.5rem) 0;
   }
 
-  .vp1-container {
+  .s-vp1-container {
     max-width: 1180px;
     margin: 0 auto;
     padding: 0 clamp(1.5rem, 4vw, 2.5rem);
@@ -125,22 +123,22 @@
   }
 
   @media (max-width: 767px) {
-    .vp1-container {
+    .s-vp1-container {
       grid-template-columns: 1fr;
       gap: 2rem;
       padding: 0 1rem;
     }
 
-    .vp1-content {
+    .s-vp1-content {
       order: 2;
     }
 
-    .vp1-image {
+    .s-vp1-image {
       order: 1;
     }
   }
 
-  .vp1-text {
+  .s-vp1-content {
     display: grid;
     gap: clamp(1.25rem, 3vw, 1.8rem);
     padding: clamp(1.8rem, 3.5vw, 2.4rem);
@@ -148,7 +146,7 @@
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
-  .vp1-text:not(.glass-surface) {
+  .s-vp1-content:not(.glass-surface) {
     background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
     border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
     box-shadow: 0 16px 40px var(--glass-shadow-color, rgba(20, 26, 34, 0.12));
@@ -156,26 +154,26 @@
     -webkit-backdrop-filter: blur(20px);
   }
 
-  .vp1-text.glass-surface {
+  .s-vp1-content.glass-surface {
     padding: clamp(1.8rem, 3.5vw, 2.4rem);
     border: none;
     box-shadow: none;
   }
 
-  .vp1-title {
+  .s-vp1-title {
     font-size: clamp(2rem, 4vw, 2.8rem);
     font-weight: 700;
     margin: 0;
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
-  .vp1-description {
+  .s-vp1-description {
     font-size: 1.05rem;
     line-height: 1.65;
     color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
   }
 
-  .vp1-button {
+  .s-vp1-button {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -195,19 +193,19 @@
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
-  .vp1-button:hover {
+  .s-vp1-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 24px 48px
       color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
   }
 
-  .vp1-media {
+  .s-vp1-media {
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .vp1-image-wrapper {
+  .s-vp1-image-wrapper {
     position: relative;
     border-radius: 20px;
     overflow: hidden;
@@ -215,34 +213,34 @@
     box-shadow: 0 20px 46px rgba(20, 26, 34, 0.14);
   }
 
-  .vp1-image {
+  .s-vp1-image {
     width: 100%;
     display: block;
   }
 
-  .vp1-image-desktop {
+  .s-vp1-image-desktop {
     display: block;
   }
 
-  .vp1-image-mobile {
+  .s-vp1-image-mobile {
     display: none;
   }
 
   @media (max-width: 767px) {
-    .vp1-container {
+    .s-vp1-container {
       grid-template-columns: 1fr;
     }
 
-    .vp1-text,
-    .vp1-text.glass-surface {
+    .s-vp1-content,
+    .s-vp1-content.glass-surface {
       padding: clamp(1.5rem, 5vw, 1.9rem);
     }
 
-    .vp1-image-desktop {
+    .s-vp1-image-desktop {
       display: none;
     }
 
-    .vp1-image-mobile {
+    .s-vp1-image-mobile {
       display: block;
     }
   }
