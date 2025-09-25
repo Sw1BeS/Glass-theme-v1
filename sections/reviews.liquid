@@ -37,8 +37,8 @@
 
     {%- unless header_found -%}
       <div class="reviews-header glass">
-        <h2 class="reviews-title">What Our Customers Say</h2>
-        <p class="reviews-subtitle">Real reviews from real customers who love our products</p>
+        <h2 class="reviews-title">{{ section.settings.section_heading | default: 'What Our Customers Say' }}</h2>
+        <p class="reviews-subtitle">{{ section.settings.section_subheading | default: 'Real reviews from real customers who love our products' }}</p>
       </div>
     {%- endunless -%}
 
@@ -287,6 +287,22 @@
   "tag": "section",
   "class": "reviews-section",
   "settings": [
+    {
+      "type": "header",
+      "content": "Section Content"
+    },
+    {
+      "type": "text",
+      "id": "section_heading",
+      "label": "Section Heading",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "textarea",
+      "id": "section_subheading",
+      "label": "Section Subheading",
+      "default": "Real reviews from satisfied customers who have already tried our products"
+    },
     {
       "type": "header",
       "content": "Glass styling"

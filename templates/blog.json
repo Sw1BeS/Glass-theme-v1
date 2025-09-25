@@ -57,7 +57,7 @@
                 "case": "none",
                 "wrap": "pretty",
                 "color": "var(--color-foreground)",
-                "text": "",
+                "text": "<p></p>",
                 "read_only": true,
                 "alignment": "left",
                 "show_alignment": false,

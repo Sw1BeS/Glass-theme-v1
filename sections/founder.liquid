@@ -53,11 +53,15 @@
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'founder_info' -%}
-              <h2 class="founder-title" {{ block.shopify_attributes }}>{{ block.settings.founder_name | default: section.settings.founder_name }}</h2>
-              <p class="founder-subtitle" {{ block.shopify_attributes }}>{{ block.settings.founder_title | default: section.settings.founder_title }}</p>
+              <h2 class="founder-title" {{ block.shopify_attributes }}>
+                {{ block.settings.founder_name | default: section.settings.founder_name }}
+              </h2>
+              <p class="founder-subtitle" {{ block.shopify_attributes }}>
+                {{ block.settings.founder_title | default: section.settings.founder_title }}
+              </p>
           {%- endcase -%}
         {%- endfor -%}
-        
+
         {%- comment -%} Fallback to settings if no founder_info block {%- endcomment -%}
         {%- assign founder_info_found = false -%}
         {%- for block in section.blocks -%}
@@ -66,7 +70,7 @@
             {%- break -%}
           {%- endif -%}
         {%- endfor -%}
-        
+
         {%- unless founder_info_found -%}
           {% if section.settings.founder_name != blank %}
             <h2 class="founder-title">{{ section.settings.founder_name }}</h2>
@@ -84,7 +88,7 @@
               </div>
           {%- endcase -%}
         {%- endfor -%}
-        
+
         {%- comment -%} Fallback to settings if no founder_story block {%- endcomment -%}
         {%- assign founder_story_found = false -%}
         {%- for block in section.blocks -%}
@@ -93,7 +97,7 @@
             {%- break -%}
           {%- endif -%}
         {%- endfor -%}
-        
+
         {%- unless founder_story_found -%}
           {% if section.settings.founder_story != blank %}
             <div class="founder-story">
@@ -119,7 +123,7 @@
           </div>
       {%- endcase -%}
     {%- endfor -%}
-    
+
     {%- comment -%} Fallback to settings if no founder_quote block {%- endcomment -%}
     {%- assign founder_quote_found = false -%}
     {%- for block in section.blocks -%}
@@ -128,7 +132,7 @@
         {%- break -%}
       {%- endif -%}
     {%- endfor -%}
-    
+
     {%- unless founder_quote_found -%}
       <div class="founder-quotes-carousel">
         <div class="quotes-container">
@@ -175,26 +179,46 @@
           <div class="stats-section" {{ block.shopify_attributes }}>
             <div class="stats-grid">
               <div class="stat-item">
-                <div class="stat-number" data-target="{{ block.settings.years_experience | default: section.settings.years_experience | default: 23 }}">0</div>
+                <div
+                  class="stat-number"
+                  data-target="{{ block.settings.years_experience | default: section.settings.years_experience | default: 23 }}"
+                >
+                  0
+                </div>
                 <div class="stat-label">Years of Experience</div>
               </div>
               <div class="stat-item">
-                <div class="stat-number" data-target="{{ block.settings.happy_customers | default: section.settings.happy_customers | default: 647 }}">0</div>
+                <div
+                  class="stat-number"
+                  data-target="{{ block.settings.happy_customers | default: section.settings.happy_customers | default: 647 }}"
+                >
+                  0
+                </div>
                 <div class="stat-label">Happy Customers</div>
               </div>
               <div class="stat-item">
-                <div class="stat-number" data-target="{{ block.settings.countries_served | default: section.settings.countries_served | default: 23 }}">0</div>
+                <div
+                  class="stat-number"
+                  data-target="{{ block.settings.countries_served | default: section.settings.countries_served | default: 23 }}"
+                >
+                  0
+                </div>
                 <div class="stat-label">Countries Served</div>
               </div>
               <div class="stat-item">
-                <div class="stat-number" data-target="{{ block.settings.ingredients_tested | default: section.settings.ingredients_tested | default: 187 }}">0</div>
+                <div
+                  class="stat-number"
+                  data-target="{{ block.settings.ingredients_tested | default: section.settings.ingredients_tested | default: 187 }}"
+                >
+                  0
+                </div>
                 <div class="stat-label">Ingredients Tested</div>
               </div>
             </div>
           </div>
       {%- endcase -%}
     {%- endfor -%}
-    
+
     {%- comment -%} Fallback to settings if no founder_stats block {%- endcomment -%}
     {%- assign founder_stats_found = false -%}
     {%- for block in section.blocks -%}
@@ -203,7 +227,7 @@
         {%- break -%}
       {%- endif -%}
     {%- endfor -%}
-    
+
     {%- unless founder_stats_found -%}
       <div class="stats-section">
         <div class="stats-grid">
@@ -230,14 +254,44 @@
     <!-- Company Mission -->
     <div class="mission-section">
       <h3 class="mission-title">Our Mission</h3>
-      <p class="mission-text">We are IS Beauty Lux™, a self-care brand dedicated to creating safe, effective, and beautifully crafted products.</p>
-      <p class="mission-text">Our mission is to simplify beauty routines with safe formulas, dermatologist-tested, water-based, non-toxic ingredients, and elegant packaging.</p>
-      <p class="mission-text">Inspired by real women. Made for everyday elegance. At IS Beauty Lux™, we believe beauty should feel effortless. Our journey began with a mission: to create self-care essentials that elevate your daily routine — without adding stress, time, or harmful ingredients.</p>
-      <p class="mission-text">With over 20 years of experience in the beauty industry, we carefully formulated every product to be clean, effective, and beautifully designed. Our brow gel and lash shampoo are crafted to deliver salon-worthy results at home, with packaging you'll be proud to display.</p>
-      <p class="mission-text">We believe in transparency, quality, and the power of simplicity. Every ingredient is carefully selected, every formula is rigorously tested, and every product is designed to make you feel confident and beautiful in your own skin.</p>
-      <p class="mission-text">Our commitment to clean beauty goes beyond just ingredients. We believe in ethical sourcing, sustainable packaging, and supporting women-owned businesses throughout our supply chain. Every product we create is a reflection of our values and our promise to you.</p>
-      <p class="mission-text">We understand that beauty routines should be moments of self-care, not sources of stress. That's why we've designed our products to be intuitive, effective, and enjoyable to use. Whether you're a beauty novice or a seasoned expert, our products adapt to your needs and enhance your natural beauty.</p>
-      <p class="mission-text">At IS Beauty Lux™, we're not just creating products – we're building a community of confident, empowered women who believe in the power of clean, effective beauty. Join us on this journey to redefine what beauty means in the modern world.</p>
+      <p class="mission-text">
+        We are IS Beauty Lux™, a self-care brand dedicated to creating safe, effective, and beautifully crafted
+        products.
+      </p>
+      <p class="mission-text">
+        Our mission is to simplify beauty routines with safe formulas, dermatologist-tested, water-based, non-toxic
+        ingredients, and elegant packaging.
+      </p>
+      <p class="mission-text">
+        Inspired by real women. Made for everyday elegance. At IS Beauty Lux™, we believe beauty should feel effortless.
+        Our journey began with a mission: to create self-care essentials that elevate your daily routine — without
+        adding stress, time, or harmful ingredients.
+      </p>
+      <p class="mission-text">
+        With over 20 years of experience in the beauty industry, we carefully formulated every product to be clean,
+        effective, and beautifully designed. Our brow gel and lash shampoo are crafted to deliver salon-worthy results
+        at home, with packaging you'll be proud to display.
+      </p>
+      <p class="mission-text">
+        We believe in transparency, quality, and the power of simplicity. Every ingredient is carefully selected, every
+        formula is rigorously tested, and every product is designed to make you feel confident and beautiful in your own
+        skin.
+      </p>
+      <p class="mission-text">
+        Our commitment to clean beauty goes beyond just ingredients. We believe in ethical sourcing, sustainable
+        packaging, and supporting women-owned businesses throughout our supply chain. Every product we create is a
+        reflection of our values and our promise to you.
+      </p>
+      <p class="mission-text">
+        We understand that beauty routines should be moments of self-care, not sources of stress. That's why we've
+        designed our products to be intuitive, effective, and enjoyable to use. Whether you're a beauty novice or a
+        seasoned expert, our products adapt to your needs and enhance your natural beauty.
+      </p>
+      <p class="mission-text">
+        At IS Beauty Lux™, we're not just creating products – we're building a community of confident, empowered women
+        who believe in the power of clean, effective beauty. Join us on this journey to redefine what beauty means in
+        the modern world.
+      </p>
     </div>
 
     <!-- Journey Timeline -->
@@ -279,9 +333,18 @@
     <div class="philosophy-section">
       <h3 class="philosophy-title">Inspired by Real Women. Made for Everyday Elegance.</h3>
       <div class="philosophy-content">
-        <p>At IS Beauty Lux™, we believe beauty should feel effortless. Our journey began with a mission: to create self-care essentials that elevate your daily routine — without adding stress, time, or harmful ingredients.</p>
-        <p>With over 20 years of experience in the beauty industry, we carefully formulated every product to be clean, effective, and beautifully designed.</p>
-        <p>Our brow gel and lash shampoo are crafted to deliver salon-worthy results at home, with packaging you'll be proud to display.</p>
+        <p>
+          At IS Beauty Lux™, we believe beauty should feel effortless. Our journey began with a mission: to create
+          self-care essentials that elevate your daily routine — without adding stress, time, or harmful ingredients.
+        </p>
+        <p>
+          With over 20 years of experience in the beauty industry, we carefully formulated every product to be clean,
+          effective, and beautifully designed.
+        </p>
+        <p>
+          Our brow gel and lash shampoo are crafted to deliver salon-worthy results at home, with packaging you'll be
+          proud to display.
+        </p>
       </div>
     </div>
 
@@ -310,7 +373,6 @@
         </div>
       </div>
     {% endif %}
-
   </div>
 </div>
 
@@ -373,7 +435,7 @@
     position: relative;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   }
 
   .founder-image img {
@@ -851,8 +913,14 @@
 
   /* Animations */
   @keyframes countUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* @keyframes glowPulse {
@@ -871,13 +939,25 @@
   }
 
   @keyframes slideInLeft {
-    from { opacity: 0; transform: translateX(-50px); }
-    to { opacity: 1; transform: translateX(0); }
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
   @keyframes slideInRight {
-    from { opacity: 0; transform: translateX(50px); }
-    to { opacity: 1; transform: translateX(0); }
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
   .timeline-item:nth-child(odd) .timeline-content {
@@ -965,69 +1045,75 @@
 </style>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  // Animated counter function
-  function animateCounter(element, target, duration = 2000) {
-    let start = 0;
-    const increment = target / (duration / 16);
+  document.addEventListener('DOMContentLoaded', function () {
+    // Animated counter function
+    function animateCounter(element, target, duration = 2000) {
+      let start = 0;
+      const increment = target / (duration / 16);
 
-    function updateCounter() {
-      start += increment;
-      if (start < target) {
-        element.textContent = Math.floor(start);
-        requestAnimationFrame(updateCounter);
-      } else {
-        element.textContent = target;
-        element.classList.add('animated');
+      function updateCounter() {
+        start += increment;
+        if (start < target) {
+          element.textContent = Math.floor(start);
+          requestAnimationFrame(updateCounter);
+        } else {
+          element.textContent = target;
+          element.classList.add('animated');
+        }
       }
+
+      updateCounter();
     }
 
-    updateCounter();
-  }
-
-  // Intersection Observer for stats animation
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const statNumbers = entry.target.querySelectorAll('.stat-number');
-        statNumbers.forEach(stat => {
-          const target = parseInt(stat.getAttribute('data-target'));
-          animateCounter(stat, target);
+    // Intersection Observer for stats animation
+    const statsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const statNumbers = entry.target.querySelectorAll('.stat-number');
+            statNumbers.forEach((stat) => {
+              const target = parseInt(stat.getAttribute('data-target'));
+              animateCounter(stat, target);
+            });
+            statsObserver.unobserve(entry.target);
+          }
         });
-        statsObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.5 });
+      },
+      { threshold: 0.5 }
+    );
 
-  // Observe stats section
-  const statsSection = document.querySelector('.stats-section');
-  if (statsSection) {
-    statsObserver.observe(statsSection);
-  }
+    // Observe stats section
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+      statsObserver.observe(statsSection);
+    }
 
-  // Timeline animation on scroll
-  const timelineObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const timelineItems = entry.target.querySelectorAll('.timeline-item');
-        timelineItems.forEach((item, index) => {
-          setTimeout(() => {
-            item.style.opacity = '1';
-            item.style.transform = 'translateY(0)';
-          }, index * 200);
+    // Timeline animation on scroll
+    const timelineObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const timelineItems = entry.target.querySelectorAll('.timeline-item');
+            timelineItems.forEach((item, index) => {
+              setTimeout(() => {
+                item.style.opacity = '1';
+                item.style.transform = 'translateY(0)';
+              }, index * 200);
+            });
+            timelineObserver.unobserve(entry.target);
+          }
         });
-        timelineObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
+      },
+      { threshold: 0.3 }
+    );
 
-  // Initialize timeline items
-  const timelineItems = document.querySelectorAll('.timeline-item');
-  timelineItems.forEach(item => {
-    item.style.opacity = '0';
-    item.style.transform = 'translateY(30px)';
-    item.style.transition = 'all 0.6s ease-out';
-  });
+    // Initialize timeline items
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    timelineItems.forEach((item) => {
+      item.style.opacity = '0';
+      item.style.transform = 'translateY(30px)';
+      item.style.transition = 'all 0.6s ease-out';
+    });
 
     // Observe timeline section
     const timelineSection = document.querySelector('.timeline-section');
@@ -1036,19 +1122,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Achievements animation on scroll
-    const achievementsObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const achievementItems = entry.target.querySelectorAll('.achievement-item');
-          achievementItems.forEach((item, index) => {
-            setTimeout(() => {
-              item.classList.add('animate');
-            }, index * 200);
-          });
-          achievementsObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
+    const achievementsObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const achievementItems = entry.target.querySelectorAll('.achievement-item');
+            achievementItems.forEach((item, index) => {
+              setTimeout(() => {
+                item.classList.add('animate');
+              }, index * 200);
+            });
+            achievementsObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
 
     // Observe achievements section
     const achievementsSection = document.querySelector('.founder-achievements');
@@ -1065,8 +1154,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
       function showSlide(index) {
         // Hide all slides
-        slides.forEach(slide => slide.classList.remove('active'));
-        indicators.forEach(indicator => indicator.classList.remove('active'));
+        slides.forEach((slide) => slide.classList.remove('active'));
+        indicators.forEach((indicator) => indicator.classList.remove('active'));
 
         // Show current slide
         slides[index].classList.add('active');
@@ -1090,7 +1179,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   });
-  </script>
+</script>
 
 {% schema %}
 {
