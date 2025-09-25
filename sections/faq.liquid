@@ -62,11 +62,14 @@
       {%- endfor -%}
     </div>
 
-    {% if section.settings.footer_text != blank %}
-      <div class="faq-footer">
-        <p class="footer-text">{{ section.settings.footer_text }}</p>
-      </div>
-    {% endif %}
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'text' -%}
+          <div class="faq-footer" {{ block.shopify_attributes }}>
+            <div class="footer-text">{{ block.settings.text }}</div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
   </div>
 </div>
 
@@ -486,6 +489,18 @@
       ]
     },
     {
+      "type": "text",
+      "name": "Footer Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Footer Text",
+          "default": "<p>Still have questions? Contact our customer support team for personalized assistance.</p>"
+        }
+      ]
+    },
+    {
       "type": "faq_item",
       "name": "FAQ Item",
       "settings": [
@@ -544,6 +559,12 @@
             "question": "Are your products cruelty-free?",
             "answer": "<p>Yes! All our products are cruelty-free and we never test on animals. We are proud to be certified by Leaping Bunny.</p>",
             "additional_info": "<p>We also use sustainable packaging and eco-friendly ingredients whenever possible.</p>"
+          }
+        },
+        {
+          "type": "text",
+          "settings": {
+            "text": "<p>Still have questions? Contact our customer support team for personalized assistance.</p>"
           }
         }
       ]
