@@ -36,6 +36,18 @@ body {
   --shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
+/* Color Scheme Classes */
+.color-scheme-1,
+.color-scheme-2,
+.color-scheme-3,
+.color-scheme-4,
+.color-scheme-5,
+.color-scheme-6,
+.color-scheme-7 {
+  /* These classes will be populated by theme-switcher.js */
+  /* The CSS variables are set dynamically by JavaScript */
+}
+
 html {
   /* Firefox */
   scrollbar-width: thin;

@@ -1,6 +1,17 @@
 // Advanced Theme Switcher with Effects for IS Beauty Lux
 class ThemeSwitcher {
   constructor() {
+    // Mapping between Shopify schemes and theme-switcher schemes
+    this.schemeMapping = {
+      'scheme-1': 'brand-porcelain',
+      'scheme-2': 'deep-burgundy',
+      'scheme-3': 'sage-green',
+      'scheme-4': 'lavender-dream',
+      'scheme-5': 'warm-earth',
+      'scheme-6': 'cyber-punk',
+      'scheme-7': 'brand-peach'
+    };
+
     this.colorSchemes = {
       'deep-burgundy': {
         name: 'Deep Burgundy',
@@ -193,6 +204,12 @@ class ThemeSwitcher {
     if (!savedScheme) {
       this.switchScheme('brand-porcelain');
     }
+
+    // Apply current theme to all existing elements
+    this.applyCurrentThemeToElements();
+
+    // Set up observer for dynamically added elements
+    this.setupDynamicElementObserver();
   }
 
   createSwitcher() {
@@ -505,6 +522,9 @@ class ThemeSwitcher {
       document.documentElement.style.setProperty(property, value);
     });
 
+    // Apply colors to Shopify scheme classes
+    this.applySchemeToClasses(scheme);
+
     // Update Shopify theme colors
     this.updateShopifyThemeColors(scheme);
 
@@ -522,6 +542,68 @@ class ThemeSwitcher {
       activeBtn.style.borderWidth = '4px';
       activeBtn.style.opacity = '1';
     }
+  }
+
+  applyCurrentThemeToElements() {
+    // Find all elements with color-scheme-* classes and apply current theme
+    const currentScheme = this.currentScheme || 'brand-porcelain';
+    const scheme = this.colorSchemes[currentScheme];
+
+    if (scheme) {
+      this.applySchemeToClasses(scheme);
+    }
+  }
+
+  setupDynamicElementObserver() {
+    // Observer for dynamically added elements with color-scheme-* classes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        mutation.addedNodes.forEach((node) => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            // Check if the added node has color-scheme-* class
+            if (node.classList && Array.from(node.classList).some(cls => cls.startsWith('color-scheme-'))) {
+              this.applyCurrentThemeToElement(node);
+            }
+
+            // Check child elements
+            const colorSchemeElements = node.querySelectorAll && node.querySelectorAll('[class*="color-scheme-"]');
+            if (colorSchemeElements) {
+              colorSchemeElements.forEach(element => {
+                this.applyCurrentThemeToElement(element);
+              });
+            }
+          }
+        });
+      });
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+  }
+
+  applyCurrentThemeToElement(element) {
+    const currentScheme = this.currentScheme || 'brand-porcelain';
+    const scheme = this.colorSchemes[currentScheme];
+
+    if (scheme) {
+      Object.entries(scheme.colors).forEach(([property, value]) => {
+        element.style.setProperty(property, value);
+      });
+    }
+  }
+
+  applySchemeToClasses(scheme) {
+    // Apply colors to all elements with color-scheme-* classes
+    Object.keys(this.schemeMapping).forEach(shopifyScheme => {
+      const elements = document.querySelectorAll(`.color-${shopifyScheme}`);
+      elements.forEach(element => {
+        Object.entries(scheme.colors).forEach(([property, value]) => {
+          element.style.setProperty(property, value);
+        });
+      });
+    });
   }
 
   updateShopifyThemeColors(scheme) {
