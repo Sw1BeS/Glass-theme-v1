@@ -126,8 +126,8 @@
     }}
   {% endif %}
 =======
-        }}
-      {% endif %}
+    }}
+  {% endif %}
 >>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
       <div class="hero-background-overlay"></div>
     </div>
@@ -142,7 +142,7 @@
 <<<<<<< HEAD
     {% endif %}
 =======
-        {% endif %}
+  {% endif %}
 >>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
         data-animation="{{ animation_style }}"
         {% if glass_enabled %}
@@ -151,7 +151,7 @@
 <<<<<<< HEAD
   {% endif %}
 =======
-        {% endif %}
+  {% endif %}
 >>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
         style="{{ panel_style }}"
       >
@@ -186,7 +186,7 @@
                     >
                       {{ block.settings.label }}
                     </a>
-                  </div>
+    </div>
 >>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
                 {%- endif -%}
             {%- endcase -%}
@@ -198,9 +198,9 @@
             <h1>The Perfect Brow Duo</h1>
             <p>Everything you need for flawless brows, every day.</p>
 <<<<<<< HEAD
-    </div>
+  </div>
 =======
-          </div>
+</div>
 >>>>>>> 0ec535550e7ff44310ad6acd19dae7d138c4f640
         {% endif %}
 
@@ -641,7 +641,7 @@
       "type": "panel",
       "name": "Content panel",
       "limit": 1,
-      "settings": [
+  "settings": [
     {
       "type": "header",
           "content": "Surface"
@@ -774,19 +774,19 @@
 =======
           "type": "header",
           "content": "Surface"
-        },
-        {
-          "type": "checkbox",
+    },
+    {
+      "type": "checkbox",
           "id": "enable_glass",
           "label": "Enable glass effect",
           "default": true
-        },
-        {
-          "type": "select",
+    },
+    {
+      "type": "select",
           "id": "glass_tone",
           "label": "Glass tone",
-          "options": [
-            {
+      "options": [
+        {
               "value": "auto",
               "label": "Auto"
             },
@@ -801,13 +801,13 @@
             }
           ],
           "default": "auto"
-        },
-        {
-          "type": "select",
+    },
+    {
+      "type": "select",
           "id": "glass_elevation",
           "label": "Glass elevation",
-          "options": [
-            {
+      "options": [
+        {
               "value": "low",
               "label": "Low"
             },
@@ -821,13 +821,13 @@
             }
           ],
           "default": "medium"
-        },
-        {
-          "type": "select",
+    },
+    {
+      "type": "select",
           "id": "content_tone",
           "label": "Text tone",
-          "options": [
-            {
+      "options": [
+        {
               "value": "auto",
               "label": "Auto"
             },
@@ -874,12 +874,194 @@
           "label": "Mobile content gap",
           "default": 20,
           "info": "Gap between elements in pixels"
-        },
-        {
-          "type": "select",
+    },
+    {
+      "type": "select",
           "id": "panel_alignment_mobile",
           "label": "Mobile panel alignment",
-          "options": [
+      "options": [
+        {
+              "value": "left",
+              "label": "Left"
+        },
+        {
+          "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+    },
+    {
+      "type": "range",
+          "id": "panel_glass_opacity_mobile",
+          "label": "Glass opacity (mobile)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+          "default": 88
+    },
+    {
+      "type": "header",
+          "content": "Animation"
+    },
+    {
+      "type": "select",
+          "id": "animation_style",
+          "label": "Animation style",
+      "options": [
+        {
+              "value": "none",
+              "label": "None"
+            },
+            {
+              "value": "fade",
+              "label": "Fade in"
+            },
+            {
+              "value": "slide",
+              "label": "Slide up"
+            },
+            {
+              "value": "scale",
+              "label": "Scale in"
+            }
+          ],
+          "default": "fade"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text content",
+          "default": "<h1>Your heading</h1><p>Your description text goes here.</p>"
+        }
+      ]
+    },
+    {
+      "type": "button",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Button label",
+          "default": "Learn more"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Button link"
+        },
+        {
+=======
+      "type": "range",
+          "id": "panel_glass_opacity",
+          "label": "Glass opacity (desktop)",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+          "default": 90
+    },
+    {
+      "type": "header",
+          "content": "Desktop layout"
+        },
+        {
+          "type": "number",
+          "id": "panel_max_width",
+          "label": "Panel max width",
+          "default": 600,
+          "info": "Width in pixels"
+        },
+        {
+          "type": "number",
+          "id": "panel_padding",
+          "label": "Panel padding",
+          "default": 40,
+          "info": "Padding in pixels"
+        },
+        {
+          "type": "number",
+          "id": "panel_corner_radius",
+          "label": "Corner radius",
+          "default": 28,
+          "info": "Border radius in pixels"
+        },
+        {
+          "type": "number",
+          "id": "panel_gap",
+          "label": "Content gap",
+          "default": 24,
+          "info": "Gap between elements in pixels"
+    },
+    {
+      "type": "select",
+          "id": "panel_alignment",
+          "label": "Panel alignment",
+      "options": [
+        {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "header",
+          "content": "Mobile layout"
+        },
+        {
+          "type": "number",
+          "id": "panel_max_width_mobile",
+          "label": "Mobile panel max width",
+          "default": 520,
+          "info": "Width in pixels"
+        },
+        {
+          "type": "number",
+          "id": "panel_padding_mobile",
+          "label": "Mobile panel padding",
+          "default": 32,
+          "info": "Padding in pixels"
+        },
+        {
+          "type": "number",
+          "id": "panel_corner_radius_mobile",
+          "label": "Mobile corner radius",
+          "default": 24,
+          "info": "Border radius in pixels"
+        },
+        {
+          "type": "number",
+          "id": "panel_gap_mobile",
+          "label": "Mobile content gap",
+          "default": 20,
+          "info": "Gap between elements in pixels"
+    },
+    {
+      "type": "select",
+          "id": "panel_alignment_mobile",
+          "label": "Mobile panel alignment",
+      "options": [
         {
               "value": "left",
               "label": "Left"
@@ -936,7 +1118,7 @@
       ]
     },
     {
-      "type": "text",
+          "type": "text",
       "name": "Text",
       "settings": [
         {
@@ -948,217 +1130,11 @@
       ]
     },
     {
-      "type": "button",
+          "type": "button",
       "name": "Button",
       "settings": [
         {
-          "type": "text",
-          "id": "label",
-          "label": "Button label",
-          "default": "Learn more"
-        },
-        {
-          "type": "url",
-          "id": "link",
-          "label": "Button link"
-        },
-        {
-=======
-          "type": "range",
-          "id": "panel_glass_opacity",
-          "label": "Glass opacity (desktop)",
-          "min": 40,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "default": 90
-        },
-        {
-          "type": "header",
-          "content": "Desktop layout"
-        },
-        {
-          "type": "range",
-          "id": "panel_max_width",
-          "label": "Panel max width",
-          "min": 360,
-          "max": 960,
-          "step": 20,
-          "unit": "px",
-          "default": 600
-        },
-        {
-          "type": "range",
-          "id": "panel_padding",
-          "label": "Panel padding",
-          "min": 20,
-          "max": 80,
-          "step": 4,
-          "unit": "px",
-          "default": 40
-        },
-        {
-          "type": "range",
-          "id": "panel_corner_radius",
-          "label": "Corner radius",
-          "min": 12,
-          "max": 48,
-          "step": 4,
-          "unit": "px",
-          "default": 28
-        },
-        {
-          "type": "range",
-          "id": "panel_gap",
-          "label": "Content gap",
-          "min": 12,
-          "max": 60,
-          "step": 4,
-          "unit": "px",
-          "default": 24
-        },
-        {
-          "type": "select",
-          "id": "panel_alignment",
-          "label": "Panel alignment",
-          "options": [
-            {
-              "value": "left",
-              "label": "Left"
-            },
-            {
-              "value": "center",
-              "label": "Center"
-            },
-            {
-              "value": "right",
-              "label": "Right"
-            }
-          ],
-          "default": "center"
-        },
-        {
-          "type": "header",
-          "content": "Mobile layout"
-        },
-        {
-          "type": "range",
-          "id": "panel_max_width_mobile",
-          "label": "Mobile panel max width",
-          "min": 280,
-          "max": 640,
-          "step": 20,
-          "unit": "px",
-          "default": 520
-        },
-        {
-          "type": "range",
-          "id": "panel_padding_mobile",
-          "label": "Mobile panel padding",
-          "min": 16,
-          "max": 64,
-          "step": 4,
-          "unit": "px",
-          "default": 32
-        },
-        {
-          "type": "range",
-          "id": "panel_corner_radius_mobile",
-          "label": "Mobile corner radius",
-          "min": 12,
-          "max": 48,
-          "step": 4,
-          "unit": "px",
-          "default": 24
-        },
-        {
-          "type": "range",
-          "id": "panel_gap_mobile",
-          "label": "Mobile content gap",
-          "min": 12,
-          "max": 60,
-          "step": 4,
-          "unit": "px",
-          "default": 20
-        },
-        {
-          "type": "select",
-          "id": "panel_alignment_mobile",
-          "label": "Mobile panel alignment",
-          "options": [
-            {
-              "value": "left",
-              "label": "Left"
-            },
-            {
-              "value": "center",
-              "label": "Center"
-            },
-            {
-              "value": "right",
-              "label": "Right"
-            }
-          ],
-          "default": "center"
-        },
-        {
-          "type": "range",
-          "id": "panel_glass_opacity_mobile",
-          "label": "Glass opacity (mobile)",
-          "min": 40,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "default": 88
-        },
-        {
-          "type": "header",
-          "content": "Animation"
-        },
-        {
-          "type": "select",
-          "id": "animation_style",
-          "label": "Animation style",
-          "options": [
-            {
-              "value": "none",
-              "label": "None"
-            },
-            {
-              "value": "fade",
-              "label": "Fade in"
-            },
-            {
-              "value": "slide",
-              "label": "Slide up"
-            },
-            {
-              "value": "scale",
-              "label": "Scale in"
-            }
-          ],
-          "default": "fade"
-        }
-      ]
-    },
-    {
-      "type": "text",
-      "name": "Text",
-      "settings": [
-        {
-          "type": "richtext",
-          "id": "text",
-          "label": "Text content",
-          "default": "<h1>Your heading</h1><p>Your description text goes here.</p>"
-        }
-      ]
-    },
-    {
-      "type": "button",
-      "name": "Button",
-      "settings": [
-        {
-          "type": "text",
+              "type": "text",
           "id": "label",
           "label": "Button label",
           "default": "Learn more"
@@ -1213,21 +1189,21 @@
           }
         },
         {
-          "type": "text",
-          "settings": {
+                  "type": "text",
+                  "settings": {
             "text": "<h1>The Perfect Brow Duo</h1>"
           }
         },
         {
 <<<<<<< HEAD
-              "type": "text",
-              "settings": {
+                  "type": "text",
+                  "settings": {
             "text": "<p>Everything you need for flawless brows, every day.</p>"
             }
           },
 =======
-          "type": "text",
-          "settings": {
+              "type": "text",
+              "settings": {
             "text": "<p>Everything you need for flawless brows, every day.</p>"
           }
         },
@@ -1241,7 +1217,7 @@
         },
         {
           "type": "button",
-          "settings": {
+      "settings": {
             "label": "Learn How to Use",
             "link": "#shopify-section-how_to"
           }
