@@ -327,12 +327,13 @@
   }
 
   #shopify-section-{{ section.id }} .mobile-toggle {
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: var(--glass-surface-color, rgba(255, 255, 255, 0.1));
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.22));
     border-radius: 12px;
     width: 42px;
     height: 42px;
     font-size: 1.1rem;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
   #shopify-section-{{ section.id }} .mobile-toggle:hover,
@@ -403,6 +404,7 @@
       padding: var(--header-spacing-block-mobile, clamp(0.5rem, 2vw, 0.75rem)) var(--header-spacing-inline-mobile, clamp(0.85rem, 4vw, 1.25rem));
       width: calc(100% - clamp(1rem, 4vw, 2.5rem));
       flex-wrap: nowrap;
+      min-height: 60px;
     }
 
     #shopify-section-{{ section.id }} .menu-group.desktop-only {
