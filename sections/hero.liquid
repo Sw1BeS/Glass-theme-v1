@@ -560,14 +560,19 @@
       "default": 24
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "panel_opacity",
       "label": "Panel Background Opacity",
-      "min": 10,
-      "max": 100,
-      "step": 5,
-      "unit": "%",
-      "default": 85
+      "options": [
+        { "value": "10", "label": "Very Transparent (10%)" },
+        { "value": "25", "label": "Transparent (25%)" },
+        { "value": "50", "label": "Semi Transparent (50%)" },
+        { "value": "75", "label": "Mostly Opaque (75%)" },
+        { "value": "85", "label": "Opaque (85%)" },
+        { "value": "95", "label": "Very Opaque (95%)" },
+        { "value": "100", "label": "Fully Opaque (100%)" }
+      ],
+      "default": "85"
     },
     {
       "type": "select",

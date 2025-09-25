@@ -547,14 +547,17 @@
       "info": "Add scale animation on hover"
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "logo_hover_scale",
       "label": "Logo Hover Scale",
-      "min": 100,
-      "max": 120,
-      "step": 5,
-      "unit": "%",
-      "default": 105
+      "options": [
+        { "value": "100", "label": "No Scale (100%)" },
+        { "value": "105", "label": "Slight Scale (105%)" },
+        { "value": "110", "label": "Medium Scale (110%)" },
+        { "value": "115", "label": "Strong Scale (115%)" },
+        { "value": "120", "label": "Maximum Scale (120%)" }
+      ],
+      "default": "105"
     },
     {
       "type": "header",
@@ -577,14 +580,16 @@
       "default": 16
     },
     {
-      "type": "range",
+      "type": "select",
       "id": "menu_font_weight",
       "label": "Menu Font Weight",
-      "min": 400,
-      "max": 700,
-      "step": 100,
-      "unit": "px",
-      "default": 600
+      "options": [
+        { "value": "400", "label": "Normal" },
+        { "value": "500", "label": "Medium" },
+        { "value": "600", "label": "Semi Bold" },
+        { "value": "700", "label": "Bold" }
+      ],
+      "default": "600"
     },
     {
       "type": "range",
