@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {
+        "logo": "",
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_cart_count": true,
+        "sticky_header": true,
+        "sticky_type": "always",
+        "transparent_header": false,
+        "section_width": "full-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 12,
+        "padding-block-end": 12
+      }
+    }
+  },
+  "order": [
+    "header"
+  ]
+}
