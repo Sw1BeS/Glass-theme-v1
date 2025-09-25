@@ -68,21 +68,9 @@
 
   <!-- Content Overlay -->
   <div class="hero-content">
-    <div class="hero-container hero-container--{{ section.settings.group_alignment }}">
-      <!-- Hero Content Group -->
-      <div
-        class="hero-content-group glass"
-        data-group-id="hero-content"
-        style="
-          max-width: {{ section.settings.group_max_width }}px;
-          padding: {{ section.settings.group_padding }}rem;
-        "
-      >
-        <!-- Debug: Show blocks count -->
-        <!-- Blocks count: {{ section.blocks.size }} -->
-
+    <div class="hero-container">
+      <div class="hero-text glass">
         {%- for block in section.blocks -%}
-          <!-- Block {{ forloop.index }}: {{ block.type }} -->
           {%- case block.type -%}
             {%- when 'text' -%}
               <div class="hero-text-block" {{ block.shopify_attributes }}>
@@ -104,18 +92,6 @@
               {%- endif -%}
           {%- endcase -%}
         {%- endfor -%}
-
-        <!-- Fallback content if no blocks -->
-        {%- if section.blocks.size == 0 -%}
-          <div class="hero-text-block">
-            <h1>The Perfect Brow Duo</h1>
-            <p>Everything you need for flawless brows, every day.</p>
-          </div>
-          <div class="hero-button-block">
-            <a href="/products/the-duo" class="hero-button">Shop The Duo - $34.99</a>
-            <a href="#shopify-section-how_to" class="hero-button">Learn How to Use</a>
-          </div>
-        {%- endif -%}
       </div>
     </div>
   </div>
@@ -175,69 +151,32 @@
 
   .hero-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+
+  .hero-text {
+    display: grid;
+    gap: clamp(1.25rem, 3vw, 1.8rem);
+    padding: clamp(1.8rem, 3.5vw, 2.4rem);
+    border-radius: 22px;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     text-align: center;
-    gap: 2rem;
+    max-width: 600px;
+    width: 100%;
   }
 
-  .hero-container--left {
-    align-items: flex-start;
-    text-align: left;
-  }
-
-  .hero-container--right {
-    align-items: flex-end;
-    text-align: right;
-  }
-
-  /* Hero Content Group - Glass Container */
-  .hero-content-group {
+  .hero-text:not(.glass-surface) {
     background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
     border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
-    border-radius: 20px;
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    box-shadow: 0 24px 48px var(--glass-shadow-color, rgba(17, 23, 34, 0.14));
-    padding: 3rem;
-    max-width: 700px;
-    width: 100%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    isolation: isolate;
+    box-shadow: 0 16px 40px var(--glass-shadow-color, rgba(20, 26, 34, 0.12));
   }
 
-  .hero-content-group::after {
-    content: '';
-    position: absolute;
-    inset: 1px;
-    border-radius: inherit;
-    background: linear-gradient(135deg, var(--glass-highlight-color, #bf8a7a) 14%, transparent 65%);
-    opacity: 0.45;
-    pointer-events: none;
-    z-index: -1;
-  }
-
-  .hero-content-group:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 28px 64px rgba(17, 23, 34, 0.16);
-  }
-
-  /* Text blocks inside group */
-  .hero-text-block {
-    background: transparent;
+  .hero-text.glass-surface {
+    padding: clamp(1.8rem, 3.5vw, 2.4rem);
     border: none;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: none;
-    padding: 0;
-    max-width: none;
-    transition: none;
-  }
-
-  .hero-text-block:hover {
-    transform: none;
     box-shadow: none;
   }
 
@@ -247,23 +186,17 @@
   .hero-text-block h4,
   .hero-text-block h5,
   .hero-text-block h6 {
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c)) !important;
-    margin: 0 0 1rem 0;
+    font-size: clamp(2rem, 4vw, 2.8rem);
     font-weight: 700;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
   .hero-text-block p {
-    color: var(--glass-foreground-muted, var(--color-foreground-muted, #666666)) !important;
-    margin: 0 0 1rem 0;
-    font-size: 1.1rem;
-    line-height: 1.6;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  }
-
-  .hero-text-block p:last-child {
-    margin-bottom: 0;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
+    margin: 0;
   }
 
   .hero-button-block {
@@ -271,16 +204,6 @@
     gap: 1rem;
     flex-wrap: wrap;
     justify-content: center;
-    margin-top: 1rem;
-  }
-
-  /* Button blocks inside group */
-  .hero-content-group .hero-button-block {
-    margin-top: 0.5rem;
-  }
-
-  .hero-content-group .hero-button-block:first-of-type {
-    margin-top: 1.5rem;
   }
 
   .hero-button {
@@ -291,15 +214,14 @@
     border-radius: 999px;
     text-decoration: none;
     font-weight: 600;
-    color: white !important;
+    color: var(--text-on-primary, #ffffff);
     background: linear-gradient(
       135deg,
       var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 0%,
       var(--color-primary, #bf8a7a) 100%
-    ) !important;
+    );
     border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
     transition: all 0.3s ease;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   }
 
   .hero-button:hover {
@@ -322,31 +244,13 @@
 
   /* Responsive adjustments */
   @media (max-width: 768px) {
-    .hero-content {
+    .hero-container {
       padding: 1rem;
     }
 
-    .hero-container {
-      gap: 1.5rem;
-    }
-
-    .hero-content-group {
-      padding: 2rem;
-      max-width: 100%;
-      border-radius: 16px;
-    }
-
-    .hero-text-block h1,
-    .hero-text-block h2,
-    .hero-text-block h3,
-    .hero-text-block h4,
-    .hero-text-block h5,
-    .hero-text-block h6 {
-      font-size: clamp(1.8rem, 6vw, 2.5rem);
-    }
-
-    .hero-text-block p {
-      font-size: 1rem;
+    .hero-text,
+    .hero-text.glass-surface {
+      padding: clamp(1.5rem, 5vw, 1.9rem);
     }
 
     .hero-button-block {
@@ -359,28 +263,6 @@
       width: 100%;
       max-width: 280px;
       justify-content: center;
-      padding: 0.75rem 1.5rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .hero-content-group {
-      padding: 1.5rem;
-      border-radius: 12px;
-    }
-
-    .hero-text-block h1,
-    .hero-text-block h2,
-    .hero-text-block h3,
-    .hero-text-block h4,
-    .hero-text-block h5,
-    .hero-text-block h6 {
-      font-size: clamp(1.5rem, 8vw, 2rem);
-    }
-
-    .hero-button {
-      padding: 0.7rem 1.2rem;
-      font-size: 0.9rem;
     }
   }
 {% endstylesheet %}
@@ -447,50 +329,6 @@
       "id": "color_scheme",
       "label": "t:settings.color_scheme",
       "default": "scheme-1"
-    },
-    {
-      "type": "header",
-      "content": "Content Group Settings"
-    },
-    {
-      "type": "select",
-      "id": "group_alignment",
-      "label": "Group Alignment",
-      "options": [
-        {
-          "value": "center",
-          "label": "Center"
-        },
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "right",
-          "label": "Right"
-        }
-      ],
-      "default": "center"
-    },
-    {
-      "type": "range",
-      "id": "group_max_width",
-      "label": "Group Max Width",
-      "min": 400,
-      "max": 800,
-      "step": 50,
-      "unit": "px",
-      "default": 700
-    },
-    {
-      "type": "range",
-      "id": "group_padding",
-      "label": "Group Padding",
-      "min": 1,
-      "max": 5,
-      "step": 0.5,
-      "unit": "rem",
-      "default": 3
     },
     {
       "type": "checkbox",
@@ -571,9 +409,6 @@
       "settings": {
         "section_width": "full-width",
         "color_scheme": "scheme-1",
-        "group_alignment": "center",
-        "group_max_width": 700,
-        "group_padding": 3,
         "enable_glass": true,
         "glass_tone": "auto",
         "glass_elevation": "medium",
