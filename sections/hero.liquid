@@ -564,133 +564,86 @@
   }
 
   /* Glass effect for text blocks only */
-  .hero .block-content,
-  .hero .group-block-content,
-  .hero [data-block-type='text'],
-  .hero [data-block-type='button'] {
+  .hero .block-content {
     position: relative;
     background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
-    border: 1px solid
-      color-mix(
-        in srgb,
-        var(--glass-surface-border-color, rgba(255, 255, 255, 0.4))
-          calc(var(--glass-global-border-opacity, 0.22) * 100%),
-        transparent
-      );
+    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
     border-radius: 16px;
-    backdrop-filter: blur(var(--glass-local-blur, var(--glass-global-blur, 24px)));
-    -webkit-backdrop-filter: blur(var(--glass-local-blur, var(--glass-global-blur, 24px)));
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
     box-shadow: 0 24px 48px var(--glass-shadow-color, rgba(17, 23, 34, 0.14));
     padding: 2rem;
     margin: 1rem 0;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     isolation: isolate;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
   }
 
-  .hero .block-content::after,
-  .hero .group-block-content::after,
-  .hero [data-block-type='text']::after,
-  .hero [data-block-type='button']::after {
+  .hero .block-content::after {
     content: '';
     position: absolute;
     inset: 1px;
     border-radius: inherit;
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--glass-highlight-color, #bf8a7a) 14%, transparent) 0%,
-      transparent 65%
-    );
+    background: linear-gradient(135deg, var(--glass-highlight-color, #bf8a7a) 14%, transparent 65%);
     opacity: 0.45;
     pointer-events: none;
     z-index: -1;
   }
 
-  .hero .block-content:hover,
-  .hero .group-block-content:hover,
-  .hero [data-block-type='text']:hover,
-  .hero [data-block-type='button']:hover {
+  .hero .block-content:hover {
     transform: translateY(-3px);
     box-shadow: 0 28px 64px rgba(17, 23, 34, 0.16);
   }
 
+  /* Text styling */
   .hero .block-content h1,
   .hero .block-content h2,
   .hero .block-content h3,
   .hero .block-content h4,
   .hero .block-content h5,
-  .hero .block-content h6,
-  .hero .group-block-content h1,
-  .hero .group-block-content h2,
-  .hero .group-block-content h3,
-  .hero .group-block-content h4,
-  .hero .group-block-content h5,
-  .hero .group-block-content h6,
-  .hero [data-block-type='text'] h1,
-  .hero [data-block-type='text'] h2,
-  .hero [data-block-type='text'] h3,
-  .hero [data-block-type='text'] h4,
-  .hero [data-block-type='text'] h5,
-  .hero [data-block-type='text'] h6 {
+  .hero .block-content h6 {
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    margin: 0 0 1rem 0;
   }
 
-  .hero .block-content p,
-  .hero .block-content li,
-  .hero .block-content span,
-  .hero .block-content small,
-  .hero .group-block-content p,
-  .hero .group-block-content li,
-  .hero .group-block-content span,
-  .hero .group-block-content small,
-  .hero [data-block-type='text'] p,
-  .hero [data-block-type='text'] li,
-  .hero [data-block-type='text'] span,
-  .hero [data-block-type='text'] small {
-    color: var(--glass-foreground-muted, var(--glass-foreground-strong, var(--color-foreground, #2c2c2c)));
+  .hero .block-content p {
+    color: var(--glass-foreground-muted, var(--color-foreground-muted, #666666));
+    margin: 0 0 1rem 0;
   }
 
-  /* Button specific styling */
-  .hero [data-block-type='button'] a,
-  .hero [data-block-type='button'] button {
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
-    text-decoration: none;
+  /* Button styling */
+  .hero .block-content a {
     display: inline-block;
     padding: 0.75rem 1.5rem;
     background: var(--glass-highlight-color, var(--color-primary, #bf8a7a));
-    border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
+    color: white;
+    text-decoration: none;
     border-radius: 8px;
     font-weight: 600;
     transition: all 0.3s ease;
+    border: none;
   }
 
-  .hero [data-block-type='button'] a:hover,
-  .hero [data-block-type='button'] button:hover {
+  .hero .block-content a:hover {
     background: var(--color-primary, #bf8a7a);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   }
 
   /* Secondary button styling */
-  .hero [data-block-type='button'][data-button-style='secondary'] a,
-  .hero [data-block-type='button'][data-button-style='secondary'] button {
+  .hero .block-content a[href*='#shopify-section'] {
     background: transparent;
     color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
     border: 2px solid var(--glass-highlight-color, var(--color-primary, #bf8a7a));
   }
 
-  .hero [data-block-type='button'][data-button-style='secondary'] a:hover,
-  .hero [data-block-type='button'][data-button-style='secondary'] button:hover {
+  .hero .block-content a[href*='#shopify-section']:hover {
     background: var(--glass-highlight-color, var(--color-primary, #bf8a7a));
     color: white;
   }
 
   /* Responsive adjustments */
   @media (max-width: 768px) {
-    .hero .block-content,
-    .hero .group-block-content,
-    .hero [data-block-type='text'],
-    .hero [data-block-type='button'] {
+    .hero .block-content {
       padding: 1.5rem;
       margin: 0.5rem 0;
     }
