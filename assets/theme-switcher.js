@@ -604,6 +604,54 @@ class ThemeSwitcher {
         });
       });
     });
+
+    // Apply colors to all sections with color-scheme-* classes
+    Object.keys(this.schemeMapping).forEach(shopifyScheme => {
+      const sections = document.querySelectorAll(`.color-${shopifyScheme}, .section.color-${shopifyScheme}`);
+      sections.forEach(section => {
+        Object.entries(scheme.colors).forEach(([property, value]) => {
+          section.style.setProperty(property, value);
+        });
+      });
+    });
+
+    // Apply colors to specific section types
+    const sectionSelectors = [
+      '.hero-section',
+      '.founder-section',
+      '.product-composition-section',
+      '.reviews-section',
+      '.faq-section',
+      '.how-to-use-section',
+      '.vp1-section',
+      '.vp2-section',
+      '.vp3-section'
+    ];
+
+    sectionSelectors.forEach(selector => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(element => {
+        if (element.classList.toString().includes('color-scheme-')) {
+          Object.entries(scheme.colors).forEach(([property, value]) => {
+            element.style.setProperty(property, value);
+          });
+        }
+      });
+    });
+
+    // Apply glass effect variables
+    const glassVariables = {
+      '--glass-surface-color': 'rgba(255, 255, 255, 0.1)',
+      '--glass-surface-border-color': 'rgba(255, 255, 255, 0.2)',
+      '--glass-shadow-color': 'rgba(0, 0, 0, 0.1)',
+      '--glass-highlight-color': scheme.colors['--color-primary'],
+      '--glass-foreground-strong': scheme.colors['--color-foreground'],
+      '--glass-foreground-muted': scheme.colors['--color-foreground-muted']
+    };
+
+    Object.entries(glassVariables).forEach(([property, value]) => {
+      document.documentElement.style.setProperty(property, value);
+    });
   }
 
   updateShopifyThemeColors(scheme) {

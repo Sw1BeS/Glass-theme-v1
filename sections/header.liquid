@@ -95,12 +95,12 @@
       </a>
     {% endif %}
 
-        <!-- Theme Toggle Button -->
-        {% if section.settings.show_theme_toggle %}
-          <button class="theme-fab glass" data-theme-toggle type="button" aria-label="Theme: auto" aria-pressed="mixed">
-            🌙
-          </button>
-        {% endif %}
+    <!-- Theme Toggle Button -->
+    {% if section.settings.show_theme_toggle %}
+      <button class="theme-fab glass" data-theme-toggle type="button" aria-label="Theme: auto" aria-pressed="mixed">
+        🌙
+      </button>
+    {% endif %}
 
     <!-- Mobile Menu Toggle -->
     <button class="mobile-toggle mobile-only" aria-label="Toggle menu">☰</button>
@@ -141,9 +141,11 @@
     border-radius: clamp(2.25rem, 5vw, 3.5rem);
     position: relative;
     z-index: 10;
+    left: 50%;
+    transform: translateX(-50%);
 
     /* Glass Effect */
-    background: var(--glass-surface-color, rgba(255, 255, 255, {{ section.settings.header_opacity | default: 85 | divided_by: 100.0 }}));
+    background: var(--glass-surface-color, rgba(255, 255, 255, {{ section.settings.header_opacity | default: 85 | times: 0.01 }}));
     backdrop-filter: blur(var(--glass-local-blur, 20px));
     -webkit-backdrop-filter: blur(var(--glass-local-blur, 20px));
     border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.2));

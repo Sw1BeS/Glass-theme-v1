@@ -2,7 +2,7 @@
   Product Composition Section - Simple product showcase
 {% endcomment %}
 
-<div class="product-composition-section" style="{% render 'spacing-style', settings: section.settings %}">
+<div class="product-composition-section color-{{ section.settings.color_scheme | default: 'scheme-1' }}" style="{% render 'spacing-style', settings: section.settings %}">
   <div class="composition-container">
     <!-- Section Header -->
     <div class="section-header">

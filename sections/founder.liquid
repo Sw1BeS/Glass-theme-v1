@@ -3,7 +3,7 @@
   Features: Professional layout, animated counters, roadmap timeline, achievements, clean design, theme integration
 {% endcomment %}
 
-<div class="founder-section" style="{% render 'spacing-style', settings: section.settings %}">
+<div class="founder-section color-{{ section.settings.color_scheme | default: 'scheme-1' }}" style="{% render 'spacing-style', settings: section.settings %}">
   <div class="founder-container">
     <!-- Our Story Header -->
     <div class="story-header">
