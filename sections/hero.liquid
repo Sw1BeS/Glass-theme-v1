@@ -34,7 +34,7 @@
   assign panel_gap_mobile = 20
   assign panel_alignment_mobile = 'center'
   assign panel_vertical_alignment_mobile = 'center'
-  assign panel_glass_opacity_mobile = 88
+  assign panel_glass_opacity_mobile = 90
 
   # Content tone
   assign panel_content_tone = 'auto'
@@ -209,7 +209,6 @@
             class: 'hero-background-image hero-background-image--mobile'
     }}
   {% endif %}
-      <div class="hero-background-overlay"></div>
     </div>
   {% endif %}
 
@@ -350,20 +349,6 @@
     display: none;
   }
 
-  .hero-background-overlay {
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(
-        180deg,
-        color-mix(in srgb, var(--color-background, #0c0c0c) 78%, transparent) 0%,
-        color-mix(in srgb, var(--color-background, #0c0c0c) 42%, transparent) 55%,
-        color-mix(in srgb, var(--color-background, #0c0c0c) 58%, transparent) 100%
-      );
-    opacity: 0.72;
-    mix-blend-mode: multiply;
-    pointer-events: none;
-  }
 
   .hero-content {
     position: relative;
