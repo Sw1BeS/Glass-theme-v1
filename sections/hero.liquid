@@ -568,7 +568,13 @@
   .hero .group-block-content {
     position: relative;
     background: var(--glass-surface-color, rgba(255, 255, 255, 0.78));
-    border: 1px solid color-mix(in srgb, var(--glass-surface-border-color, rgba(255, 255, 255, 0.4)) calc(var(--glass-global-border-opacity, 0.22) * 100%), transparent);
+    border: 1px solid
+      color-mix(
+        in srgb,
+        var(--glass-surface-border-color, rgba(255, 255, 255, 0.4))
+          calc(var(--glass-global-border-opacity, 0.22) * 100%),
+        transparent
+      );
     border-radius: 16px;
     backdrop-filter: blur(var(--glass-local-blur, var(--glass-global-blur, 24px)));
     -webkit-backdrop-filter: blur(var(--glass-local-blur, var(--glass-global-blur, 24px)));
@@ -586,7 +592,11 @@
     position: absolute;
     inset: 1px;
     border-radius: inherit;
-    background: linear-gradient(135deg, color-mix(in srgb, var(--glass-highlight-color, #bf8a7a) 14%, transparent) 0%, transparent 65%);
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--glass-highlight-color, #bf8a7a) 14%, transparent) 0%,
+      transparent 65%
+    );
     opacity: 0.45;
     pointer-events: none;
     z-index: -1;
