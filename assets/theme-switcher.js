@@ -269,31 +269,50 @@ class ThemeSwitcher {
         bottom: 20px !important;
         right: 20px !important;
         z-index: 1000;
-        background: var(--color-primary, rgba(255, 255, 255, 0.9));
+        background: color-mix(in srgb, var(--color-primary) 85%, transparent);
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
-        border: 2px solid var(--color-accent, rgba(255, 255, 255, 0.3));
-        border-radius: 50%;
-        width: 80px;
-        height: 80px;
+        border: 1px solid color-mix(in srgb, var(--color-accent) 40%, transparent);
+        border-radius: 16px;
+        width: 60px;
+        height: 60px;
         font-size: 12px;
         font-weight: 600;
         cursor: pointer;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        transition: all 0.3s ease;
-        color: var(--color-background, #000);
+        box-shadow: 0 8px 32px color-mix(in srgb, var(--color-primary) 20%, transparent);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        color: var(--color-foreground);
         display: flex;
         align-items: center;
         justify-content: center;
         overflow: hidden;
         position: relative;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       ">
         <span style="
           position: relative;
           z-index: 2;
-          font-size: 20px;
+          font-size: 18px;
         ">🎨</span>
       </button>
+
+      <style>
+        @media (max-width: 768px) {
+          #theme-toggle-btn {
+            width: 50px !important;
+            height: 50px !important;
+            bottom: 15px !important;
+            right: 15px !important;
+            font-size: 16px !important;
+          }
+
+          #theme-modal > div {
+            padding: 1rem !important;
+            margin: 0.5rem !important;
+            max-height: 85vh !important;
+          }
+        }
+      </style>
     `;
 
     // Create modal
@@ -304,25 +323,29 @@ class ThemeSwitcher {
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.5);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
+        background: color-mix(in srgb, var(--color-background) 80%, transparent);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
         z-index: 1001;
         display: none;
         justify-content: center;
         align-items: center;
+        padding: 1rem;
       ">
         <div style="
-          background: linear-gradient(135deg, var(--color-background, rgba(255, 255, 255, 0.95)), var(--color-secondary-bg, rgba(250, 249, 247, 0.95)));
-          backdrop-filter: blur(20px);
-          -webkit-backdrop-filter: blur(20px);
-          border: 1px solid var(--color-border, rgba(255, 255, 255, 0.3));
-          border-radius: 24px;
-          padding: 2rem;
-          max-width: 420px;
-          width: 90%;
-          box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+          background: color-mix(in srgb, var(--color-secondary-bg) 90%, transparent);
+          backdrop-filter: blur(30px);
+          -webkit-backdrop-filter: blur(30px);
+          border: 1px solid color-mix(in srgb, var(--color-border) 50%, transparent);
+          border-radius: 20px;
+          padding: 1.5rem;
+          max-width: 400px;
+          width: 100%;
+          max-height: 80vh;
+          overflow-y: auto;
+          box-shadow: 0 25px 50px color-mix(in srgb, var(--color-primary) 15%, transparent);
           position: relative;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         ">
           <div style="
             display: flex;
@@ -566,6 +589,9 @@ class ThemeSwitcher {
     this.currentScheme = schemeKey;
     const scheme = this.colorSchemes[schemeKey];
 
+    // Save to localStorage immediately
+    localStorage.setItem('is-beauty-theme', schemeKey);
+
     // Apply colors to CSS variables
     Object.entries(scheme.colors).forEach(([property, value]) => {
       document.documentElement.style.setProperty(property, value);
@@ -573,6 +599,12 @@ class ThemeSwitcher {
 
     // Apply colors to Shopify scheme classes
     this.applySchemeToClasses(scheme);
+
+    // Apply glass colors
+    this.applyGlassColors(scheme);
+
+    // Apply section backgrounds
+    this.applySectionBackgrounds(scheme);
 
     // Update Shopify theme colors
     this.updateShopifyThemeColors(scheme);
