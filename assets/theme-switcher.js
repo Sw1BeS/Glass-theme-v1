@@ -822,15 +822,15 @@ class ThemeSwitcher {
       '.reviews-section',
       '.faq-section',
       '.how-to-use-section',
-      '.vp1-section',
-      '.vp2-section',
-      '.vp3-section'
+      '.s-vp1',
+      '.s-vp2',
+      '.s-vp3'
     ];
 
     sectionSelectors.forEach(selector => {
       const elements = document.querySelectorAll(selector);
       elements.forEach(element => {
-        if (element.classList.toString().includes('color-scheme-')) {
+        if (element.classList.contains('color-scheme') || element.classList.toString().includes('color-scheme-')) {
           Object.entries(scheme.colors).forEach(([property, value]) => {
             element.style.setProperty(property, value);
           });
