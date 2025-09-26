@@ -599,7 +599,16 @@ class ThemeSwitcher {
     const scheme = this.colorSchemes[currentScheme];
 
     if (scheme) {
+      // Apply colors to root CSS variables first
+      Object.entries(scheme.colors).forEach(([property, value]) => {
+        document.documentElement.style.setProperty(property, value);
+      });
+
+      // Apply colors to all sections and elements
       this.applySchemeToClasses(scheme);
+
+      // Apply colors to all glass elements
+      this.applyGlassColors(scheme);
     }
   }
 

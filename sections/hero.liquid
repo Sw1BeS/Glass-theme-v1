@@ -492,12 +492,12 @@
     color: var(--text-on-primary, #ffffff);
     background: linear-gradient(
       135deg,
-      var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 0%,
+      var(--color-primary, #bf8a7a) 0%,
       color-mix(in srgb, var(--color-primary, #bf8a7a) 90%, transparent) 100%
     );
     border: 1px solid color-mix(in srgb, var(--glass-surface-border-color, rgba(255, 255, 255, 0.4)) 85%, transparent);
     box-shadow: 0 24px 48px
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
+      color-mix(in srgb, var(--color-primary, #bf8a7a) 32%, transparent);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     will-change: transform;
     width: min(200px, 100%);
@@ -508,11 +508,11 @@
   .hero-button:hover {
     transform: translateY(-2px);
     box-shadow: 0 28px 58px
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 38%, transparent);
+      color-mix(in srgb, var(--color-primary, #bf8a7a) 38%, transparent);
   }
 
   .hero-button:focus-visible {
-    outline: 2px solid var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+    outline: 2px solid var(--color-primary, #bf8a7a);
     outline-offset: 3px;
   }
 
@@ -545,7 +545,7 @@
   .hero-panel[data-hover-effects='true']:hover .hero-button {
     transform: translateY(-1px);
     box-shadow: 0 28px 56px
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 40%, transparent);
+      color-mix(in srgb, var(--color-primary, #bf8a7a) 40%, transparent);
   }
 
   /* Parallax effect */

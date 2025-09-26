@@ -215,20 +215,20 @@
     font-weight: 600;
     background: linear-gradient(
       135deg,
-      var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 0%,
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 55%, transparent) 100%
+      var(--color-primary, #bf8a7a) 0%,
+      color-mix(in srgb, var(--color-primary, #bf8a7a) 55%, transparent) 100%
     );
     color: var(--text-on-primary, #ffffff);
     border: 1px solid transparent;
     box-shadow: 0 20px 40px
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 25%, transparent);
+      color-mix(in srgb, var(--color-primary, #bf8a7a) 25%, transparent);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   .s-vp3 .button:hover {
     transform: translateY(-2px);
     box-shadow: 0 26px 52px
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
+      color-mix(in srgb, var(--color-primary, #bf8a7a) 32%, transparent);
   }
 
   .s-vp3 .media {

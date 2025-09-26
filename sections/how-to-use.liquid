@@ -234,8 +234,8 @@
     height: 3px;
     background: linear-gradient(
       90deg,
-      var(--glass-highlight-color, var(--color-primary, #bf8a7a)),
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 45%, transparent)
+      var(--color-primary, #bf8a7a),
+      color-mix(in srgb, var(--color-primary, #bf8a7a) 45%, transparent)
     );
     border-radius: 2px;
   }
@@ -298,14 +298,14 @@
     border-radius: 50%;
     background: linear-gradient(
       135deg,
-      var(--glass-highlight-color, var(--color-primary, #bf8a7a)),
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 45%, transparent)
+      var(--color-primary, #bf8a7a),
+      color-mix(in srgb, var(--color-primary, #bf8a7a) 45%, transparent)
     );
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: 0 4px 16px
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 32%, transparent);
+      color-mix(in srgb, var(--color-primary, #bf8a7a) 32%, transparent);
     position: relative;
   }
 
@@ -333,8 +333,8 @@
     height: clamp(100px, 15vw, 140px);
     background: linear-gradient(
       180deg,
-      var(--glass-highlight-color, var(--color-primary, #bf8a7a)),
-      color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 35%, transparent)
+      var(--color-primary, #bf8a7a),
+      color-mix(in srgb, var(--color-primary, #bf8a7a) 35%, transparent)
     );
     border-radius: 2px;
     position: relative;
@@ -347,7 +347,7 @@
     background: linear-gradient(
       180deg,
       var(--glass-foreground-strong, var(--color-foreground, #2c2c2c)),
-      var(--glass-highlight-color, var(--color-primary, #bf8a7a))
+      var(--color-primary, #bf8a7a)
     );
     border-radius: 2px;
     animation: fillProgress 3s ease-in-out infinite;
@@ -438,7 +438,7 @@
     align-items: center;
     gap: 0.75rem;
     background: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.78)) 70%, transparent);
-    border-left: 3px solid var(--glass-highlight-color, var(--color-primary, #bf8a7a));
+    border-left: 3px solid var(--color-primary, #bf8a7a);
     padding: 1rem 1.25rem;
     border-radius: 12px;
   }
@@ -475,7 +475,7 @@
   .decoration-circle {
     position: absolute;
     border-radius: 50%;
-    background: color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 14%, transparent);
+    background: color-mix(in srgb, var(--color-primary, #bf8a7a) 14%, transparent);
     filter: blur(0px);
   }
 
@@ -499,7 +499,7 @@
     right: -60px;
     width: 160px;
     height: 2px;
-    background: color-mix(in srgb, var(--glass-highlight-color, var(--color-primary, #bf8a7a)) 18%, transparent);
+    background: color-mix(in srgb, var(--color-primary, #bf8a7a) 18%, transparent);
     transform: rotate(12deg);
   }
 
