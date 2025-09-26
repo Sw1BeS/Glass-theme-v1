@@ -11,6 +11,9 @@ body {
   min-height: 100svh;
   font-variation-settings: 'slnt' 0;
   overflow-x: hidden;
+  /* Ensure scrollbar doesn't affect layout */
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
 }
 
 :root {

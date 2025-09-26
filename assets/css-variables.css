@@ -147,17 +147,32 @@
 /* Scrollbar Styles - Uses theme-switcher.js variables */
 ::-webkit-scrollbar {
   width: 8px;
+  position: fixed;
+  z-index: 9999;
 }
 
 ::-webkit-scrollbar-track {
   background: var(--scrollbar-track-bg, var(--color-secondary-bg));
+  border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--scrollbar-thumb-bg, var(--color-primary));
   border-radius: var(--radius-full);
+  border: 1px solid var(--scrollbar-track-bg, var(--color-secondary-bg));
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover-bg, var(--color-primary-hover));
+}
+
+/* Ensure scrollbar doesn't affect layout */
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-bg, var(--color-primary)) var(--scrollbar-track-bg, var(--color-secondary-bg));
 }
