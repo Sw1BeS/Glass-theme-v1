@@ -154,16 +154,28 @@
       height: auto;
     }
 
-    .s-vp1 .image {
-      order: 1;
-      width: 100%;
-      max-width: 100%;
-    }
-
     .s-vp1 .image-wrapper {
       width: 100%;
       max-width: 100%;
       margin: 0;
+    }
+  }
+
+  .s-vp1 .image-desktop {
+    display: block;
+  }
+
+  .s-vp1 .image-mobile {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .s-vp1 .image-desktop {
+      display: none;
+    }
+
+    .s-vp1 .image-mobile {
+      display: block;
     }
   }
 
