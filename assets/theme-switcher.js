@@ -744,14 +744,17 @@ class ThemeSwitcher {
   }
 
   applySchemeToClasses(scheme) {
-    // Apply colors to all elements with color-scheme-* classes
-    Object.keys(this.schemeMapping).forEach(shopifyScheme => {
-      const elements = document.querySelectorAll(`.color-${shopifyScheme}`);
-      elements.forEach(element => {
+    // Apply colors to all elements with color-scheme class and data-theme attribute
+    const elements = document.querySelectorAll('.color-scheme[data-theme]');
+    elements.forEach(element => {
+      const theme = element.getAttribute('data-theme');
+      const mappedScheme = this.schemeMapping[theme];
+
+      if (mappedScheme === this.currentScheme) {
         Object.entries(scheme.colors).forEach(([property, value]) => {
           element.style.setProperty(property, value);
         });
-      });
+      }
     });
 
     // Apply colors to all sections with color-scheme-* classes

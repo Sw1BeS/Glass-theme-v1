@@ -13,7 +13,8 @@
 %}
 
 <div
-  class="s-vp3 section color-{{ section.settings.color_scheme }}"
+  class="s-vp3 section color-scheme"
+  data-theme="{{ section.settings.color_scheme }}"
   {% if glass_enabled %}
     data-glass-tone="{{ glass_tone }}"
     data-glass-elevation="{{ glass_elevation }}"
@@ -125,6 +126,7 @@
 {% stylesheet %}
   .s-vp3 .section {
     padding: clamp(3rem, 6vw, 4.2rem) 0;
+    background: transparent;
   }
 
   .s-vp3-container {
@@ -141,14 +143,15 @@
     .s-vp3-container {
       grid-template-columns: 1fr;
       gap: 2rem;
-      padding: 0 1rem;
-      margin: 0 auto;
+      padding: 0 0.5rem;
+      margin: 0;
       max-width: 100%;
+      width: 100%;
     }
 
     .s-vp3-content {
       order: 2;
-      padding: 1.5rem;
+      padding: 1rem;
       margin: 0;
     }
 
@@ -162,7 +165,7 @@
     .s-vp3 .image-mobile {
       width: 100%;
       max-width: 100%;
-      margin: 0 auto;
+      margin: 0;
     }
   }
 

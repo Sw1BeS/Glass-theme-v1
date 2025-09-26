@@ -2,7 +2,7 @@
   Product Composition Section - Simple product showcase
 {% endcomment %}
 
-<div class="product-composition-section color-{{ section.settings.color_scheme | default: 'scheme-1' }}" style="{% render 'spacing-style', settings: section.settings %}">
+<div class="product-composition-section color-scheme" data-theme="{{ section.settings.color_scheme | default: 'scheme-1' }}" style="{% render 'spacing-style', settings: section.settings %}">
   <div class="composition-container">
     <!-- Section Header -->
     <div class="section-header">
@@ -242,7 +242,7 @@
 <style>
   .product-composition-section {
     padding: 4rem 0;
-    background: var(--color-background, #ffffff);
+    background: transparent;
   }
 
   .composition-container {
@@ -1646,10 +1646,11 @@
 
   @media (max-width: 767px) {
     .product-composition-container {
-      padding: 0 1rem;
+      padding: 0 0.5rem;
       gap: 1.5rem;
-      margin: 0 auto;
+      margin: 0;
       max-width: 100%;
+      width: 100%;
     }
 
     .product-composition-header {

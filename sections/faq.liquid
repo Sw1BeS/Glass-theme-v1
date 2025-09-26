@@ -4,7 +4,8 @@
 {% endcomment %}
 
 <div
-  class="faq-section color-{{ section.settings.color_scheme }} section-{{ section.settings.section_width }}"
+  class="faq-section color-scheme section-{{ section.settings.section_width }}"
+  data-theme="{{ section.settings.color_scheme }}"
   style="{% render 'spacing-style', settings: section.settings %}"
 >
   <div class="faq-container">
@@ -124,7 +125,7 @@
   .faq-section {
     width: 100vw;
     margin-left: calc(-50vw + 50%);
-    background: linear-gradient(135deg, var(--color-secondary-bg, #f8f9fa), var(--color-tertiary-bg, #e9ecef));
+    background: transparent;
     padding: 4rem 0;
     overflow: hidden;
     position: relative;
@@ -344,7 +345,8 @@
     }
 
     .faq-container {
-      padding: 0 1rem;
+      padding: 0 0.5rem;
+      width: 100%;
     }
 
     .faq-header {
