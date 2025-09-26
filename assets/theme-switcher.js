@@ -791,20 +791,15 @@ class ThemeSwitcher {
   // applyScrollbarStyles removed
 
   applySchemeToClasses(scheme) {
-    // Apply colors to all elements with color-scheme class and data-theme attribute
-    const elements = document.querySelectorAll('.color-scheme[data-theme]');
-    elements.forEach(element => {
-      const theme = element.getAttribute('data-theme');
-      const mappedScheme = this.schemeMapping[theme];
-
-      if (mappedScheme === this.currentScheme) {
-        Object.entries(scheme.colors).forEach(([property, value]) => {
-          element.style.setProperty(property, value);
-        });
-      }
+    // Apply colors to ALL elements with color-scheme class
+    const allColorSchemeElements = document.querySelectorAll('.color-scheme');
+    allColorSchemeElements.forEach(element => {
+      Object.entries(scheme.colors).forEach(([property, value]) => {
+        element.style.setProperty(property, value);
+      });
     });
 
-    // Apply colors to all sections with color-scheme-* classes
+    // Apply colors to all sections with color-scheme-* classes (backward compatibility)
     Object.keys(this.schemeMapping).forEach(shopifyScheme => {
       const sections = document.querySelectorAll(`.color-${shopifyScheme}, .section.color-${shopifyScheme}`);
       sections.forEach(section => {
@@ -830,11 +825,9 @@ class ThemeSwitcher {
     sectionSelectors.forEach(selector => {
       const elements = document.querySelectorAll(selector);
       elements.forEach(element => {
-        if (element.classList.contains('color-scheme') || element.classList.toString().includes('color-scheme-')) {
-          Object.entries(scheme.colors).forEach(([property, value]) => {
-            element.style.setProperty(property, value);
-          });
-        }
+        Object.entries(scheme.colors).forEach(([property, value]) => {
+          element.style.setProperty(property, value);
+        });
       });
     });
 

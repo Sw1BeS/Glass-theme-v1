@@ -144,7 +144,7 @@
   .reviews-title {
     font-size: clamp(2rem, 4vw, 3rem);
     font-weight: 700;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    color: var(--text-primary);
     margin: 0;
     display: inline-block;
     position: relative;
@@ -161,14 +161,14 @@
     background: linear-gradient(
       90deg,
       var(--color-primary, #bf8a7a),
-      var(--glass-accent-color, var(--color-accent, #dab4a6))
+      var(--color-accent, #dab4a6)
     );
     border-radius: 2px;
   }
 
   .reviews-subtitle {
     font-size: clamp(1rem, 2vw, 1.2rem);
-    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
+    color: var(--text-secondary);
     max-width: 620px;
     margin: 0 auto;
     line-height: 1.6;
@@ -190,7 +190,7 @@
     display: grid;
     gap: 1.25rem;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    color: var(--text-primary);
   }
 
   .review-card.glass-surface {
@@ -223,7 +223,7 @@
   .review-text {
     font-size: 1rem;
     line-height: 1.7;
-    color: var(--glass-foreground-muted, var(--color-foreground, #2c2c2c));
+    color: var(--text-secondary);
     margin: 0;
     font-style: italic;
   }
@@ -257,7 +257,7 @@
   .author-name {
     font-size: 1rem;
     font-weight: 600;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    color: var(--text-primary);
     margin: 0;
   }
 
@@ -274,7 +274,7 @@
     text-transform: uppercase;
     background: color-mix(in srgb, var(--glass-surface-color, rgba(255, 255, 255, 0.78)) 80%, transparent);
     border: 1px solid var(--glass-surface-border-color, rgba(255, 255, 255, 0.4));
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    color: var(--text-primary);
     transition: transform 0.25s ease;
   }
 
