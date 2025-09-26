@@ -612,6 +612,9 @@ class ThemeSwitcher {
 
       // Apply section backgrounds
       this.applySectionBackgrounds(scheme);
+
+      // Apply scrollbar styles
+      this.applyScrollbarStyles(scheme);
     }
   }
 
@@ -752,6 +755,13 @@ class ThemeSwitcher {
     sections.forEach(section => {
       section.style.setProperty('background', scheme.colors['--color-secondary-bg']);
     });
+  }
+
+  applyScrollbarStyles(scheme) {
+    // Apply scrollbar styles to document
+    document.documentElement.style.setProperty('--scrollbar-track-bg', scheme.colors['--color-secondary-bg']);
+    document.documentElement.style.setProperty('--scrollbar-thumb-bg', scheme.colors['--color-primary']);
+    document.documentElement.style.setProperty('--scrollbar-thumb-hover-bg', scheme.colors['--color-primary-hover']);
   }
 
   applySchemeToClasses(scheme) {

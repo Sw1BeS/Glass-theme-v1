@@ -131,6 +131,21 @@
     position: relative;
   }
 
+  .faq-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: color-mix(in srgb, var(--color-secondary-bg) 85%, transparent);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    margin: 1rem;
+    z-index: -1;
+    position: relative;
+  }
+
   .faq-container {
     max-width: var(--page-width, 1200px);
     margin: 0 auto;

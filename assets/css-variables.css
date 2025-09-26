@@ -150,14 +150,14 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-secondary-bg);
+  background: var(--scrollbar-track-bg, var(--color-secondary-bg));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
+  background: var(--scrollbar-thumb-bg, var(--color-primary));
   border-radius: var(--radius-full);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-primary-hover);
+  background: var(--scrollbar-thumb-hover-bg, var(--color-primary-hover));
 }
