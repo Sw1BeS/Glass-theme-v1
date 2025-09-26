@@ -42,23 +42,9 @@
         {%- endcase -%}
       {%- endfor -%}
 
-      {%- unless header_found -%}
-        <h2 class="title">{{ section.settings.heading | default: 'Safe for Your Most Delicate Skin' }}</h2>
-      {%- endunless -%}
+      {%- comment -%} Headers are now managed through blocks only {%- endcomment -%}
 
-      {%- unless section.blocks.size > 0 -%}
-        <div class="description">
-          {{
-            section.settings.text
-            | default: '<p>Formulated specifically for the sensitive eye area. Our pH-balanced formula removes impurities without irritation, perfect for daily use on natural brows and extensions.</p>'
-          }}
-        </div>
-        {%- if section.settings.button_text != blank -%}
-          <a href="{{ section.settings.button_link | default: '#' }}" class="button">
-            {{ section.settings.button_text }}
-          </a>
-        {%- endif -%}
-      {%- endunless -%}
+      {%- comment -%} Content is now managed through blocks only {%- endcomment -%}
     </div>
 
     <div class="media">
@@ -155,6 +141,17 @@
       order: 2;
       padding: 1rem;
       margin: 0;
+      width: 100%;
+    }
+
+    .s-vp1 .image-wrapper {
+      width: 100%;
+      order: 1;
+    }
+
+    .s-vp1 .image {
+      width: 100%;
+      height: auto;
     }
 
     .s-vp1 .image {

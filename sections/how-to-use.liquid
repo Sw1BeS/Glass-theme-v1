@@ -15,23 +15,16 @@
 >
   <div class="how-to-use-container">
     <div class="how-to-use-header">
-      {%- assign header_found = false -%}
       {%- for block in section.blocks -%}
         {%- if block.type == 'section_header' -%}
-          <h2 class="how-to-use-title">{{ block.settings.heading | default: 'How to Use' }}</h2>
+          <h2 class="how-to-use-title">{{ block.settings.heading }}</h2>
           {%- if block.settings.subheading != blank -%}
             <p class="how-to-use-subtitle">{{ block.settings.subheading }}</p>
           {%- endif -%}
-          {%- assign header_found = true -%}
           {%- break -%}
         {%- endif -%}
       {%- endfor -%}
-      {%- unless header_found -%}
-        <h2 class="how-to-use-title">{{ section.settings.section_heading | default: 'How to Use' }}</h2>
-        <p class="how-to-use-subtitle">
-          {{ section.settings.section_subheading | default: 'Follow these simple steps for perfect results' }}
-        </p>
-      {%- endunless -%}
+      {%- comment -%} Headers are now managed through blocks only {%- endcomment -%}
     </div>
 
     <div class="how-to-use-steps" data-step-count="{{ step_count }}">
@@ -422,6 +415,24 @@
 
   .step-image-container:hover .step-image {
     transform: scale(1.04);
+  }
+
+  .step-image-desktop {
+    display: block;
+  }
+
+  .step-image-mobile {
+    display: none;
+  }
+
+  @media (max-width: 767px) {
+    .step-image-desktop {
+      display: none;
+    }
+
+    .step-image-mobile {
+      display: block;
+    }
   }
 
   .step-text-wrapper {

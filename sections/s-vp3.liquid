@@ -41,9 +41,7 @@
         {%- endcase -%}
       {%- endfor -%}
 
-      {%- unless header_found -%}
-        <h2 class="title">{{ section.settings.heading | default: '3-Step Routine Made Simple' }}</h2>
-      {%- endunless -%}
+      {%- comment -%} Headers are now managed through blocks only {%- endcomment -%}
 
       {%- assign text_found = false -%}
       {%- assign button_found = false -%}
@@ -168,6 +166,17 @@
       order: 2;
       padding: 1rem;
       margin: 0;
+      width: 100%;
+    }
+
+    .s-vp3 .image-wrapper {
+      width: 100%;
+      order: 1;
+    }
+
+    .s-vp3 .image {
+      width: 100%;
+      height: auto;
     }
 
     .s-vp3 .image {

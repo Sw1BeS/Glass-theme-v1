@@ -36,14 +36,7 @@
       {%- endcase -%}
     {%- endfor -%}
 
-    {%- unless header_found -%}
-      <div class="reviews-header glass">
-        <h2 class="reviews-title">{{ section.settings.section_heading | default: 'What Our Customers Say' }}</h2>
-        <p class="reviews-subtitle">
-          {{ section.settings.section_subheading | default: 'Real reviews from real customers who love our products' }}
-        </p>
-      </div>
-    {%- endunless -%}
+    {%- comment -%} Headers are now managed through blocks only {%- endcomment -%}
 
     <div class="reviews-grid">
       {%- for block in section.blocks -%}

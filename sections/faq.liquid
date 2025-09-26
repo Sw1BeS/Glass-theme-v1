@@ -9,11 +9,9 @@
   style="{% render 'spacing-style', settings: section.settings %}"
 >
   <div class="faq-container">
-    {%- assign header_found = false -%}
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when 'section_header' -%}
-          {%- assign header_found = true -%}
           <div class="faq-header glass" {{ block.shopify_attributes }}>
             <h2 class="faq-title">{{ block.settings.heading }}</h2>
             {%- if block.settings.subheading != blank -%}
@@ -23,14 +21,7 @@
       {%- endcase -%}
     {%- endfor -%}
 
-    {%- unless header_found -%}
-      <div class="faq-header glass">
-        <h2 class="faq-title">{{ section.settings.section_heading | default: 'Frequently Asked Questions' }}</h2>
-        <p class="faq-subtitle">
-          {{ section.settings.section_subheading | default: 'Find answers to common questions about our products' }}
-        </p>
-      </div>
-    {%- endunless -%}
+    {%- comment -%} Headers are now managed through blocks only {%- endcomment -%}
 
     <div class="faq-accordion">
       {%- for block in section.blocks -%}
@@ -158,9 +149,9 @@
   }
 
   .faq-title {
-    font-size: clamp(2rem, 4vw, 3rem);
+    font-size: var(--heading-large);
     font-weight: 700;
-    color: var(--glass-foreground-strong, var(--color-foreground, #2c2c2c));
+    color: var(--text-primary);
     margin: 0;
     display: inline-block;
     position: relative;
@@ -183,8 +174,8 @@
   }
 
   .faq-subtitle {
-    font-size: clamp(1rem, 2vw, 1.3rem);
-    color: var(--glass-foreground-muted, var(--color-foreground-muted, #6a6a6a));
+    font-size: var(--body-text-size);
+    color: var(--text-secondary);
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.6;
