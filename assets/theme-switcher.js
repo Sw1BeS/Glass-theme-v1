@@ -636,20 +636,20 @@ class ThemeSwitcher {
     // Listen for Shopify Theme Editor changes
     if (window.Shopify && window.Shopify.theme) {
       // Listen for theme editor changes
-      document.addEventListener('shopify:section:load', () => {
-        setTimeout(() => {
+      this.addEventListener(document, 'shopify:section:load', () => {
+        this.addTimeout(() => {
           this.applyCurrentThemeToElements();
         }, 100);
       });
 
-      document.addEventListener('shopify:section:reorder', () => {
-        setTimeout(() => {
+      this.addEventListener(document, 'shopify:section:reorder', () => {
+        this.addTimeout(() => {
           this.applyCurrentThemeToElements();
         }, 100);
       });
 
-      document.addEventListener('shopify:section:select', () => {
-        setTimeout(() => {
+      this.addEventListener(document, 'shopify:section:select', () => {
+        this.addTimeout(() => {
           this.applyCurrentThemeToElements();
         }, 100);
       });
@@ -676,9 +676,9 @@ class ThemeSwitcher {
 
   setupResizeListener() {
     let resizeTimeout;
-    window.addEventListener('resize', () => {
+    this.addEventListener(window, 'resize', () => {
       clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => {
+      resizeTimeout = this.addTimeout(() => {
         this.applyCurrentThemeToElements();
       }, 250);
     });
