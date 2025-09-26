@@ -5,6 +5,13 @@
   /* Color System - Managed by theme-switcher.js */
   /* These variables are set dynamically by JavaScript */
 
+  /* Text Color System - 3 variants only */
+  --text-primary: var(--color-foreground);
+  --text-secondary: var(--color-foreground-muted);
+  --text-accent: var(--color-primary);
+  --text-white: #ffffff;
+  --text-black: #000000;
+
   /* Glass Effect Variables - Managed by theme-switcher.js */
   /* These variables are set dynamically by JavaScript */
 

@@ -609,6 +609,9 @@ class ThemeSwitcher {
 
       // Apply colors to all glass elements
       this.applyGlassColors(scheme);
+
+      // Apply section backgrounds
+      this.applySectionBackgrounds(scheme);
     }
   }
 
@@ -741,6 +744,14 @@ class ThemeSwitcher {
       element.style.setProperty('--glass-surface-border-color', scheme.colors['--color-border']);
       element.style.setProperty('--glass-foreground-strong', scheme.colors['--color-foreground']);
     }
+  }
+
+  applySectionBackgrounds(scheme) {
+    // Apply secondary background to all sections with color-scheme class
+    const sections = document.querySelectorAll('.color-scheme');
+    sections.forEach(section => {
+      section.style.setProperty('background', scheme.colors['--color-secondary-bg']);
+    });
   }
 
   applySchemeToClasses(scheme) {
