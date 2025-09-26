@@ -653,25 +653,38 @@ class ThemeSwitcher {
           this.applyCurrentThemeToElements();
         }, 100);
       });
-    }
 
-    // Listen for any class changes on sections
-    const sectionObserver = new MutationObserver((mutations) => {
-      mutations.forEach((mutation) => {
-        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
-          const target = mutation.target;
-          if (target.classList && Array.from(target.classList).some(cls => cls.startsWith('color-scheme-'))) {
-            this.applyCurrentThemeToElement(target);
-          }
-        }
+      // Listen for theme settings changes
+      this.addEventListener(document, 'shopify:section:unload', () => {
+        this.addTimeout(() => {
+          this.applyCurrentThemeToElements();
+        }, 100);
       });
-    });
 
-    sectionObserver.observe(document.body, {
-      attributes: true,
-      attributeFilter: ['class'],
-      subtree: true
-    });
+      // Listen for any class changes on sections
+      const sectionObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+            const target = mutation.target;
+            if (target.classList.contains('color-scheme') ||
+                target.classList.contains('section') ||
+                target.classList.contains('glass')) {
+              this.addTimeout(() => {
+                this.applyCurrentThemeToElement(target);
+              }, 50);
+            }
+          }
+        });
+      });
+
+      this.addObserver(sectionObserver);
+      sectionObserver.observe(document.body, {
+        childList: true,
+        subtree: true,
+        attributeFilter: ['class'],
+        subtree: true
+      });
+    }
   }
 
   setupResizeListener() {
