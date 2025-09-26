@@ -613,8 +613,7 @@ class ThemeSwitcher {
       // Apply section backgrounds
       this.applySectionBackgrounds(scheme);
 
-      // Apply scrollbar styles
-      this.applyScrollbarStyles(scheme);
+      // Scrollbar styles removed: use native browser scrollbar
     }
   }
 
@@ -757,12 +756,7 @@ class ThemeSwitcher {
     });
   }
 
-  applyScrollbarStyles(scheme) {
-    // Apply scrollbar styles to document
-    document.documentElement.style.setProperty('--scrollbar-track-bg', scheme.colors['--color-secondary-bg']);
-    document.documentElement.style.setProperty('--scrollbar-thumb-bg', scheme.colors['--color-primary']);
-    document.documentElement.style.setProperty('--scrollbar-thumb-hover-bg', scheme.colors['--color-primary-hover']);
-  }
+  // applyScrollbarStyles removed
 
   applySchemeToClasses(scheme) {
     // Apply colors to all elements with color-scheme class and data-theme attribute
