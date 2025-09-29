@@ -30,7 +30,7 @@ class ThemeSwitcher {
           '--color-accent': '#dab4a6',
           '--color-foreground': '#f5f2eb',
           '--color-foreground-light': '#ece7d7',
-          '--color-foreground-muted': '#dab4a6',
+          '--color-foreground-muted': '#b8a8a0',
           '--color-border': '#4d3030',
           '--color-border-light': '#5a3030'
         }
@@ -47,7 +47,7 @@ class ThemeSwitcher {
           '--color-accent': '#8fbc8f',
           '--color-foreground': '#f0f8f0',
           '--color-foreground-light': '#e8f4e8',
-          '--color-foreground-muted': '#d8e8d8',
+          '--color-foreground-muted': '#a8c8a8',
           '--color-border': '#6a8a6a',
           '--color-border-light': '#7a9a7a'
         }
@@ -64,7 +64,7 @@ class ThemeSwitcher {
           '--color-accent': '#c5a8e8',
           '--color-foreground': '#f8f4ff',
           '--color-foreground-light': '#f0e8ff',
-          '--color-foreground-muted': '#e8dcff',
+          '--color-foreground-muted': '#c8b8e8',
           '--color-border': '#8b6bab',
           '--color-border-light': '#9b7bbb'
         }
@@ -81,7 +81,7 @@ class ThemeSwitcher {
           '--color-accent': '#daa520',
           '--color-foreground': '#fff8f0',
           '--color-foreground-light': '#fef0e0',
-          '--color-foreground-muted': '#fce8d0',
+          '--color-foreground-muted': '#d4c0a0',
           '--color-border': '#f4a460',
           '--color-border-light': '#faf0e6'
         }
@@ -115,7 +115,7 @@ class ThemeSwitcher {
           '--color-accent': '#bf8a7a',
           '--color-foreground': '#2c2c2c',
           '--color-foreground-light': '#3c3c3c',
-          '--color-foreground-muted': '#5a5e5a',
+          '--color-foreground-muted': '#8a8a8a',
           '--color-border': '#d4c0b0',
           '--color-border-light': '#e8e2db'
         }
@@ -132,7 +132,7 @@ class ThemeSwitcher {
           '--color-accent': '#bf8a7a',
           '--color-foreground': '#2c2c2c',
           '--color-foreground-light': '#3c3c3c',
-          '--color-foreground-muted': '#5a5e5a',
+          '--color-foreground-muted': '#8a8a8a',
           '--color-border': '#c4a896',
           '--color-border-light': '#d4c0b0'
         }
@@ -829,6 +829,20 @@ class ThemeSwitcher {
           element.style.setProperty(property, value);
         });
       });
+    });
+
+    // Apply text color variables
+    const textVariables = {
+      '--text-primary': scheme.colors['--color-foreground'],
+      '--text-secondary': scheme.colors['--color-foreground-muted'],
+      '--text-accent': scheme.colors['--color-primary'],
+      '--text-white': '#ffffff',
+      '--text-black': '#000000'
+    };
+
+    // Apply text variables to root
+    Object.entries(textVariables).forEach(([property, value]) => {
+      document.documentElement.style.setProperty(property, value);
     });
 
     // Apply glass effect variables
